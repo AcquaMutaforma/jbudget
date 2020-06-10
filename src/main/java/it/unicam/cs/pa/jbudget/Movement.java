@@ -9,11 +9,18 @@ public interface Movement {
     int getId();
     String getMotivation();
     double getValue();
-    TypeOfMovement getType();
+    MovementType getType();
     List<Category> getTags();
     LocalDate getDate();
-    Asset getAsset();
+    Account getAccount();
 
     //setters
-    //TODO
+    void setId(int id);
+    void setMotivation(String m);
+    void setValue(double d);
+    void setType(MovementType mt);
+    void setTags(List<Category> l);
+    void setDate(LocalDate d);
+    void setAccount(Account a);
+
 }
