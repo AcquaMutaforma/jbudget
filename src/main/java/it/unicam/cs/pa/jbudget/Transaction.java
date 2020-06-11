@@ -18,4 +18,8 @@ public interface Transaction {
 
     //other
     double getTotalAmount();
+    void addTag(Category c);
+    boolean rmTag(Category c);
+    void addMovement(Movement m);
+    boolean rmMovement(Movement m);
 }
