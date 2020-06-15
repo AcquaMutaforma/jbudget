@@ -4,20 +4,20 @@ import java.util.List;
 
 public interface Ledge {
 
-    List<Transaction> getTransactions();
+    List<TransactionInterface> getTransactions();
     List<Category> getTags();
-    List<Account> getAccounts();
+    List<AccountInterface> getAccounts();
     List<ScheduledTransaction> getScheduledTransactions();
     //  List<Transaction> getTransactions(Predicate<Transaction> p)  //TODO
 
-    void addTransaction(Transaction t);
+    void addTransaction(TransactionInterface t);
     void addTag(Category c);
-    void addAccount(Account a);
+    void addAccount(AccountInterface a);
     void addScheduledTransaction(ScheduledTransaction st);
 
-    boolean rmTransaction(Transaction t);
+    boolean rmTransaction(TransactionInterface t);
     boolean rmTag(Category c);
-    boolean rmAccount(Account a);
+    boolean rmAccount(AccountInterface a);
     boolean rmScheduledTransaction(ScheduledTransaction st);
 
 }

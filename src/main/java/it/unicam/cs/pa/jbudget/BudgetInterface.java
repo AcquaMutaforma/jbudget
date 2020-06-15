@@ -2,7 +2,7 @@ package it.unicam.cs.pa.jbudget;
 
 import java.util.List;
 
-public interface Budget {
+public interface BudgetInterface {
 
     List<Category> getTags();
     double getValueOf(Category c);

@@ -3,10 +3,10 @@ package it.unicam.cs.pa.jbudget;
 import java.util.List;
 import java.util.Map;
 
-public interface BudgetReport {
+public interface BgtReport {
 
     Map<Category,Double> getReport();
-    Budget getBudget();
+    BudgetInterface getBudget();
     List<Category> getTags();
     double getValueOf(Category c);
 }

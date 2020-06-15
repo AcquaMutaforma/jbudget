@@ -1,4 +1,4 @@
 package it.unicam.cs.pa.jbudget;
 
-public interface BudgetManager {
+public interface BgtManager {
 }
