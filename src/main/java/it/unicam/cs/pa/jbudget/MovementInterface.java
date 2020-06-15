@@ -23,4 +23,7 @@ public interface MovementInterface {
     void setDate(LocalDate d);
     void setAccount(AccountInterface a);
 
+    void addTag(Category c);
+    boolean rmTag(Category c);
+
 }

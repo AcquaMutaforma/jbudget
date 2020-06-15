@@ -1,6 +1,7 @@
 package it.unicam.cs.pa.jbudget;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Transaction implements TransactionInterface {
@@ -10,6 +11,11 @@ public class Transaction implements TransactionInterface {
     private LocalDate date;
     private List<MovementInterface> movList;
     private double balance;
+
+    public Transaction(int id, LocalDate date){
+        setId(id);
+        setDate(date);
+    }
 
     @Override
     public int getId() { return this.id;}
@@ -37,14 +43,27 @@ public class Transaction implements TransactionInterface {
 
     @Override
     public void addTag(Category c) {
-        if(!contains(c))
-            this.tagList.add(c);
+        if(!getTags().contains(c)) {
+            getTags().add(c);
+            for(MovementInterface mi : getMovements()){
+                mi.addTag(c);
+            }
+        }
+    }
+
+    public void addTag(List<Category> lt) {
+        for(Category c : lt){
+            addTag(c);
+        }
     }
 
     @Override
     public boolean rmTag(Category c) {
-        if(contains(c)){
-            this.tagList.remove(c);
+        if(getTags().contains(c)){
+            getTags().remove(c);
+            for(MovementInterface mi : getMovements()){
+                mi.rmTag(c);
+            }
             return true;
         }else{
             return false;
@@ -53,27 +72,37 @@ public class Transaction implements TransactionInterface {
 
     @Override
     public void addMovement(MovementInterface m) {
-        if(!this.contains(m))
-            this.movList.add(m);
+        //TODO modificare balance
+        if(!getMovements().contains(m)){
+            getMovements().add(m);
+            for(Category c: m.getTags()){
+                addTag(c);
+            }
+        }
     }
 
     @Override
     public boolean rmMovement(MovementInterface m) {
-        if(contains(m)){
+        //TODO modificare balance
+        if(getMovements().contains(m)){
             this.movList.remove(m);
+            this.tagList = new ArrayList<Category>();
+            for(MovementInterface mi : getMovements()){
+                addTag(mi.getTags());
+                //TODO
+                /*
+                in questo modo la transazione cancella e "riappara" tutti i tag dei movimenti
+
+                 */
+            }
             return true;
         }else{
             return false;
         }
     }
 
+
     //TODO ma va bene o viene considerato copia incolla ?
     //TODO ci sono anche ---> addTag/Mov && rmTag/rmMov
-    public boolean contains(Category c){
-        return this.tagList.contains(c);
-    }
 
-    public boolean contains(MovementInterface m){
-        return this.movList.contains(m);
-    }
 }

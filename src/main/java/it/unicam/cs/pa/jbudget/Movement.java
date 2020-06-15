@@ -65,4 +65,20 @@ public class Movement implements MovementInterface {
 
     @Override
     public void setAccount(AccountInterface a) {this.account = a;}
+
+    @Override
+    public void addTag(Category c) {
+        if(!getTags().contains(c))
+            getTags().add(c);
+    }
+
+    @Override
+    public boolean rmTag(Category c) {
+        if(getTags().contains(c)){
+            getTags().remove(c);
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
