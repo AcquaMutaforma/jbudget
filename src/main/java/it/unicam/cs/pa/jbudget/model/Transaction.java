@@ -1,4 +1,4 @@
-package it.unicam.cs.pa.jbudget;
+package it.unicam.cs.pa.jbudget.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,6 +15,9 @@ public class Transaction implements TransactionInterface {
     public Transaction(int id, LocalDate date){
         setId(id);
         setDate(date);
+        this.balance = 0.0;
+        tagList = new ArrayList<>();
+        movList = new ArrayList<>();
     }
 
     @Override
@@ -45,15 +48,14 @@ public class Transaction implements TransactionInterface {
     public void addTag(Category c) {
         if(!getTags().contains(c)) {
             getTags().add(c);
-            for(MovementInterface mi : getMovements()){
-                mi.addTag(c);
-            }
+            fixTags();
         }
     }
 
     public void addTag(List<Category> lt) {
         for(Category c : lt){
             addTag(c);
+            fixTags();
         }
     }
 
@@ -61,48 +63,48 @@ public class Transaction implements TransactionInterface {
     public boolean rmTag(Category c) {
         if(getTags().contains(c)){
             getTags().remove(c);
-            for(MovementInterface mi : getMovements()){
-                mi.rmTag(c);
-            }
+            fixTags();
             return true;
         }else{
             return false;
         }
     }
 
+    private void fixTags(){
+        for(MovementInterface mi : getMovements()){
+            mi.setTags(getTags());
+        }
+    }
     @Override
     public void addMovement(MovementInterface m) {
-        //TODO modificare balance
         if(!getMovements().contains(m)){
             getMovements().add(m);
-            for(Category c: m.getTags()){
-                addTag(c);
-            }
+            addTag(m.getTags());
+            editBalance(m,true);
         }
     }
 
     @Override
     public boolean rmMovement(MovementInterface m) {
-        //TODO modificare balance
         if(getMovements().contains(m)){
             this.movList.remove(m);
             this.tagList = new ArrayList<Category>();
             for(MovementInterface mi : getMovements()){
                 addTag(mi.getTags());
-                //TODO
-                /*
-                in questo modo la transazione cancella e "riappara" tutti i tag dei movimenti
-
-                 */
             }
+            editBalance(m,false);
             return true;
         }else{
             return false;
         }
     }
 
-
-    //TODO ma va bene o viene considerato copia incolla ?
-    //TODO ci sono anche ---> addTag/Mov && rmTag/rmMov
+    private void editBalance(MovementInterface m, boolean aor){
+        if(m.getType() == MovementType.CREDIT && aor ||
+                m.getType() == MovementType.DEBIT && !aor){
+            this.balance += m.getValue();
+        }else
+            this.balance -= m.getValue();
+    }
 
 }

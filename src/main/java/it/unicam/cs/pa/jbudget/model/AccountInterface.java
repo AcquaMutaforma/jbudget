@@ -1,4 +1,4 @@
-package it.unicam.cs.pa.jbudget;
+package it.unicam.cs.pa.jbudget.model;
 
 import java.util.List;
 

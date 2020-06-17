@@ -1,4 +1,6 @@
-package it.unicam.cs.pa.jbudget;
+package it.unicam.cs.pa.jbudget.service;
+
+import it.unicam.cs.pa.jbudget.model.Category;
 
 import java.util.List;
 

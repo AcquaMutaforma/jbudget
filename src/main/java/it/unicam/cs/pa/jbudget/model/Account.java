@@ -1,5 +1,6 @@
-package it.unicam.cs.pa.jbudget;
+package it.unicam.cs.pa.jbudget.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -11,6 +12,15 @@ public class Account implements AccountInterface{
     private String description;
     private List<MovementInterface> movlist;
     private AccountType type;
+
+    public Account(int id,double ob,String n, String desc,AccountType at){
+        this.id = id;
+        setOpeningBalance(ob);
+        setName(n);
+        setDescription(desc);
+        setType(at);
+        this.movlist = new ArrayList<MovementInterface>();
+    }
 
     @Override
     public int getId() {return this.id;}
@@ -45,16 +55,15 @@ public class Account implements AccountInterface{
     @Override
     public void setType(AccountType at) {this.type = at;}
 
+    //TODO equals & hashcode
+
     @Override
     public void addMovement(MovementInterface m) {
         //inserisco il movimento e incremento il balance del valore del movimento
         //in base al tipo di account, se è ASSET sommo altrimenti sottraggo
-        try{
+        if(!getMovements().contains(m)) {
             this.movlist.add(m);
-            this.editBalance(m.getValue());
-        }catch (Exception e){
-            //TODO specificare l'exception, forse meglio throw ?
-            System.out.println("\nErrore Account.addMovement");
+            this.editBalance(m,true);
         }
     }
 
@@ -67,11 +76,9 @@ public class Account implements AccountInterface{
             return false;
         try{
             getMovements().remove(m);
-            //TODO qua non mi piace per niente, vedi di inventarti qualcos'altro
-            this.editBalance(-1 * m.getValue());
+            this.editBalance(m,false);
             return true;
         }catch (Exception e){
-            //TODO specificare l'exception, forse meglio throw ?
             System.out.println("\nErrore Account.rmMovement");
         }
         return false;
@@ -82,11 +89,12 @@ public class Account implements AccountInterface{
         return null;
     }
 
-    private void editBalance(double value){
-        if(getType() == AccountType.ASSET){
-            this.balance += value;
+    private void editBalance(MovementInterface m,boolean aor){
+        if(((getType() == AccountType.ASSET)&&(m.getType() == MovementType.CREDIT) && aor) ||
+                (getType() == AccountType.LIABILITIES)&&(m.getType() == MovementType.DEBIT)&&aor){
+            this.balance += m.getValue();
         }else{
-            this.balance -= value;
+            this.balance -= m.getValue();
         }
     }
 
