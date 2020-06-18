@@ -1,6 +1,6 @@
 package it.unicam.cs.pa.jbudget.model;
 
-public interface Category {
+public interface TagInterface {
 
     //getters
     int getId();

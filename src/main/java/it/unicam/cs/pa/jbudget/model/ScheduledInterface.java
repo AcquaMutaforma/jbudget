@@ -1,16 +1,17 @@
 package it.unicam.cs.pa.jbudget.model;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.function.Predicate;
 
 public interface ScheduledInterface {
     /* funge da manager di transazioni future*/
     
     //getters
-    LocalDate getDate();
+
     List<TransactionInterface> getTransactions();
-
-
+    List<TransactionInterface> getTransactions(Predicate<Transaction> p);
+aaa
+    //TODO transazioni o serie di transazioni, che deve fare questa interfaccia ??
     //setters
     //generic methods
     boolean isComplete();

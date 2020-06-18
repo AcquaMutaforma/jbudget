@@ -2,6 +2,7 @@ package it.unicam.cs.pa.jbudget.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 public class Account implements AccountInterface{
@@ -79,7 +80,7 @@ public class Account implements AccountInterface{
             this.editBalance(m,false);
             return true;
         }catch (Exception e){
-            System.out.println("\nErrore Account.rmMovement");
+            //TODO
         }
         return false;
     }
@@ -98,4 +99,16 @@ public class Account implements AccountInterface{
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Account)) return false;
+        Account account = (Account) o;
+        return getId() == account.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }

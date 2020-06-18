@@ -1,14 +1,14 @@
 package it.unicam.cs.pa.jbudget.service;
 
-import it.unicam.cs.pa.jbudget.model.Category;
+import it.unicam.cs.pa.jbudget.model.TagInterface;
 
 import java.util.List;
 
 public interface BudgetInterface {
 
-    List<Category> getTags();
-    double getValueOf(Category c);
-    void set(Category c, double expected);
+    List<TagInterface> getTags();
+    double getValueOf(TagInterface c);
+    void set(TagInterface c, double expected);
 
     /*
     idea per set:

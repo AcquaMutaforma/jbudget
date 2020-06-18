@@ -1,14 +1,14 @@
 package it.unicam.cs.pa.jbudget.service;
 
-import it.unicam.cs.pa.jbudget.model.Category;
+import it.unicam.cs.pa.jbudget.model.TagInterface;
 
 import java.util.List;
 import java.util.Map;
 
 public interface BgtReport {
 
-    Map<Category,Double> getReport();
+    Map<TagInterface,Double> getReport();
     BudgetInterface getBudget();
-    List<Category> getTags();
-    double getValueOf(Category c);
+    List<TagInterface> getTags();
+    double getValueOf(TagInterface c);
 }
