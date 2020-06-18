@@ -71,6 +71,8 @@ public class Transaction implements TransactionInterface {
     }
 
     private void fixTags(){
+        if(getMovements().isEmpty())
+            return;
         for(MovementInterface mi : getMovements()){
             mi.setTags(getTags());
         }

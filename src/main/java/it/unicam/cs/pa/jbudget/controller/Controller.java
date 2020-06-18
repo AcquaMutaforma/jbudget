@@ -1,16 +1,17 @@
 package it.unicam.cs.pa.jbudget.controller;
 
-import it.unicam.cs.pa.jbudget.model.Ledge;
-import it.unicam.cs.pa.jbudget.view.*;
-import it.unicam.cs.pa.jbudget.service.*;
+import it.unicam.cs.pa.jbudget.model.LedgeInterface;
+import it.unicam.cs.pa.jbudget.service.BudgetManager;
+import it.unicam.cs.pa.jbudget.view.ViewInterface;
+import it.unicam.cs.pa.jbudget.service.BgtManager;
 
-public class Controller<T extends ViewInterface,K extends Ledge> {
+public class Controller<T extends ViewInterface,K extends LedgeInterface> {
 
-    private Ledge ledge;
+    private LedgeInterface ledge;
     private ViewInterface view;
     private BgtManager bgtManager;
 
-    public Controller(ViewInterface vi, Ledge l){
+    public Controller(LedgeInterface l, ViewInterface vi){
         this.ledge = l;
         this.view = vi;
         this.bgtManager = new BudgetManager();

@@ -2,7 +2,7 @@ package it.unicam.cs.pa.jbudget.model;
 
 import java.util.List;
 
-public interface Ledge {
+public interface LedgeInterface {
 
     List<MovementInterface> getMovements();
     List<Category> getTags();
