@@ -114,11 +114,10 @@ public class Transaction implements TransactionInterface {
                     alo = true;
                 }
             }
-        }catch (Exception e){
+        }catch (Exception e) {
             //TODO
-        }finally {
-            return alo;
         }
+        return alo;
     }
 
     private void editBalance(MovementInterface m, boolean aor){

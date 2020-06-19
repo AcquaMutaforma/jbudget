@@ -1,20 +1,34 @@
 package it.unicam.cs.pa.jbudget.controller;
 
-import it.unicam.cs.pa.jbudget.model.LedgeInterface;
-import it.unicam.cs.pa.jbudget.service.BudgetManager;
-import it.unicam.cs.pa.jbudget.view.ViewInterface;
-import it.unicam.cs.pa.jbudget.service.BgtManager;
+import it.unicam.cs.pa.jbudget.model.*;
+import it.unicam.cs.pa.jbudget.view.*;
+import it.unicam.cs.pa.jbudget.service.*;
 
-public class Controller<T extends ViewInterface,K extends LedgeInterface> {
+import java.io.*;
+import java.util.Hashtable;
+import java.util.function.Consumer;
+
+public class Controller{
 
     private LedgeInterface ledge;
     private ViewInterface view;
     private BgtManager bgtManager;
 
+    private Hashtable<String, Consumer<? extends LedgeInterface>> commands;
+
     public Controller(LedgeInterface l, ViewInterface vi){
         this.ledge = l;
         this.view = vi;
         this.bgtManager = new BudgetManager();
+    }
+
+    public static void main(String[] args) {
+
+        PrintStream output = new PrintStream(System.out);
+        LedgeInterface l = new Ledge();
+        ViewInterface vi = new ViewCli(input,output,output);
+        Controller controller = new Controller(l,vi);
+
     }
 
 }
