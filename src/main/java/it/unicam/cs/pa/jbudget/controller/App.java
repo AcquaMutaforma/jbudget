@@ -13,8 +13,8 @@ public class App{
     private LedgeInterface ledge;
     private ViewInterface view;
     private BgtManager bgtManager;
-    private IdManager idmanager;
-    //private SaverInterface saver;
+    private IDManager idmanager;
+    private SaverInterface saver;
 
     private Hashtable<String, Consumer<? extends LedgeInterface>> commands;
 
@@ -22,7 +22,7 @@ public class App{
         this.ledge = l;
         this.view = vi;
         this.bgtManager = new BudgetManager();
-        this.idmanager = new IdManager();
+        this.idmanager = new IDManager();
         //this.saver = s;
     }
 
