@@ -1,5 +1,6 @@
 package it.unicam.cs.pa.jbudget.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -10,6 +11,14 @@ public class Ledge implements LedgeInterface{
     private List<TagInterface> taglist;
     private List<AccountInterface> accountlist;
     private List<ScheduledInterface> scheduledlist;
+
+    public Ledge(){
+        this.translist = new ArrayList<>();
+        this.taglist = new ArrayList<>();
+        this.accountlist = new ArrayList<>();
+        this.scheduledlist = new ArrayList<>();
+
+    }
 
     @Override
     public List<TransactionInterface> getTransactions() { return this.translist; }

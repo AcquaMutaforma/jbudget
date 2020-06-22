@@ -39,4 +39,6 @@ public class Tag implements TagInterface {
     public int hashCode() {
         return Objects.hash(getId());
     }
+
+    //TODO toString
 }

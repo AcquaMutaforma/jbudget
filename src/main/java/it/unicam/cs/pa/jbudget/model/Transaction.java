@@ -140,4 +140,5 @@ public class Transaction implements TransactionInterface {
     public int hashCode() {
         return Objects.hash(getId());
     }
+    //TODO toString
 }
