@@ -6,11 +6,17 @@ import java.util.List;
 
 public interface BudgetInterface {
 
+    String getNome();
+    int getId();
     List<TagInterface> getTags();
     double getValueOf(TagInterface c);
     void set(TagInterface c, double expected);
 
     /*
+
+    PROBABILMENTE NON TI SERVE A NIENTE, IL BUDGET E' SENZA IL REPORT,
+    QUINDI SONO LA STESSA COSA
+
     idea per set:
     inserisco come valore aspettato " 0 " per non calcolare quel tag,
     magari perché è solo descrittivo, come l'anno o un altro tag di cui non importa

@@ -12,7 +12,6 @@ public interface ViewInterface {
     //input
 
     //generic methods
-    <T extends LedgeInterface> void start(T l);
-
+    //<T extends LedgeInterface> void start(T l);
 
 }

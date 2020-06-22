@@ -12,7 +12,7 @@ public class App{
 
     private LedgeInterface ledge;
     private ViewInterface view;
-    private BgtManager bgtManager;
+    private BudgetMInterface budgetManager;
     private IDManager idmanager;
     private SaverInterface saver;
 
@@ -21,7 +21,7 @@ public class App{
     public App(LedgeInterface l, ViewInterface vi, SaverInterface s){
         this.ledge = l;
         this.view = vi;
-        this.bgtManager = new BudgetManager();
+        this.budgetManager = new BudgetManager();
         this.idmanager = new IDManager();
         //this.saver = s;
     }
