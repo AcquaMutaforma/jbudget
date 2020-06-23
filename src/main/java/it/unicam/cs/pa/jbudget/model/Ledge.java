@@ -40,8 +40,14 @@ public class Ledge implements LedgeInterface{
 
     @Override
     public void addTransaction(TransactionInterface t) {
-        if(!getTransactions().contains(t))
+        if(t.getMovements().isEmpty())
+            throw new NullPointerException("transazione senza movimenti");
+        if(!getTransactions().contains(t)) {
             this.translist.add(t);
+            for(MovementInterface m : t.getMovements()){
+                m.getAccount().addMovement(m);
+            }
+        }
     }
 
     @Override
@@ -83,11 +89,12 @@ public class Ledge implements LedgeInterface{
     }
 
     @Override
-    public boolean rmTag(TagInterface c) {
-        if(getTags().contains(c)){
+    public boolean rmTag(TagInterface t) {
+        if(getTags().contains(t)){
             for(TransactionInterface tra : getTransactions()){
-                tra.rmTag(c);
+                tra.rmTag(t);
             }
+            this.taglist.remove(t);
             return true;
         }else
             return false;
@@ -104,6 +111,8 @@ public class Ledge implements LedgeInterface{
             boolean alo = false;
             for (TransactionInterface tra : getTransactions()) {
                 alo = tra.rmMovement(x -> x.getAccount().equals(a));
+                if(tra.getMovements().isEmpty())
+                    rmTransaction(tra);
             }
             return alo;
         }

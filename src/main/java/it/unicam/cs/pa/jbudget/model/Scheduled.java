@@ -10,7 +10,7 @@ public class Scheduled implements ScheduledInterface{
     }
 
     @Override
-    public List<TransactionInterface> getTransactions(Predicate<Transaction> p) {
+    public List<TransactionInterface> getTransactions(Predicate<TransactionInterface> p) {
         return null;
     }
 

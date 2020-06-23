@@ -6,12 +6,13 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 public class Account implements AccountInterface{
+
     private int id;
     private double balance;
     private double openingbalance;
     private String name;
     private String description;
-    private List<Movement> movlist;
+    private List<MovementInterface> movlist;
     private AccountType type;
 
     public Account(int id,double ob,String n, String desc,AccountType at){
@@ -20,7 +21,7 @@ public class Account implements AccountInterface{
         setName(n);
         setDescription(desc);
         setType(at);
-        this.movlist = new ArrayList<Movement>();
+        this.movlist = new ArrayList<MovementInterface>();
     }
 
     @Override
@@ -39,7 +40,7 @@ public class Account implements AccountInterface{
     public String getDescription() {return this.description;}
 
     @Override
-    public List<Movement> getMovements() {return this.movlist; }
+    public List<MovementInterface> getMovements() {return this.movlist; }
 
     @Override
     public AccountType getType() {return this.type;}
@@ -57,7 +58,7 @@ public class Account implements AccountInterface{
     public void setType(AccountType at) {this.type = at;}
 
     @Override
-    public void addMovement(Movement m) {
+    public void addMovement(MovementInterface m) {
         //TODO
         //inserisco il movimento e incremento il balance del valore del movimento
         //in base al tipo di account, se è ASSET sommo altrimenti sottraggo
@@ -68,7 +69,7 @@ public class Account implements AccountInterface{
     }
 
     @Override
-    public boolean rmMovement(Movement m) {
+    public boolean rmMovement(MovementInterface m) {
         //se non è presente il movimento ritorno false
         //idem se c'è qualche errore nell'esecuzione
         //poi lo rimuovo e scalo dal balance il valore del movimento
