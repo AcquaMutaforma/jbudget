@@ -9,7 +9,7 @@ public interface ScheduledInterface {
     //getters
 
     List<TransactionInterface> getTransactions();
-    List<TransactionInterface> getTransactions(Predicate<Transaction> p);
+    List<TransactionInterface> getTransactions(Predicate<TransactionInterface> p);
 
     //TODO transazioni o serie di transazioni, che deve fare questa interfaccia ??
     //setters

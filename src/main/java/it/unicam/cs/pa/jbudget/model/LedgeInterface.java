@@ -7,7 +7,7 @@ public interface LedgeInterface {
 
     //getters
     List<TransactionInterface> getTransactions();
-    List<Transaction> getTransactions(Predicate<Transaction> p);
+    List<TransactionInterface> getTransactions(Predicate<TransactionInterface> p);
     List<TagInterface> getTags();
     List<AccountInterface> getAccounts();
     List<ScheduledInterface> getScheduledTransactions();

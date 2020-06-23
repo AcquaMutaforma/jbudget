@@ -3,6 +3,7 @@ package it.unicam.cs.pa.jbudget.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Ledge implements LedgeInterface{
 
@@ -17,16 +18,15 @@ public class Ledge implements LedgeInterface{
         this.taglist = new ArrayList<>();
         this.accountlist = new ArrayList<>();
         this.scheduledlist = new ArrayList<>();
-
     }
 
     @Override
     public List<TransactionInterface> getTransactions() { return this.translist; }
 
     @Override
-    public List<Transaction> getTransactions(Predicate<Transaction> p) {
-        //TODO
-        return null;
+    public List<TransactionInterface> getTransactions(Predicate<TransactionInterface> p) {
+        //TODO vedi se funziona va..
+        return getTransactions().stream().filter(p).collect(Collectors.toList());
     }
 
     @Override
@@ -97,6 +97,10 @@ public class Ledge implements LedgeInterface{
     public boolean rmAccount(AccountInterface a) {
         //TODO non sono sicuro che funzioni al 100%
         if (getAccounts().contains(a)) {
+            if(getTransactions().isEmpty()) {
+                this.accountlist.remove(a);
+                return true;
+            }
             boolean alo = false;
             for (TransactionInterface tra : getTransactions()) {
                 alo = tra.rmMovement(x -> x.getAccount().equals(a));
@@ -111,4 +115,6 @@ public class Ledge implements LedgeInterface{
         //TODO
         return false;
     }
+
+
 }

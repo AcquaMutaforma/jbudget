@@ -6,39 +6,40 @@ public class Tag implements TagInterface {
 
     private int id;
     private String name;
-    //TODO tutto
+
+    public Tag(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     @Override
     public int getId() {
-        return 0;
+        return this.id;
     }
 
     @Override
     public String getName() {
-        return null;
+        return this.name;
     }
 
     @Override
-    public void setId(int o) {
-
-    }
+    public void setId(int o) { this.id = o;    }
 
     @Override
-    public void setName(String s) {
-
-    }
+    public void setName(String s) {this.name = s;}
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Tag)) return false;
         Tag tag = (Tag) o;
-        return getId() == tag.getId();
+        return getId() == tag.getId() &&
+                getName().equals(tag.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getId(), getName());
     }
 
-    //TODO toString
 }

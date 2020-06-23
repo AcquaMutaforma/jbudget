@@ -2,20 +2,27 @@ package it.unicam.cs.pa.jbudget.controller;
 
 public class IDManager implements IdManagerInterface{
 
-    private int idmovimenti;
-    private int idtransazioni;
+    private int idmovement;
+    private int idtransaction;
     private int idaccount;
     private int idbudget;
     private int idtag;
 
+    public IDManager() {
+        setIdmovimenti(0);
+        setIdtransaction(0);
+        setIdaccount(0);
+        setIdbudget(0);
+        setIdtag(0);
+    }
 
-    public int getIdmovimenti() {     return idmovimenti;    }
+    public int getIdmovement() {     return idmovement;    }
 
-    public void setIdmovimenti(int idmovimenti) {    this.idmovimenti = idmovimenti;    }
+    public void setIdmovimenti(int idmovimenti) {    this.idmovement = idmovimenti;    }
 
-    public int getIdtransazioni() {    return idtransazioni;    }
+    public int getIdtransaction() {    return idtransaction;    }
 
-    public void setIdtransazioni(int idtransazioni) {   this.idtransazioni = idtransazioni; }
+    public void setIdtransaction(int idtransaction) {   this.idtransaction = idtransaction; }
 
     public int getIdaccount() { return idaccount; }
 
@@ -32,12 +39,13 @@ public class IDManager implements IdManagerInterface{
     @Override
     public int generateIdOf(String s) {
         switch (s){
-            case "movimenti": this.idmovimenti++; return getIdmovimenti();
-            case "transazioni": this.idtransazioni++; return getIdtransazioni();
+            case "movement": this.idmovement++; return getIdmovement();
+            case "transaction": this.idtransaction++; return getIdtransaction();
             case "account":  this.idaccount++; return getIdaccount();
             case "budget":  this.idbudget++; return getIdbudget();
             case "tag":  this.idtag++; return getIdtag();
             default: return -1;
         }
     }
+
 }

@@ -38,7 +38,7 @@ public class Transaction implements TransactionInterface {
     public void setId(int id) {this.id = id;}
 
     @Override
-    public void setTags(List<TagInterface> l) {this.tagList = l;}
+    public void setTags(List<TagInterface> l) {  this.tagList = l;}
 
     @Override
     public void setDate(LocalDate d) {this.date = d;}
@@ -127,7 +127,7 @@ public class Transaction implements TransactionInterface {
         }else
             this.balance -= m.getValue();
     }
- //TODO check equals e hashcode di questo, movement, account, tag
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -140,5 +140,5 @@ public class Transaction implements TransactionInterface {
     public int hashCode() {
         return Objects.hash(getId());
     }
-    //TODO toString
+
 }

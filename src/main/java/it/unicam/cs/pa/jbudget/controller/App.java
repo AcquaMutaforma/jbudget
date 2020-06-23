@@ -5,7 +5,7 @@ import it.unicam.cs.pa.jbudget.saver.SaverInterface;
 import it.unicam.cs.pa.jbudget.view.*;
 import it.unicam.cs.pa.jbudget.budget.*;
 
-import java.util.Hashtable;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class App{
@@ -16,17 +16,18 @@ public class App{
     private IDManager idmanager;
     private SaverInterface saver;
 
-    private Hashtable<String, Consumer<? extends LedgeInterface>> commands;
+    private Map<String, Consumer<? extends LedgeInterface>> commands;
 
     public App(LedgeInterface l, ViewInterface vi, SaverInterface s){
         this.ledge = l;
         this.view = vi;
         this.budgetManager = new BudgetManager();
         this.idmanager = new IDManager();
-        //this.saver = s;
+        this.saver = s;
     }
 
     public static void main(String[] args) {
+
     }
 
 }

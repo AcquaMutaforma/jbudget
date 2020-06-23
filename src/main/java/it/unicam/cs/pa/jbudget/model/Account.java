@@ -11,7 +11,7 @@ public class Account implements AccountInterface{
     private double openingbalance;
     private String name;
     private String description;
-    private List<MovementInterface> movlist;
+    private List<Movement> movlist;
     private AccountType type;
 
     public Account(int id,double ob,String n, String desc,AccountType at){
@@ -20,7 +20,7 @@ public class Account implements AccountInterface{
         setName(n);
         setDescription(desc);
         setType(at);
-        this.movlist = new ArrayList<MovementInterface>();
+        this.movlist = new ArrayList<Movement>();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Account implements AccountInterface{
     public String getDescription() {return this.description;}
 
     @Override
-    public List<MovementInterface> getMovements() {return this.movlist; }
+    public List<Movement> getMovements() {return this.movlist; }
 
     @Override
     public AccountType getType() {return this.type;}
@@ -56,10 +56,9 @@ public class Account implements AccountInterface{
     @Override
     public void setType(AccountType at) {this.type = at;}
 
-    //TODO equals & hashcode
-
     @Override
-    public void addMovement(MovementInterface m) {
+    public void addMovement(Movement m) {
+        //TODO
         //inserisco il movimento e incremento il balance del valore del movimento
         //in base al tipo di account, se è ASSET sommo altrimenti sottraggo
         if(!getMovements().contains(m)) {
@@ -69,20 +68,15 @@ public class Account implements AccountInterface{
     }
 
     @Override
-    public boolean rmMovement(MovementInterface m) {
+    public boolean rmMovement(Movement m) {
         //se non è presente il movimento ritorno false
         //idem se c'è qualche errore nell'esecuzione
         //poi lo rimuovo e scalo dal balance il valore del movimento
         if(!getMovements().contains(m))
             return false;
-        try{
-            getMovements().remove(m);
-            this.editBalance(m,false);
-            return true;
-        }catch (Exception e){
-            //TODO
-        }
-        return false;
+        getMovements().remove(m);
+        this.editBalance(m,false);
+        return true;
     }
 
     public List<Movement> getMovements(Predicate<Movement> p){
@@ -112,5 +106,4 @@ public class Account implements AccountInterface{
         return Objects.hash(getId());
     }
 
-    //TODO toString
 }
