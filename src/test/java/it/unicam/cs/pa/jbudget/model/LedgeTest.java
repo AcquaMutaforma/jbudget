@@ -80,10 +80,10 @@ class LedgeTest {
         t1.addMovement(m);
         ledge.addTransaction(t1);
         ledge.addAccount(a);
-
     }
 
     @Test
     void rmScheduledTransaction() {
+        //TODO
     }
 }

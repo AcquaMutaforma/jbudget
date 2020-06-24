@@ -1,21 +1,44 @@
 package it.unicam.cs.pa.jbudget.model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class Scheduled implements ScheduledInterface{
-    @Override
-    public List<TransactionInterface> getTransactions() {
-        return null;
+
+    private List<TransactionInterface> translist;
+    private LocalDate date;
+
+    public Scheduled(LocalDate date) {
+        this.date = date;
+        this.translist = new ArrayList<>();
     }
 
     @Override
-    public List<TransactionInterface> getTransactions(Predicate<TransactionInterface> p) {
-        return null;
+    public LocalDate getDate() {return this.date;}
+
+    @Override
+    public List<TransactionInterface> getTransactions() {return this.translist; }
+
+    @Override
+    public void setDate(LocalDate ld) {this.date = ld;}
+
+    @Override
+    public void addTransaction(TransactionInterface t) {
+        if(!translist.contains(t) && t.getDate().equals(getDate()))
+            this.translist.add(t);
+    }
+
+    @Override
+    public boolean rmTransaction(TransactionInterface t) {
+        if(!getTransactions().contains(t))
+            return false;
+        this.translist.remove(t);
+        return true;
     }
 
     @Override
     public boolean isComplete() {
-        return false;
+        return this.translist.isEmpty();
     }
 }

@@ -40,6 +40,7 @@ public class Ledge implements LedgeInterface{
 
     @Override
     public void addTransaction(TransactionInterface t) {
+        //todo update per scheduled se data > oggi
         if(t.getMovements().isEmpty())
             throw new NullPointerException("transazione senza movimenti");
         if(!getTransactions().contains(t)) {
@@ -50,32 +51,13 @@ public class Ledge implements LedgeInterface{
         }
     }
 
-    @Override
-    public void addTag(TagInterface c) {
-        if(!getTags().contains(c))
-            this.taglist.add(c);
-    }
-
-    @Override
-    public void addAccount(AccountInterface a) {
-        if(!getAccounts().contains(a))
-            this.accountlist.add(a);
-        //todo forse serve un throw ? o semplicemente non lo aggiungo ?
-        //magari controllo dalla view se i nomi non sono uguali, in quel caso risponde subito
-        //senza passare per il controller e model
-    }
-
-    @Override
-    public void addScheduledTransaction(ScheduledInterface st) {
-        //TODO
-    }
-
     /*
     TODO vedi se è corretto
     per ogni movimento, se stesso chiama l'account collegato e si rimuove
     poi cancello la transazione */
     @Override
     public boolean rmTransaction(TransactionInterface t) {
+        //todo update per scheduled
         if(getTransactions().contains(t)){
             if (!t.getMovements().isEmpty()) {
                 for (MovementInterface mov : t.getMovements()) {
@@ -89,7 +71,14 @@ public class Ledge implements LedgeInterface{
     }
 
     @Override
+    public void addTag(TagInterface c) {
+        if(!getTags().contains(c))
+            this.taglist.add(c);
+    }
+
+    @Override
     public boolean rmTag(TagInterface t) {
+        //todo update per scheduled
         if(getTags().contains(t)){
             for(TransactionInterface tra : getTransactions()){
                 tra.rmTag(t);
@@ -101,22 +90,40 @@ public class Ledge implements LedgeInterface{
     }
 
     @Override
+    public void addAccount(AccountInterface a) {
+        if(!getAccounts().contains(a))
+            this.accountlist.add(a);
+        //todo forse serve un throw ? o semplicemente non lo aggiungo ?
+        //magari controllo dalla view se i nomi non sono uguali, in quel caso risponde subito
+        //senza passare per il controller e model
+    }
+    @Override
     public boolean rmAccount(AccountInterface a) {
         //TODO non sono sicuro che funzioni al 100%
+        //todo update per scheduled
         if (getAccounts().contains(a)) {
             if(getTransactions().isEmpty()) {
                 this.accountlist.remove(a);
                 return true;
             }
-            boolean alo = false;
             for (TransactionInterface tra : getTransactions()) {
-                alo = tra.rmMovement(x -> x.getAccount().equals(a));
+                tra.rmMovement(x -> x.getAccount().equals(a));
                 if(tra.getMovements().isEmpty())
                     rmTransaction(tra);
             }
-            return alo;
+            return true;
         }
         return false;
+    }
+
+    //se la data di oggi e' > di scheduled.getdate allora inserisco le transazioni e la cancello
+    @Override
+    public void checkScheduled(){
+
+    }
+    @Override
+    public void addScheduledTransaction(ScheduledInterface st) {
+        //TODO
     }
 
     @Override

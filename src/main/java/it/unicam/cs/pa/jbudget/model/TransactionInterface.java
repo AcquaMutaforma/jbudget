@@ -13,6 +13,7 @@ public interface TransactionInterface {
     List<MovementInterface> getMovements();
     List<MovementInterface> getMovements(Predicate<MovementInterface> p);
 
+
     //setters
     void setId(int id);
     void setTags(List<TagInterface> l);
@@ -25,5 +26,6 @@ public interface TransactionInterface {
     void addMovement(MovementInterface m);
     boolean rmMovement(MovementInterface m);
     boolean rmMovement(Predicate<MovementInterface> p);
+
 
 }

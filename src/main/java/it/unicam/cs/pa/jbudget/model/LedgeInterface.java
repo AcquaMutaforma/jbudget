@@ -13,13 +13,13 @@ public interface LedgeInterface {
     List<ScheduledInterface> getScheduledTransactions();
 
     void addTransaction(TransactionInterface t);
-    void addTag(TagInterface c);
-    void addAccount(AccountInterface a);
-    void addScheduledTransaction(ScheduledInterface st);
-
     boolean rmTransaction(TransactionInterface t);
+    void addTag(TagInterface c);
     boolean rmTag(TagInterface c);
+    void addAccount(AccountInterface a);
     boolean rmAccount(AccountInterface a);
+    void addScheduledTransaction(ScheduledInterface st);
     boolean rmScheduledTransaction(ScheduledInterface st);
+    void checkScheduled();
 
 }

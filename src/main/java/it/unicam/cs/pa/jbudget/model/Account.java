@@ -73,7 +73,6 @@ public class Account implements AccountInterface{
      * @param m movimento da rimuovere dall'account
      * @return false se non e' presente il movimento , true se e' presente
      */
-
     @Override
     public boolean rmMovement(MovementInterface m) {
         if(!getMovements().contains(m))
