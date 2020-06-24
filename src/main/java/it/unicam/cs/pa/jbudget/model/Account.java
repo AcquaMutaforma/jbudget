@@ -4,24 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Account implements AccountInterface{
 
-    private int id;
+    private final int id;
     private double balance;
     private double openingbalance;
     private String name;
     private String description;
     private List<MovementInterface> movlist;
-    private AccountType type;
+    private final AccountType type;
 
     public Account(int id,double ob,String n, String desc,AccountType at){
         this.id = id;
         setOpeningBalance(ob);
         setName(n);
         setDescription(desc);
-        setType(at);
-        this.movlist = new ArrayList<MovementInterface>();
+        this.type = at;
+        this.movlist = new ArrayList<>();
     }
 
     @Override
@@ -54,25 +55,27 @@ public class Account implements AccountInterface{
     @Override
     public void setDescription(String d) {this.description = d;    }
 
-    @Override
-    public void setType(AccountType at) {this.type = at;}
-
+    /**
+     * questo metodo aggiunge un movimento all'account ne modifica il bilancio tramite editBalance
+     * @param m movimento che andremo ad inserire
+     */
     @Override
     public void addMovement(MovementInterface m) {
-        //TODO
-        //inserisco il movimento e incremento il balance del valore del movimento
-        //in base al tipo di account, se è ASSET sommo altrimenti sottraggo
         if(!getMovements().contains(m)) {
             this.movlist.add(m);
             this.editBalance(m,true);
         }
     }
 
+    /**
+     * questo metodo verifica la presenza del movimento, se presente verra' rimosso e il bilancio
+     * verra' aggiornato tramite editBalance()
+     * @param m movimento da rimuovere dall'account
+     * @return false se non e' presente il movimento , true se e' presente
+     */
+
     @Override
     public boolean rmMovement(MovementInterface m) {
-        //se non è presente il movimento ritorno false
-        //idem se c'è qualche errore nell'esecuzione
-        //poi lo rimuovo e scalo dal balance il valore del movimento
         if(!getMovements().contains(m))
             return false;
         getMovements().remove(m);
@@ -80,11 +83,16 @@ public class Account implements AccountInterface{
         return true;
     }
 
-    public List<Movement> getMovements(Predicate<Movement> p){
-        //TODO
-        return null;
+    @Override
+    public List<MovementInterface> getMovements(Predicate<MovementInterface> p){
+        return getMovements().stream().filter(p).collect(Collectors.toList());
     }
 
+    /**
+     * metodo per la modifica del bilancio invocato da addMovement e rmMovement
+     * @param m movimento legato all'azione di add o remove
+     * @param aor AddOrRemove, true se sto aggiungendo il movimento, false se lo sto eliminando
+     */
     private void editBalance(MovementInterface m,boolean aor){
         if(((getType() == AccountType.ASSET)&&(m.getType() == MovementType.CREDIT) && aor) ||
                 (getType() == AccountType.LIABILITIES)&&(m.getType() == MovementType.DEBIT)&&aor){

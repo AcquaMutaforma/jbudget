@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Transaction implements TransactionInterface {
 
@@ -45,6 +46,12 @@ public class Transaction implements TransactionInterface {
 
     @Override
     public double getTotalAmount() {return this.balance;}
+
+    @Override
+    public List<MovementInterface> getMovements(Predicate<MovementInterface> p){
+        //TODO vedi se funziona va
+        return getMovements().stream().filter(p).collect(Collectors.toList());
+    }
 
     @Override
     public void addTag(TagInterface c) {
@@ -92,7 +99,7 @@ public class Transaction implements TransactionInterface {
     public boolean rmMovement(MovementInterface m) {
         if(getMovements().contains(m)){
             this.movList.remove(m);
-            this.tagList = new ArrayList<TagInterface>();
+            this.tagList = new ArrayList<>();
             for(MovementInterface mi : getMovements()){
                 addTag(mi.getTags());
             }
@@ -105,17 +112,14 @@ public class Transaction implements TransactionInterface {
 
     @Override
     public boolean rmMovement(Predicate<MovementInterface> p){
-        //TODO forse il try-catch è un po forzato, pensaci meglio
         boolean alo = false;
-        try{
+        if(!getMovements().isEmpty()){
             for(MovementInterface mov : getMovements()){
                 if(p.test(mov)) {
                     rmMovement(mov);
                     alo = true;
                 }
             }
-        }catch (Exception e) {
-            //TODO
         }
         return alo;
     }
