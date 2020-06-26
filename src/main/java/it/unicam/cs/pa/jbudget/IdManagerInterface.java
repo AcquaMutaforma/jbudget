@@ -1,4 +1,4 @@
-package it.unicam.cs.pa.jbudget.controller;
+package it.unicam.cs.pa.jbudget;
 
 public interface IdManagerInterface {
 

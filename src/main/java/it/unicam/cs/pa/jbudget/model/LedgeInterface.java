@@ -10,7 +10,8 @@ public interface LedgeInterface {
     List<TransactionInterface> getTransactions(Predicate<TransactionInterface> p);
     List<TagInterface> getTags();
     List<AccountInterface> getAccounts();
-    List<ScheduledInterface> getScheduledTransactions();
+    List<ScheduledInterface> getScheduled();
+    List<ScheduledInterface> getScheduled(Predicate<ScheduledInterface> p);
 
     void addTransaction(TransactionInterface t);
     boolean rmTransaction(TransactionInterface t);
@@ -18,8 +19,8 @@ public interface LedgeInterface {
     boolean rmTag(TagInterface c);
     void addAccount(AccountInterface a);
     boolean rmAccount(AccountInterface a);
-    void addScheduledTransaction(ScheduledInterface st);
-    boolean rmScheduledTransaction(ScheduledInterface st);
+    void addScheduled(ScheduledInterface st);
+    boolean rmScheduled(ScheduledInterface st);
     void checkScheduled();
 
 }

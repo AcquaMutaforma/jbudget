@@ -1,6 +1,6 @@
-package it.unicam.cs.pa.jbudget.controller;
+package it.unicam.cs.pa.jbudget;
 
-public class IDManager implements IdManagerInterface{
+public class IDManager implements IdManagerInterface {
 
     private int idmovement;
     private int idtransaction;

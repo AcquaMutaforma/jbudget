@@ -1,5 +1,6 @@
 package it.unicam.cs.pa.jbudget.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -25,7 +26,6 @@ public class Ledge implements LedgeInterface{
 
     @Override
     public List<TransactionInterface> getTransactions(Predicate<TransactionInterface> p) {
-        //TODO vedi se funziona va..
         return getTransactions().stream().filter(p).collect(Collectors.toList());
     }
 
@@ -36,25 +36,30 @@ public class Ledge implements LedgeInterface{
     public List<AccountInterface> getAccounts() {return this.accountlist; }
 
     @Override
-    public List<ScheduledInterface> getScheduledTransactions() {return this.scheduledlist; }
+    public List<ScheduledInterface> getScheduled() {return this.scheduledlist; }
+
+    @Override
+    public List<ScheduledInterface> getScheduled(Predicate<ScheduledInterface> p) {
+        return getScheduled().stream().filter(p).collect(Collectors.toList());
+    }
 
     @Override
     public void addTransaction(TransactionInterface t) {
-        //todo update per scheduled se data > oggi
+        //todo update per scheduled, check if it really works
         if(t.getMovements().isEmpty())
-            throw new NullPointerException("transazione senza movimenti");
+            throw new NullPointerException("transazione senza movimenti"); //todo logger ?
         if(!getTransactions().contains(t)) {
-            this.translist.add(t);
-            for(MovementInterface m : t.getMovements()){
-                m.getAccount().addMovement(m);
+            if(t.getDate().isAfter(LocalDate.now())){
+                addTransactionToScheduled(t);
+            }else {
+                this.translist.add(t);
+                for (MovementInterface m : t.getMovements()) {
+                    m.getAccount().addMovement(m);
+                }
             }
         }
     }
 
-    /*
-    TODO vedi se è corretto
-    per ogni movimento, se stesso chiama l'account collegato e si rimuove
-    poi cancello la transazione */
     @Override
     public boolean rmTransaction(TransactionInterface t) {
         //todo update per scheduled
@@ -122,15 +127,32 @@ public class Ledge implements LedgeInterface{
 
     }
     @Override
-    public void addScheduledTransaction(ScheduledInterface st) {
-        //TODO
+    public void addScheduled(ScheduledInterface st) {
+        if(!getScheduled().contains(st))
+            getScheduled().add(st);
     }
 
     @Override
-    public boolean rmScheduledTransaction(ScheduledInterface st) {
-        //TODO
+    public boolean rmScheduled(ScheduledInterface st) {
+        if(getScheduled().contains(st)) {
+            getScheduled().remove(st);
+            return true;
+        }
         return false;
     }
 
+    private void addTransactionToScheduled(TransactionInterface t){
+        /*TODO ho fatto un casino con le responsabilità, chi si deve occupare di inserire
+           le transazioni dentro le scheduled ? e chi deve aggiungere nuovi scheduled ?
+           l'utente crea lo scheduled o lo crea il sistema ?*/
+        List<ScheduledInterface> l = getScheduled(x -> x.getDate() == t.getDate());
+        if(!l.isEmpty()) {
+            l.get(1).addTransaction(t);
+        }else{
+            ScheduledInterface s = new Scheduled(t.getDate());
+            s.addTransaction(t);
+            addScheduled(s);
+        }
+    }
 
 }
