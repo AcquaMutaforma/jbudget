@@ -3,6 +3,7 @@ package it.unicam.cs.pa.jbudget.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Scheduled implements ScheduledInterface{
 
@@ -35,6 +36,20 @@ public class Scheduled implements ScheduledInterface{
             return false;
         this.translist.remove(t);
         return true;
+    }
+
+    @Override
+    public boolean rmTransaction(Predicate<TransactionInterface> p) {
+        if(isComplete())
+            return false;
+        boolean alo = false;
+        for(TransactionInterface tra : getTransactions()){
+            if(p.test(tra)){
+                rmTransaction(tra);
+                alo = true;
+            }
+        }
+        return alo;
     }
 
     @Override

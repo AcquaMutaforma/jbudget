@@ -62,7 +62,7 @@ public class Ledge implements LedgeInterface{
 
     @Override
     public boolean rmTransaction(TransactionInterface t) {
-        //todo update per scheduled
+        //todo update per scheduled, check if it works & check if u can cut lines here
         if(getTransactions().contains(t)){
             if (!t.getMovements().isEmpty()) {
                 for (MovementInterface mov : t.getMovements()) {
@@ -71,8 +71,14 @@ public class Ledge implements LedgeInterface{
             }
             this.translist.remove(t);
             return true;
-        }else
-            return false;
+        }
+        if(!getScheduled().isEmpty()){
+            for(ScheduledInterface sched : getScheduled()){
+                sched.rmTransaction(t);
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -83,10 +89,17 @@ public class Ledge implements LedgeInterface{
 
     @Override
     public boolean rmTag(TagInterface t) {
-        //todo update per scheduled
+        //todo update per scheduled, check if it works & if u can cut lines
         if(getTags().contains(t)){
             for(TransactionInterface tra : getTransactions()){
                 tra.rmTag(t);
+            }
+            if(!getScheduled().isEmpty()){
+                for(ScheduledInterface sched : getScheduled()){
+                    for(TransactionInterface tra : sched.getTransactions()){
+                        tra.rmTag(t);
+                    }
+                }
             }
             this.taglist.remove(t);
             return true;
@@ -104,17 +117,19 @@ public class Ledge implements LedgeInterface{
     }
     @Override
     public boolean rmAccount(AccountInterface a) {
-        //TODO non sono sicuro che funzioni al 100%
-        //todo update per scheduled
+        //todo update per scheduled,check for errors
         if (getAccounts().contains(a)) {
-            if(getTransactions().isEmpty()) {
-                this.accountlist.remove(a);
+            this.accountlist.remove(a);
+            if(getTransactions().isEmpty() && getScheduled().isEmpty()) {
                 return true;
             }
             for (TransactionInterface tra : getTransactions()) {
                 tra.rmMovement(x -> x.getAccount().equals(a));
                 if(tra.getMovements().isEmpty())
                     rmTransaction(tra);
+            }
+            for(ScheduledInterface sched : getScheduled()){
+                sched.rmTransaction(x->x.rmMovement(y->y.getAccount().equals(a)));
             }
             return true;
         }
@@ -124,8 +139,18 @@ public class Ledge implements LedgeInterface{
     //se la data di oggi e' > di scheduled.getdate allora inserisco le transazioni e la cancello
     @Override
     public void checkScheduled(){
-
+        if(getScheduled().isEmpty())
+            return;
+        for(ScheduledInterface s : getScheduled(x -> x.getDate().isBefore(LocalDate.now().plusDays(1)))){
+            for(TransactionInterface t : s.getTransactions()){
+                addTransaction(t);
+                s.rmTransaction(t);
+                if(s.isComplete())
+                    rmScheduled(s);
+            }
+        }
     }
+
     @Override
     public void addScheduled(ScheduledInterface st) {
         if(!getScheduled().contains(st))
@@ -142,12 +167,9 @@ public class Ledge implements LedgeInterface{
     }
 
     private void addTransactionToScheduled(TransactionInterface t){
-        /*TODO ho fatto un casino con le responsabilità, chi si deve occupare di inserire
-           le transazioni dentro le scheduled ? e chi deve aggiungere nuovi scheduled ?
-           l'utente crea lo scheduled o lo crea il sistema ?*/
         List<ScheduledInterface> l = getScheduled(x -> x.getDate() == t.getDate());
         if(!l.isEmpty()) {
-            l.get(1).addTransaction(t);
+            l.get(0).addTransaction(t);
         }else{
             ScheduledInterface s = new Scheduled(t.getDate());
             s.addTransaction(t);

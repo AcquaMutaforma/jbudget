@@ -2,6 +2,7 @@ package it.unicam.cs.pa.jbudget.model;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.function.Predicate;
 
 public interface ScheduledInterface {
     
@@ -15,5 +16,6 @@ public interface ScheduledInterface {
     //generic methods
     void addTransaction(TransactionInterface t);
     boolean rmTransaction(TransactionInterface t);
+    boolean rmTransaction(Predicate<TransactionInterface> p);
     boolean isComplete();
 }
