@@ -9,6 +9,8 @@ public interface ViewInterface {
     void printGoodbye();
     void printCommands();
 
+    String getCommand();
+
     //input
 
     //generic methods

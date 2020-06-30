@@ -33,13 +33,11 @@ public class Tag implements TagInterface {
         if (this == o) return true;
         if (!(o instanceof Tag)) return false;
         Tag tag = (Tag) o;
-        return getId() == tag.getId() &&
-                getName().equals(tag.getName());
+        return getId() == tag.getId();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName());
+        return Objects.hash(getId());
     }
-
 }
