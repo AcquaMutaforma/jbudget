@@ -25,4 +25,5 @@ public interface LedgeInterface {
     void checkScheduled();
 
     List<TransactionInterface> getScheduledTransactions();
+    devi aggiungere i get(int id) sennò la view come fa a prendere gli oggetti per cancellarli ?
 }

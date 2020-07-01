@@ -10,34 +10,28 @@ public class IDManager implements IdManagerInterface {
     private int idaccount;
     private int idbudget;
     private int idtag;
+    private int idreport;
 
     public IDManager() {
-        setIdmovimenti(0);
-        setIdtransaction(0);
-        setIdaccount(0);
-        setIdbudget(0);
-        setIdtag(0);
+        this.idmovement = 0;
+        this.idtransaction = 0;
+        this.idaccount = 0;
+        this.idbudget = 0;
+        this.idtag = 0;
+        this.idreport = 0;
     }
 
     public int getIdmovement() {     return idmovement;    }
 
-    public void setIdmovimenti(int idmovimenti) {    this.idmovement = idmovimenti;    }
-
     public int getIdtransaction() {    return idtransaction;    }
-
-    public void setIdtransaction(int idtransaction) {   this.idtransaction = idtransaction; }
 
     public int getIdaccount() { return idaccount; }
 
-    public void setIdaccount(int idaccount) { this.idaccount = idaccount; }
-
     public int getIdbudget() { return idbudget; }
-
-    public void setIdbudget(int idbudget) { this.idbudget = idbudget; }
 
     public int getIdtag() { return idtag; }
 
-    public void setIdtag(int idtag) { this.idtag = idtag; }
+    public int getIdreport(){ return idreport; }
 
     @Override
     public int generateIdOf(String s) {
@@ -47,6 +41,7 @@ public class IDManager implements IdManagerInterface {
             case "account":  this.idaccount++; return getIdaccount();
             case "budget":  this.idbudget++; return getIdbudget();
             case "tag":  this.idtag++; return getIdtag();
+            case "report": this.idreport++; return getIdreport();
             default: return -1;
         }
     }

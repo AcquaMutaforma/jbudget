@@ -49,6 +49,8 @@ public class BudgetManager implements BManagerInterface {
 
     @Override
     public void generateReport(int id,BudgetInterface b, LedgeInterface l) {
+        /*per future implementazioni lo lasciamo cosi',
+        senno' avrebbe potuto avere lo stesso id del budget */
         BReportInterface rep = new BudgetReport(id,b,l);
         addReport(rep);
     }
