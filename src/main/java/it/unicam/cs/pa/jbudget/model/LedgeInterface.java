@@ -1,5 +1,6 @@
 package it.unicam.cs.pa.jbudget.model;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -23,4 +24,5 @@ public interface LedgeInterface {
     boolean rmScheduled(ScheduledInterface st);
     void checkScheduled();
 
+    List<TransactionInterface> getScheduledTransactions();
 }

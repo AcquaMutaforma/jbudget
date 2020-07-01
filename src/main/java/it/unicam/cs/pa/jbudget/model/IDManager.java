@@ -1,6 +1,9 @@
-package it.unicam.cs.pa.jbudget;
+package it.unicam.cs.pa.jbudget.model;
 
 public class IDManager implements IdManagerInterface {
+
+    /*TODO magari puoi togliere i set, tanto saver carica un altro oggetto, e i getters sono usati
+       solamente da generateIDof() */
 
     private int idmovement;
     private int idtransaction;

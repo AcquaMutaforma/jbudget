@@ -5,13 +5,22 @@ import it.unicam.cs.pa.jbudget.saver.*;
 import it.unicam.cs.pa.jbudget.view.*;
 import it.unicam.cs.pa.jbudget.budget.*;
 
-import javax.swing.text.View;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 public class App{
+    aaa
+    era una prova, vedi di capire dove hai sbagliato e fixa !! susu manca poco alla consegna
+
+    /*
+    Conclusioni del pomeriggio del cazzo:
+    View si deve occupare dei comandi diretti, ma in questo modo il controller non puo' lanciare questi comandi
+    a tutti i pezzi del model come idmanager o budgetmanager... forse questo puo fare da controller e un altro main
+    in un altra classe si occupa di lanciare i comandi tra lui e view, quindi questo e' il controller dei vari model(?)
+    non lo so, qui sopra abbiamo fatto delle prove con il consumer, ma view e app sono troppo legati A(B) e B(A)
+    forse c'e' un altra soluzione, pensaci meglio, tvb <3 byeee
+     */
 
     private final LedgeInterface ledge;
     private final ViewInterface view;
@@ -50,12 +59,5 @@ public class App{
         commands.put("hi", s -> s.view.printHello());
         commands.put("help",s-> s.view.printGoodbye());
     }
-    /*
-    Conclusioni del pomeriggio del cazzo:
-    View si deve occupare dei comandi diretti, ma in questo modo il controller non puo' lanciare questi comandi
-    a tutti i pezzi del model come idmanager o budgetmanager... forse questo puo fare da controller e un altro main
-    in un altra classe si occupa di lanciare i comandi tra lui e view, quindi questo e' il controller dei vari model(?)
-    non lo so, qui sopra abbiamo fatto delle prove con il consumer, ma view e app sono troppo legati A(B) e B(A)
-    forse c'e' un altra soluzione, pensaci meglio, tvb <3 byeee
-     */
+
 }
