@@ -18,4 +18,7 @@ public interface BManagerInterface {
     void generateReport(int id,BudgetInterface b, LedgeInterface l);
     //todo add e remove transaction ? forse un metodo con boolean o 2 metodi
     void aorTransaction(TransactionInterface tra,boolean aor);
+
+    BReportInterface getReport(int id);
+
 }

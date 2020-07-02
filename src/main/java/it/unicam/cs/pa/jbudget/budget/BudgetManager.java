@@ -66,5 +66,17 @@ public class BudgetManager implements BManagerInterface {
                 rep.rmTransaction(tra);
             }
         }
+        for(BReportInterface rep: getReports()){
+
+        }
+    }
+
+    @Override
+    public BReportInterface getReport(int id) {
+        for(BReportInterface rep : getReports()){
+            if(rep.getId() == id)
+                return rep;
+        }
+        return null;
     }
 }

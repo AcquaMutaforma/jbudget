@@ -24,6 +24,12 @@ public interface LedgeInterface {
     boolean rmScheduled(ScheduledInterface st);
     void checkScheduled();
 
+    boolean rmMovement(MovementInterface m);
+
     List<TransactionInterface> getScheduledTransactions();
-    devi aggiungere i get(int id) sennò la view come fa a prendere gli oggetti per cancellarli ?
+
+    AccountInterface getAccount(int id);
+    TransactionInterface getTransaction(int id);
+    TagInterface getTag(int id);
+    MovementInterface getMovement(int id);
 }

@@ -152,6 +152,27 @@ public class Ledge implements LedgeInterface{
     }
 
     @Override
+    public boolean rmMovement(MovementInterface m) {
+        for(TransactionInterface tra: getTransactions()){
+            if(tra.getMovements().contains(m)) {
+                tra.rmMovement(m);
+                m.getAccount().rmMovement(m);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public List<TransactionInterface> getScheduledTransactions() {
+        List<TransactionInterface> list = new ArrayList<>();
+        for(ScheduledInterface sched : getScheduled()){
+            list.addAll(sched.getTransactions());
+        }
+        return list;
+    }
+
+    @Override
     public void addScheduled(ScheduledInterface st) {
         if(!getScheduled().contains(st))
             getScheduled().add(st);
@@ -164,6 +185,44 @@ public class Ledge implements LedgeInterface{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public AccountInterface getAccount(int id) {
+        for(AccountInterface a: getAccounts()){
+            if(a.getId() == id)
+                return a;
+        }
+        return null;
+    }
+
+    @Override
+    public TransactionInterface getTransaction(int id) {
+        for(TransactionInterface t: getTransactions()){
+            if(t.getId() == id)
+                return t;
+        }
+        return null;
+    }
+
+    @Override
+    public TagInterface getTag(int id) {
+        for(TagInterface t: getTags()){
+            if(t.getId() == id)
+                return t;
+        }
+        return null;
+    }
+
+    @Override
+    public MovementInterface getMovement(int id) {
+        MovementInterface m = null;
+        for(AccountInterface a: getAccounts()){
+            m = a.getMovement(id);
+            if(m != null)
+                break;
+        }
+        return m;
     }
 
     private void addTransactionToScheduled(TransactionInterface t){

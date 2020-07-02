@@ -87,6 +87,15 @@ public class Account implements AccountInterface{
         return getMovements().stream().filter(p).collect(Collectors.toList());
     }
 
+    @Override
+    public MovementInterface getMovement(int id) {
+        for(MovementInterface mov : getMovements()){
+            if(mov.getId() == id)
+                return mov;
+        }
+        return null;
+    }
+
     /**
      * metodo per la modifica del bilancio invocato da addMovement e rmMovement
      * @param m movimento legato all'azione di add o remove

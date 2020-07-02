@@ -4,6 +4,7 @@ import it.unicam.cs.pa.jbudget.Controller;
 import it.unicam.cs.pa.jbudget.model.Account;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.function.Consumer;
 
 public class ViewCli implements ViewInterface/*,PrintAccInterface,PrintBReportInterface,PrintMovInterface,
@@ -22,11 +23,17 @@ public class ViewCli implements ViewInterface/*,PrintAccInterface,PrintBReportIn
     private PrintTagInterface printTag;
     private PrintTransInterface printTransaction;
 
+    /* TODO la mappa con i comandi riguarda la view, perche' e' lei che dovra' chiamare ogni printer per fargli fare la sua
+        azione, per poi inviare al controller i vari cambiamenti */
+    private HashMap<String,Consumer<ViewInterface>> commands;
 
-    public ViewCli(){
+
+    public ViewCli(Controller controller){
         this.input = new BufferedReader( new InputStreamReader(System.in));
         this.output = new BufferedWriter(new OutputStreamWriter(System.out));
         //TODO err scrive insieme ad output oppure su log ?
+
+        this.printAccount = new PrintAccount(controller);
 
     }
 
@@ -76,6 +83,7 @@ public class ViewCli implements ViewInterface/*,PrintAccInterface,PrintBReportIn
 
     public void commandsHandler(String command){
         Consumer<ViewInterface> consumer = this.commands.get(command);
+        consumer.accept(this);
     }
 
     private String returnLine() throws IOException {
@@ -86,9 +94,6 @@ public class ViewCli implements ViewInterface/*,PrintAccInterface,PrintBReportIn
     public void addAccount(Controller controller){
         controller.addAccount(this.printAccount.addAccount());
         //lui avra la stampa a video, con gestione di input
-
-        //TODO forse con l'id si fa prima, magari nel controller dopo aver fatto il get fai remove(getAccount(int id)))
-        controller.rmAccount(this.printAccount.rmAccount(controller.getSingleAccount(int id)));
     }
 
 }

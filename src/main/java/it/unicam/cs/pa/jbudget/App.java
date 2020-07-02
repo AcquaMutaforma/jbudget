@@ -9,6 +9,9 @@ import it.unicam.cs.pa.jbudget.view.ViewCli;
 import it.unicam.cs.pa.jbudget.view.ViewInterface;
 
 public class App {
+    /*TODO il main crea i comandi<Controller> x-> x.addTransaction(t) che vengono chiamati da view,
+       perche ricevo da input un comando e in base al comando il main chiama controller o view
+       mica posso usare lo switch >_<  */
 
     private Controller controller;
     private ViewInterface view;

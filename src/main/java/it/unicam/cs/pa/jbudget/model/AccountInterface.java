@@ -23,4 +23,5 @@ public interface AccountInterface {
     void addMovement(MovementInterface m);
     boolean rmMovement(MovementInterface m);
     List<MovementInterface> getMovements(Predicate<MovementInterface> p);
+    MovementInterface getMovement(int id);
 }
