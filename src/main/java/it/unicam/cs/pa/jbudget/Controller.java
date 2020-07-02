@@ -49,7 +49,7 @@ public class Controller {
     public boolean rmTag(TagInterface t){ return this.ledge.rmTag(t); }
     public void addBudget(BudgetInterface b){
         /*TODO note: la view crea il budget e fa inserire all'utente i vari tag e valori
-        *  il controller si occupa solamente di inserirlo nel manager */
+        *  il controller si occupa solamente di inserirlo nel manager e creare il suo report*/
         this.budgetManager.addBudget(b);
         this.budgetManager.generateReport(generateIDof("report"),b,this.ledge);
     }
@@ -65,6 +65,7 @@ public class Controller {
     public int generateIDof(String s){ return this.idmanager.generateIdOf(s); }
 
     //Getters
+    //TODO fa comodo anche un getSingleX() cosi la view non deve lavorare con le liste ma solo con i singoli oggetti
     public List<AccountInterface> getAccounts(){
         return this.ledge.getAccounts();
     }

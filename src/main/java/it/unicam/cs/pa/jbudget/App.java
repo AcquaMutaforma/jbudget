@@ -1,63 +1,44 @@
 package it.unicam.cs.pa.jbudget;
 
-import it.unicam.cs.pa.jbudget.model.*;
-import it.unicam.cs.pa.jbudget.saver.*;
-import it.unicam.cs.pa.jbudget.view.*;
-import it.unicam.cs.pa.jbudget.budget.*;
+import it.unicam.cs.pa.jbudget.budget.BudgetManager;
+import it.unicam.cs.pa.jbudget.model.IDManager;
+import it.unicam.cs.pa.jbudget.model.Ledge;
+import it.unicam.cs.pa.jbudget.saver.Saver;
+import it.unicam.cs.pa.jbudget.saver.SaverInterface;
+import it.unicam.cs.pa.jbudget.view.ViewCli;
+import it.unicam.cs.pa.jbudget.view.ViewInterface;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
+public class App {
 
-public class App{
-    aaa
-    era una prova, vedi di capire dove hai sbagliato e fixa !! susu manca poco alla consegna
+    private Controller controller;
+    private ViewInterface view;
+    private SaverInterface saver;
 
-    /*
-    Conclusioni del pomeriggio del cazzo:
-    View si deve occupare dei comandi diretti, ma in questo modo il controller non puo' lanciare questi comandi
-    a tutti i pezzi del model come idmanager o budgetmanager... forse questo puo fare da controller e un altro main
-    in un altra classe si occupa di lanciare i comandi tra lui e view, quindi questo e' il controller dei vari model(?)
-    non lo so, qui sopra abbiamo fatto delle prove con il consumer, ma view e app sono troppo legati A(B) e B(A)
-    forse c'e' un altra soluzione, pensaci meglio, tvb <3 byeee
-     */
-
-    private final LedgeInterface ledge;
-    private final ViewInterface view;
-    private final BManagerInterface budgetManager;
-    private final IDManager idmanager;
-    private final SaverInterface saver;
-
-    private Map<String, Consumer<App>> commands;
-
-    public App(LedgeInterface l, ViewInterface vi, SaverInterface s){
-        this.ledge = l;
-        this.view = vi;
-        this.budgetManager = new BudgetManager();
-        this.idmanager = new IDManager();
-        this.saver = s;
+    public App(ViewInterface view, SaverInterface saver) {
+        this.view = view;
+        this.saver = saver;
+        this.controller = saver.loadController();
+        if(this.controller == null)
+            this.controller = new Controller(new Ledge(),new BudgetManager(),new IDManager());
     }
 
     public static void main(String[] args) {
-        start();
+        App app = start();
+        app.viewStart();
     }
 
-    public static void start(){
-        App app = new App(new Ledge(), new ViewCli(), new Saver());
-        app.createCommands();
-        while (true) {
-            String command = app.view.getCommand();
-            Consumer<App> action = app.commands.get(command);
-            action.accept(app);
-            if(command == "bye")
-                break;
-        }
+    public static App start(){
+        ViewInterface view = new ViewCli();
+        SaverInterface save = new Saver();
+        return new App(view,save);
     }
 
-    private void createCommands(){
-        commands = new HashMap<>();
-        commands.put("hi", s -> s.view.printHello());
-        commands.put("help",s-> s.view.printGoodbye());
+    public void viewStart(){
+        //todo probabilmente non deve stare qui
+        this.view.printHello();
+        /* todo: qui la view chiede a spam il getCommand, quando ha finito qui gli dico di fare print goodbye
+        *
+        * todo: qua nella app ci saranno i comandi <string,consumer<controller>> che verranno passati alla view ?
+        *  beh almeno per fare il print poi dopo si vedra' come farglieli eseguire  */
     }
-
 }

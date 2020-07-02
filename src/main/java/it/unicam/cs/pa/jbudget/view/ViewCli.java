@@ -1,14 +1,27 @@
 package it.unicam.cs.pa.jbudget.view;
 
-import it.unicam.cs.pa.jbudget.App;
+import it.unicam.cs.pa.jbudget.Controller;
+import it.unicam.cs.pa.jbudget.model.Account;
 
 import java.io.*;
+import java.util.function.Consumer;
 
-public class ViewCli implements ViewInterface{
+public class ViewCli implements ViewInterface/*,PrintAccInterface,PrintBReportInterface,PrintMovInterface,
+        PrintSaveInterface,PrintTagInterface,PrintTransInterface*/{
+    //TODO probabilemente e' sbagliato, viene una classe immensa, forse questa fara' da view manager e potrebbe creare un oggetto per ogni tipo
+    //TODO di cosa da stampare, mmh
 
     private BufferedReader input;
     private BufferedWriter output;
     //TODO private BufferedWriter err;
+
+    private PrintAccInterface printAccount;
+    private PrintBReportInterface printReport;
+    private PrintMovInterface printMovement;
+    private PrintSaveInterface printSaver;
+    private PrintTagInterface printTag;
+    private PrintTransInterface printTransaction;
+
 
     public ViewCli(){
         this.input = new BufferedReader( new InputStreamReader(System.in));
@@ -44,6 +57,10 @@ public class ViewCli implements ViewInterface{
     }
 
     @Override
+    public void printState(Controller controller) {
+    }
+
+    @Override
     public String getCommand() {
         System.out.print("\n");
         System.out.println("comando > ");
@@ -51,10 +68,14 @@ public class ViewCli implements ViewInterface{
         try {
             toReturn = returnLine();
         } catch (IOException e) {
-            e.printStackTrace();
+            //TODO
         }finally {
             return toReturn;
         }
+    }
+
+    public void commandsHandler(String command){
+        Consumer<ViewInterface> consumer = this.commands.get(command);
     }
 
     private String returnLine() throws IOException {
@@ -62,5 +83,12 @@ public class ViewCli implements ViewInterface{
         return line;
     }
 
+    public void addAccount(Controller controller){
+        controller.addAccount(this.printAccount.addAccount());
+        //lui avra la stampa a video, con gestione di input
+
+        //TODO forse con l'id si fa prima, magari nel controller dopo aver fatto il get fai remove(getAccount(int id)))
+        controller.rmAccount(this.printAccount.rmAccount(controller.getSingleAccount(int id)));
+    }
 
 }
