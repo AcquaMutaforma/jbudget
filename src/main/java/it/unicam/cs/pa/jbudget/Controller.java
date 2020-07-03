@@ -40,8 +40,13 @@ public class Controller {
         }
     }
 
-    public void addAccount(AccountInterface a){ this.ledge.addAccount(a);  }
-    public boolean rmAccount(AccountInterface a){ return this.ledge.rmAccount(a);    }
+    public void addAccount(AccountInterface a){ if(a != null){this.ledge.addAccount(a);}  }
+    public boolean rmAccount(AccountInterface a){
+        if(a != null){
+            return this.ledge.rmAccount(a);
+        }else{
+        return false; }
+    }
 
     public void addTag(TagInterface t){ this.ledge.addTag(t); }
     public boolean rmTag(TagInterface t){ return this.ledge.rmTag(t); }

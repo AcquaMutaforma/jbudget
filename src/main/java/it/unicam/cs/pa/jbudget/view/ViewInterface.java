@@ -2,6 +2,9 @@ package it.unicam.cs.pa.jbudget.view;
 
 import it.unicam.cs.pa.jbudget.Controller;
 
+import java.io.IOException;
+import java.util.function.Consumer;
+
 public interface ViewInterface {
 
     //output generici
@@ -14,8 +17,8 @@ public interface ViewInterface {
 
     String getCommand();
 
-    //input
+    void addAccount(Controller controller);
+    void rmAccount(Controller controller);
 
-    //generic methods
 
 }

@@ -8,5 +8,7 @@ public interface SaverInterface {
 
     Controller loadController();
 
-    void saveControllerInLocal();
+    void saveControllerInLocal(String s);
+
+    boolean checkSave();
 }

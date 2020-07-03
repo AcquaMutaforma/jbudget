@@ -1,16 +1,12 @@
 package it.unicam.cs.pa.jbudget.view;
 
 import it.unicam.cs.pa.jbudget.Controller;
-import it.unicam.cs.pa.jbudget.model.Account;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.function.Consumer;
 
-public class ViewCli implements ViewInterface/*,PrintAccInterface,PrintBReportInterface,PrintMovInterface,
-        PrintSaveInterface,PrintTagInterface,PrintTransInterface*/{
-    //TODO probabilemente e' sbagliato, viene una classe immensa, forse questa fara' da view manager e potrebbe creare un oggetto per ogni tipo
-    //TODO di cosa da stampare, mmh
+public class ViewCli implements ViewInterface{
 
     private BufferedReader input;
     private BufferedWriter output;
@@ -33,7 +29,7 @@ public class ViewCli implements ViewInterface/*,PrintAccInterface,PrintBReportIn
         this.output = new BufferedWriter(new OutputStreamWriter(System.out));
         //TODO err scrive insieme ad output oppure su log ?
 
-        this.printAccount = new PrintAccount(controller);
+        this.printAccount = new PrintAccount();
 
     }
 
@@ -81,19 +77,12 @@ public class ViewCli implements ViewInterface/*,PrintAccInterface,PrintBReportIn
         }
     }
 
-    public void commandsHandler(String command){
-        Consumer<ViewInterface> consumer = this.commands.get(command);
-        consumer.accept(this);
-    }
-
     private String returnLine() throws IOException {
         String line = input.readLine();
         return line;
     }
-
-    public void addAccount(Controller controller){
-        controller.addAccount(this.printAccount.addAccount());
-        //lui avra la stampa a video, con gestione di input
-    }
-
+    @Override
+    public void addAccount(Controller controller){ controller.addAccount(this.printAccount.addAccount(controller)); }
+    @Override
+    public void rmAccount(Controller controller){ controller.rmAccount(this.printAccount.rmAccount(controller));  }
 }
