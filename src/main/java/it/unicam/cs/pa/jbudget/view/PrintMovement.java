@@ -13,10 +13,12 @@ public class PrintMovement extends Printer implements PrintMovInterface{
     @Override
     public MovementInterface addMovement(Controller controller) {
         //TODO
+        return null;
     }
 
     @Override
     public MovementInterface rmMovement(Controller controller) {
         //TODO
+        return null;
     }
 }

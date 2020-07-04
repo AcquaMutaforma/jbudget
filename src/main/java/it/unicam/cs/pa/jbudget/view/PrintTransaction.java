@@ -24,10 +24,12 @@ public class PrintTransaction extends Printer implements PrintTransInterface{
     @Override
     public TransactionInterface addTransaction(Controller controller) {
        //TODO
+        return null;
     }
 
     @Override
     public TransactionInterface rmTransaction(Controller controller) {
        //TODO
+        return null;
     }
 }

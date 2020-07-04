@@ -71,6 +71,7 @@ public class App {
         */
         commands.put("save", x -> x.printSave());
         commands.put("load", x-> x.printLoad());
+
         commands.put("exit", x -> x.printGoodbye());
         this.commands = commands;
     }

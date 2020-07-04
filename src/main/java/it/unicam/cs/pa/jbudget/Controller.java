@@ -85,5 +85,5 @@ public class Controller {
     public List<MovementInterface> getMovementsOf(AccountInterface a){ return a.getMovements(); }
 
     //TODO EDIT section (budget.set account.setname tag.setname etc..
-
+    //TODO NOTA !! brutto scemo hai i get, dalla view bastera' fare controller.getaccount.set(blabla)
 }

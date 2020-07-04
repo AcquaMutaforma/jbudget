@@ -1,8 +1,10 @@
 package it.unicam.cs.pa.jbudget.view;
 
 import it.unicam.cs.pa.jbudget.Controller;
+import it.unicam.cs.pa.jbudget.model.AccountInterface;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.TreeSet;
 import java.util.function.Consumer;
@@ -58,7 +60,9 @@ public class ViewCli implements ViewInterface{
 
     @Override
     public void printCommands(TreeSet set){
-//TODO
+        TreeSet<String> words = new TreeSet<>(commands.keySet());
+        String[] wordsArray = words.toArray(new String[] {});
+        System.out.println("Commands: "+ Arrays.toString(wordsArray));
     }
 
     @Override
@@ -86,13 +90,26 @@ public class ViewCli implements ViewInterface{
         return line;
     }
     @Override
-    public void addAccount(){ controller.addAccount(this.printAccount.addAccount(controller)); }
+    public void addAccount(){
+        AccountInterface a = this.printAccount.addAccount(controller);
+        if(a!= null)
+            controller.addAccount(a);
+        else{
+            System.out.println("\n\nInserimento fallito :(");
+        }
+        return;
+    }
     @Override
     public void rmAccount(){ controller.rmAccount(this.printAccount.rmAccount(controller));  }
 
     @Override
     public void printSave() {
         //TODO
+    }
+
+    @Override
+    public void printLoad() {
+//TODO
     }
 
     @Override
