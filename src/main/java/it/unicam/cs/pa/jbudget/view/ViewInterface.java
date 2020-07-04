@@ -21,6 +21,7 @@ public interface ViewInterface {
     void rmAccount();
 
     void printSave();
+    void printLoad();
     void addTransaction();
     void rmTransaction();
     void addTag();

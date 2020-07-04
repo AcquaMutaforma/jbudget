@@ -1,7 +1,6 @@
 package it.unicam.cs.pa.jbudget;
 
 import it.unicam.cs.pa.jbudget.budget.BudgetManager;
-import it.unicam.cs.pa.jbudget.model.IDManager;
 import it.unicam.cs.pa.jbudget.model.Ledge;
 import it.unicam.cs.pa.jbudget.saver.Saver;
 import it.unicam.cs.pa.jbudget.saver.SaverInterface;
@@ -71,6 +70,7 @@ public class App {
         commands.put("editBudget")
         */
         commands.put("save", x -> x.printSave());
+        commands.put("load", x-> x.printLoad());
         commands.put("exit", x -> x.printGoodbye());
         this.commands = commands;
     }

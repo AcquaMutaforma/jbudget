@@ -1,4 +1,4 @@
-package it.unicam.cs.pa.jbudget.model;
+package it.unicam.cs.pa.jbudget;
 
 public class IDManager implements IdManagerInterface {
 

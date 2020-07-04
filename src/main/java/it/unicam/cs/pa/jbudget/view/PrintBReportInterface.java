@@ -8,6 +8,6 @@ public interface PrintBReportInterface {
 
     void printReport(BReportInterface report);
     BudgetInterface addBudget(Controller controller);
-    BudgetInterface rmBudget(Controller controller);
+    BReportInterface rmBudget(Controller controller);
 
 }

@@ -11,7 +11,7 @@ public class Saver implements SaverInterface{
     }
 
     @Override
-    public void saveControllerInLocal(String s,Controller controller) {
+    public void saveController(String s, Controller controller) {
         File file = new File(s);
         file.mkdir();
 
@@ -19,6 +19,6 @@ public class Saver implements SaverInterface{
 
     @Override
     public boolean checkSave() {
-        return false;
+        return new File("/jbudget").exists();
     }
 }

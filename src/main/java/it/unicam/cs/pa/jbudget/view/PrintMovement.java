@@ -6,7 +6,8 @@ import it.unicam.cs.pa.jbudget.model.MovementInterface;
 public class PrintMovement extends Printer implements PrintMovInterface{
     @Override
     public void printMovement(MovementInterface m) {
-        //TODO
+        System.out.println("\n | Movement -- id: "+m.getId()+" motivation: "+m.getMotivation()
+        +" type: "+m.getType()+" value:"+m.getValue());
     }
 
     @Override

@@ -1,7 +1,11 @@
 package it.unicam.cs.pa.jbudget.view;
 
+import it.unicam.cs.pa.jbudget.Controller;
+import it.unicam.cs.pa.jbudget.saver.SaverInterface;
+
 public interface PrintSaveInterface {
 
-    void printSaveMethod();
-    void changeSaveMethod();
+    void save(Controller controller, SaverInterface save);
+    void load(Controller controller, SaverInterface save);
+
 }
