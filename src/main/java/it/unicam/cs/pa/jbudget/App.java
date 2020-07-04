@@ -8,10 +8,8 @@ import it.unicam.cs.pa.jbudget.saver.SaverInterface;
 import it.unicam.cs.pa.jbudget.view.ViewCli;
 import it.unicam.cs.pa.jbudget.view.ViewInterface;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.TreeSet;
 import java.util.function.Consumer;
 
 public class App {
@@ -36,7 +34,6 @@ public class App {
     public static void main(String[] args) throws UnknownCommand {
         App app = new App();
         app.createCommands();
-        app.saver.saveControllerInLocal();
 
         app.start();
     }
@@ -58,12 +55,22 @@ public class App {
 
     private void createCommands(){
         HashMap<String,Consumer<ViewInterface>> commands = new HashMap<>();
-        commands.put("hi", s -> s.printHello());
-        commands.put("help",s-> s.printCommands());
-        commands.put("addAccount", s -> s.addAccount(this.controller));
-        commands.put("rmAccount", x-> x.rmAccount(this.controller));
-
-
+        commands.put("help",s-> s.printCommands(new TreeSet(commands.keySet())));
+        commands.put("addAccount", s -> s.addAccount());
+        commands.put("rmAccount", x-> x.rmAccount());
+        commands.put("addTransaction", x-> x.addTransaction());
+        commands.put("rmTransaction", x -> x.rmTransaction());
+        commands.put("addTag", t -> t.addTag());
+        commands.put("rmTag", t -> t.rmTag());
+        commands.put("addBudget", s -> s.addBudget());
+        commands.put("rmBudget", x-> x.rmBudget());
+        /*
+        commands.put("editAccount")
+        commands.put("editTransaction")
+        commands.put("editTag")
+        commands.put("editBudget")
+        */
+        commands.put("save", x -> x.printSave());
         commands.put("exit", x -> x.printGoodbye());
         this.commands = commands;
     }

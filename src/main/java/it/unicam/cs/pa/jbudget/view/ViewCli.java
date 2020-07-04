@@ -4,6 +4,7 @@ import it.unicam.cs.pa.jbudget.Controller;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.TreeSet;
 import java.util.function.Consumer;
 
 public class ViewCli implements ViewInterface{
@@ -18,6 +19,7 @@ public class ViewCli implements ViewInterface{
     private PrintSaveInterface printSaver;
     private PrintTagInterface printTag;
     private PrintTransInterface printTransaction;
+    private Controller controller;
 
     /* TODO la mappa con i comandi riguarda la view, perche' e' lei che dovra' chiamare ogni printer per fargli fare la sua
         azione, per poi inviare al controller i vari cambiamenti */
@@ -55,16 +57,18 @@ public class ViewCli implements ViewInterface{
     }
 
     @Override
-    public void printCommands(){
-
+    public void printCommands(TreeSet set){
+//TODO
     }
 
     @Override
-    public void printState(Controller controller) {
+    public void printState() {
+        //TODO
     }
 
     @Override
     public String getCommand() {
+        //TODO prima di prendere il comando faccio printState()
         System.out.print("\n");
         System.out.println("comando > ");
         String toReturn = "";
@@ -82,7 +86,42 @@ public class ViewCli implements ViewInterface{
         return line;
     }
     @Override
-    public void addAccount(Controller controller){ controller.addAccount(this.printAccount.addAccount(controller)); }
+    public void addAccount(){ controller.addAccount(this.printAccount.addAccount(controller)); }
     @Override
-    public void rmAccount(Controller controller){ controller.rmAccount(this.printAccount.rmAccount(controller));  }
+    public void rmAccount(){ controller.rmAccount(this.printAccount.rmAccount(controller));  }
+
+    @Override
+    public void printSave() {
+        //TODO
+    }
+
+    @Override
+    public void addTransaction() {
+//TODO
+    }
+
+    @Override
+    public void rmTransaction() {
+//TODO
+    }
+
+    @Override
+    public void addTag() {
+//TODO
+    }
+
+    @Override
+    public void rmTag() {
+//TODO
+    }
+
+    @Override
+    public void addBudget() {
+//TODO
+    }
+
+    @Override
+    public void rmBudget() {
+//TODO
+    }
 }

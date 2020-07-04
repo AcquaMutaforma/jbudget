@@ -55,7 +55,7 @@ public class Controller {
         this.budgetManager.addBudget(b);
         this.budgetManager.generateReport(generateIDof("report"),b,this.ledge);
     }
-    public boolean rmReportAndBudget(BReportInterface r){
+    public boolean rmBudgetAndReport(BReportInterface r){
         if(this.budgetManager.rmReport(r)){
             this.budgetManager.rmBudget(r.getBudget());
             return true;

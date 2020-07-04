@@ -11,11 +11,9 @@ public class Saver implements SaverInterface{
     }
 
     @Override
-    public void saveControllerInLocal(String s) {
+    public void saveControllerInLocal(String s,Controller controller) {
         File file = new File(s);
         file.mkdir();
-
-        
 
     }
 

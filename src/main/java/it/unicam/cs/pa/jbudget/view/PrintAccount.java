@@ -5,21 +5,13 @@ import it.unicam.cs.pa.jbudget.model.Account;
 import it.unicam.cs.pa.jbudget.model.AccountInterface;
 import it.unicam.cs.pa.jbudget.model.AccountType;
 
-import java.io.*;
+import java.io.IOException;
 
-public class PrintAccount implements PrintAccInterface{
-
-    private BufferedReader input;
-    private BufferedWriter output;
-
-    public PrintAccount() {
-        this.input = new BufferedReader( new InputStreamReader(System.in));
-    }
+public class PrintAccount extends Printer implements PrintAccInterface{
 
     @Override
     public void printAccount(AccountInterface a) {
-        String s = "";
-        s = s.concat("\nAccount -- id: "+a.getId()+"\tname: "+a.getName()+"\tbalance: "+a.getBalance()+"\ttype: "+a.getType());
+        String s = ("\nAccount -- id: "+a.getId()+"\tname: "+a.getName()+"\tbalance: "+a.getBalance()+"\ttype: "+a.getType());
         System.out.println(s);
     }
 
@@ -70,8 +62,4 @@ public class PrintAccount implements PrintAccInterface{
         }catch (IOException e){ return null; }
     }
 
-    private String returnLine() throws IOException {
-        String line = input.readLine();
-        return line;
-    }
 }
