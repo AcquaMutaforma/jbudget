@@ -38,7 +38,6 @@ public class PrintAccount extends Printer implements PrintAccInterface{
             }
             System.out.println("\nInsert the opening balance : ");
             openingbalance = Double.parseDouble(returnLine());
-
         } catch (IOException e) {
             return null;
         }
@@ -46,7 +45,7 @@ public class PrintAccount extends Printer implements PrintAccInterface{
         AccountInterface a = new Account(id,openingbalance,name,description,
                 type);
         printAccount(a);
-        System.out.println("\nAccount inserito correttament !");
+        System.out.println("\nAccount insert correctly!");
         return a;
     }
 
@@ -57,9 +56,10 @@ public class PrintAccount extends Printer implements PrintAccInterface{
             System.out.println("\nInsert the ID of the account to remove : ");
             int id = Integer.parseInt(returnLine());
             AccountInterface a = controller.getAccount(id);
-            System.out.println("\nAccount with id ' "+id+" ' has been removed successfully!");
             return a;
-        }catch (IOException e){ return null; }
+        }catch (IOException e){
+            System.out.println("\nAccount with the insert id was not found..");
+            return null; }
     }
 
 }

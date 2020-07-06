@@ -6,7 +6,7 @@ import it.unicam.cs.pa.jbudget.Controller;
 public interface SaverInterface {
 
 
-    Controller loadController();
+    Controller loadController(String s);
 
     void saveController(String s, Controller controller);
 

@@ -24,9 +24,10 @@ public class PrintSaver extends Printer implements PrintSaveInterface {
 
     @Override
     public void load (Controller controller, SaverInterface save){
+        String path = "";
         try {
             System.out.println("\nInsert the path of the directory to load : ");
-            String path = returnLine();
+            path = returnLine();
         } catch (IOException e) {
             System.out.println("\nInserted Path is not valid!");
             return;
@@ -34,7 +35,7 @@ public class PrintSaver extends Printer implements PrintSaveInterface {
         System.out.println("\nLooking for data on the disk...");
         if (save.checkSave()) {
             System.out.println("\nSave found! I am loading the previous data..");
-            save.loadController();
+            save.loadController(path);
             System.out.println("\nAll done! ");
         } else {
             System.out.println("\nI am sorry.. i didn't found anything :(");

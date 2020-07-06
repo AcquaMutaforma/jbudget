@@ -23,6 +23,7 @@ public class Account implements AccountInterface{
         setDescription(desc);
         this.type = at;
         this.movlist = new ArrayList<>();
+        this.balance = this.openingbalance;
     }
 
     @Override

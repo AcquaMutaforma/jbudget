@@ -23,17 +23,13 @@ public class App {
 
     public App() {
         this.saver = new Saver();
-        this.controller = saver.loadController();
-        if(this.controller == null)
-            this.controller = new Controller(new Ledge(),new BudgetManager(),new IDManager());
+        this.controller = new Controller(new Ledge(),new BudgetManager(),new IDManager());
         this.view = new ViewCli(this.controller);
-        this.commands = new HashMap<>();
+        createCommands();
     }
 
     public static void main(String[] args) throws UnknownCommand {
         App app = new App();
-        app.createCommands();
-
         app.start();
     }
 
@@ -63,15 +59,17 @@ public class App {
         commands.put("rmTag", t -> t.rmTag());
         commands.put("addBudget", s -> s.addBudget());
         commands.put("rmBudget", x-> x.rmBudget());
+        commands.put("rmMovement", x-> x.rmMovement());
         /*
         commands.put("editAccount")
         commands.put("editTransaction")
         commands.put("editTag")
         commands.put("editBudget")
         */
-        commands.put("save", x -> x.printSave());
-        commands.put("load", x-> x.printLoad());
+        commands.put("save", x -> x.printSave(this.saver));
+        commands.put("load", x-> x.printLoad(this.saver));
 
+        commands.put("tutorial", x-> x.printTutorial());
         commands.put("exit", x -> x.printGoodbye());
         this.commands = commands;
     }

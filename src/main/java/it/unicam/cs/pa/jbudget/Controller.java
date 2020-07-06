@@ -86,4 +86,5 @@ public class Controller {
 
     //TODO EDIT section (budget.set account.setname tag.setname etc..
     //TODO NOTA !! brutto scemo hai i get, dalla view bastera' fare controller.getaccount.set(blabla)
+    //TODO SCEMO ! violi il contratto di open closed
 }

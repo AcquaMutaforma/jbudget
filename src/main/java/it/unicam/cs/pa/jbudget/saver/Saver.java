@@ -5,8 +5,10 @@ import it.unicam.cs.pa.jbudget.Controller;
 import java.io.File;
 
 public class Saver implements SaverInterface{
+
+
     @Override
-    public Controller loadController() {
+    public Controller loadController(String s) {
         return null;
     }
 

@@ -2,11 +2,8 @@ package it.unicam.cs.pa.jbudget.model;
 
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class LedgeTest {
 
@@ -82,8 +79,4 @@ class LedgeTest {
         ledge.addAccount(a);
     }
 
-    @Test
-    void rmScheduledTransaction() {
-        //TODO
-    }
 }
