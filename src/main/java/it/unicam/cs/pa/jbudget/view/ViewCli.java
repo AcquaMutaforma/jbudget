@@ -143,13 +143,11 @@ public class ViewCli implements ViewInterface{
 
     @Override
     public void printSave(SaverInterface save) {
-        //TODO
         this.printSaver.save(this.controller,save);
     }
 
     @Override
     public void printLoad(SaverInterface save) {
-        //TODO
         this.printSaver.load(this.controller,save);
     }
 

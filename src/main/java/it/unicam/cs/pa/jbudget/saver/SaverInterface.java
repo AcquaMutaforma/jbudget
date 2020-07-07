@@ -1,6 +1,9 @@
 package it.unicam.cs.pa.jbudget.saver;
 
 import it.unicam.cs.pa.jbudget.Controller;
+
+import java.io.IOException;
+
 /**Questa interfaccia definisce i metodi della classe saver, che si occupera' della gestione dei dati in memoria
  * con le funzioni di salvataggio e caricamento di questi */
 public interface SaverInterface {
@@ -8,7 +11,7 @@ public interface SaverInterface {
 
     Controller loadController(String s);
 
-    void saveController(String s, Controller controller);
+    void saveController(String s, Controller controller) throws IOException;
 
-    boolean checkSave();
+    boolean checkSave(String s);
 }

@@ -9,16 +9,14 @@ public class PrintSaver extends Printer implements PrintSaveInterface {
 
     @Override
     public void save(Controller controller, SaverInterface save) {
-        if (!controller.getAccounts().isEmpty()) {
-            System.out.println("\nInserisci il percorso dove salvare i file : ");
-            try {
-                String s = returnLine();
-                System.out.println("\nValid Path! I am saving the data ...");
-                save.saveController(s,controller);
-                System.out.println("\nSave completed!");
-            } catch (IOException e) {
+        System.out.println("\nInserisci il percorso dove salvare i file : ");
+        try {
+            String s = returnLine();
+            System.out.println("\nValid Path! I am saving the data ...");
+            save.saveController(s,controller);
+            System.out.println("\nSave completed!");
+        } catch (IOException e) {
             System.out.println("\nInvalid Path :(");
-            }
         }
     }
 
@@ -33,7 +31,7 @@ public class PrintSaver extends Printer implements PrintSaveInterface {
             return;
         }
         System.out.println("\nLooking for data on the disk...");
-        if (save.checkSave()) {
+        if (save.checkSave(path)) {
             System.out.println("\nSave found! I am loading the previous data..");
             save.loadController(path);
             System.out.println("\nAll done! ");
