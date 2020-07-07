@@ -26,12 +26,16 @@ public class Controller {
 
 
     public void addTransaction(TransactionInterface tra){
+        if(tra == null)
+            return;
         this.ledge.addTransaction(tra);
         //TODO fix: ledge scarta le transazioni sbagliate, il budget manager ?
         if(this.ledge.getTransaction(tra.getId()) != null)
             this.budgetManager.aorTransaction(tra,true);
     }
     public boolean rmTransaction(TransactionInterface tra){
+        if(tra == null)
+            return false;
         if(this.ledge.rmTransaction(tra)){
             this.budgetManager.aorTransaction(tra,false);
             return true;
@@ -40,7 +44,11 @@ public class Controller {
         }
     }
 
-    public void addAccount(AccountInterface a){ if(a != null){this.ledge.addAccount(a);}  }
+    public void addAccount(AccountInterface a){
+        if(a == null)
+            return;
+        this.ledge.addAccount(a);
+    }
     public boolean rmAccount(AccountInterface a){
         if(a != null){
             return this.ledge.rmAccount(a);
@@ -48,14 +56,25 @@ public class Controller {
         return false; }
     }
 
-    public void addTag(TagInterface t){ this.ledge.addTag(t); }
-    public boolean rmTag(TagInterface t){ return this.ledge.rmTag(t); }
+    public void addTag(TagInterface t){
+        if(t == null)
+            return;
+        this.ledge.addTag(t);
+    }
+    public boolean rmTag(TagInterface t){
+        if(t == null)
+            return false;
+        return this.ledge.rmTag(t); }
 
     public void addBudget(BudgetInterface b){
+        if(b == null)
+            return;
         this.budgetManager.addBudget(b);
         this.budgetManager.generateReport(generateIDof("report"),b,this.ledge);
     }
     public boolean rmBudgetAndReport(BReportInterface r){
+        if(r == null)
+            return false;
         if(this.budgetManager.rmReport(r)){
             this.budgetManager.rmBudget(r.getBudget());
             return true;
@@ -64,7 +83,10 @@ public class Controller {
         }
     }
 
-    public boolean rmMovement(MovementInterface m){ return this.ledge.rmMovement(m); }
+    public boolean rmMovement(MovementInterface m){
+        if(m == null)
+            return false;
+        return this.ledge.rmMovement(m); }
 
     public int generateIDof(String s){ return this.idmanager.generateIdOf(s); }
 

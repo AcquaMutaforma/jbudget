@@ -45,7 +45,6 @@ public class Ledge implements LedgeInterface{
 
     @Override
     public void addTransaction(TransactionInterface t) {
-        //todo update per scheduled, check if it really works
         if(t.getMovements().isEmpty())
             throw new NullPointerException("transazione senza movimenti"); //todo logger ?
         if(!getTransactions().contains(t)) {
@@ -62,7 +61,6 @@ public class Ledge implements LedgeInterface{
 
     @Override
     public boolean rmTransaction(TransactionInterface t) {
-        //todo update per scheduled, check if it works & check if u can cut lines here
         if(getTransactions().contains(t)){
             if (!t.getMovements().isEmpty()) {
                 for (MovementInterface mov : t.getMovements()) {
@@ -89,7 +87,6 @@ public class Ledge implements LedgeInterface{
 
     @Override
     public boolean rmTag(TagInterface t) {
-        //todo update per scheduled, check if it works & if u can cut lines
         if(getTags().contains(t)){
             for(TransactionInterface tra : getTransactions()){
                 tra.rmTag(t);
@@ -110,14 +107,16 @@ public class Ledge implements LedgeInterface{
     @Override
     public void addAccount(AccountInterface a) {
         if(!getAccounts().contains(a))
-            this.accountlist.add(a);
-        //todo forse serve un throw ? o semplicemente non lo aggiungo ?
-        //magari controllo dalla view se i nomi non sono uguali, in quel caso risponde subito
-        //senza passare per il controller e model
+            return;
+        for(AccountInterface acc : getAccounts()){
+            if(acc.getName() == a.getName()) {
+                return;
+            }
+        }
+        this.accountlist.add(a);
     }
     @Override
     public boolean rmAccount(AccountInterface a) {
-        //todo update per scheduled,check for errors
         if (getAccounts().contains(a)) {
             this.accountlist.remove(a);
             if(getTransactions().isEmpty() && getScheduled().isEmpty()) {

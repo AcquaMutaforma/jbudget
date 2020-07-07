@@ -16,6 +16,7 @@ public class Saver implements SaverInterface{
     public void saveController(String s, Controller controller) {
         File file = new File(s);
         file.mkdir();
+        s.concat("/jbudget");
 
     }
 

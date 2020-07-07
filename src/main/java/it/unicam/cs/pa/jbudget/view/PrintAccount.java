@@ -17,7 +17,7 @@ public class PrintAccount extends Printer implements PrintAccInterface{
 
     @Override
     public AccountInterface addAccount(Controller controller) {
-
+        //TODO non inserirlo se ci sono altri con lo stesso nome
         double openingbalance = 0.0;
         String name;
         String description;
