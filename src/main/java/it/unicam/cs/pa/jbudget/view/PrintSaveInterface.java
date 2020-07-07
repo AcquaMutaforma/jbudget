@@ -6,6 +6,5 @@ import it.unicam.cs.pa.jbudget.saver.SaverInterface;
 public interface PrintSaveInterface {
 
     void save(Controller controller, SaverInterface save);
-    void load(Controller controller, SaverInterface save);
 
 }

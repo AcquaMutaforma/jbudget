@@ -8,9 +8,6 @@ import java.io.IOException;
  * con le funzioni di salvataggio e caricamento di questi */
 public interface SaverInterface {
 
-
-    Controller loadController(String s);
-
     void saveController(String s, Controller controller) throws IOException;
 
     boolean checkSave(String s);

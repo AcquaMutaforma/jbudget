@@ -1,5 +1,7 @@
 package it.unicam.cs.pa.jbudget.model;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +15,7 @@ public class Account implements AccountInterface{
     private double openingbalance;
     private String name;
     private String description;
-    private List<MovementInterface> movlist;
+    private transient List<MovementInterface> movlist;
     private final AccountType type;
 
     public Account(int id,double ob,String n, String desc,AccountType at){

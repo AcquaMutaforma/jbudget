@@ -1,9 +1,10 @@
 package it.unicam.cs.pa.jbudget.view;
 
+import it.unicam.cs.pa.jbudget.App;
 import it.unicam.cs.pa.jbudget.Controller;
 import it.unicam.cs.pa.jbudget.budget.BReportInterface;
 import it.unicam.cs.pa.jbudget.model.AccountInterface;
-import it.unicam.cs.pa.jbudget.model.TransactionInterface;
+import it.unicam.cs.pa.jbudget.saver.LoadInterface;
 import it.unicam.cs.pa.jbudget.saver.SaverInterface;
 
 import java.io.BufferedReader;
@@ -27,6 +28,8 @@ public class ViewCli implements ViewInterface{
     private PrintSaveInterface printSaver;
     private PrintTagInterface printTag;
     private PrintTransInterface printTransaction;
+    private PrintLoaderInterface printLoader;
+
     private Controller controller;
 
     /* TODO la mappa con i comandi riguarda la view, perche' e' lei che dovra' chiamare ogni printer per fargli fare la sua
@@ -44,7 +47,13 @@ public class ViewCli implements ViewInterface{
         this.printSaver = new PrintSaver();
         this.printTag = new PrintTag();
         this.printTransaction = new PrintTransaction();
+        //this.printLoader = new PrintLoader();
+
         this.controller = controller;
+    }
+
+    public void setController(Controller c){
+        this.controller = c;
     }
 
     @Override
@@ -147,8 +156,8 @@ public class ViewCli implements ViewInterface{
     }
 
     @Override
-    public void printLoad(SaverInterface save) {
-        this.printSaver.load(this.controller,save);
+    public void printLoad(LoadInterface load, App app) {
+        app.loadController(new PrintLoader().load(load));
     }
 
     @Override

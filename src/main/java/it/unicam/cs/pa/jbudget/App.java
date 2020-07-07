@@ -2,6 +2,8 @@ package it.unicam.cs.pa.jbudget;
 
 import it.unicam.cs.pa.jbudget.budget.BudgetManager;
 import it.unicam.cs.pa.jbudget.model.Ledge;
+import it.unicam.cs.pa.jbudget.saver.LoadInterface;
+import it.unicam.cs.pa.jbudget.saver.Loader;
 import it.unicam.cs.pa.jbudget.saver.Saver;
 import it.unicam.cs.pa.jbudget.saver.SaverInterface;
 import it.unicam.cs.pa.jbudget.view.ViewCli;
@@ -20,8 +22,10 @@ public class App {
     private ViewInterface view;
     private SaverInterface saver;
     private HashMap<String,Consumer<ViewInterface>> commands;
+    private LoadInterface loader;
 
     public App() {
+        this.loader = new Loader();
         this.saver = new Saver();
         this.controller = new Controller(new Ledge(),new BudgetManager(),new IDManager());
         this.view = new ViewCli(this.controller);
@@ -67,10 +71,17 @@ public class App {
         commands.put("editBudget")
         */
         commands.put("save", x -> x.printSave(this.saver));
-        commands.put("load", x-> x.printLoad(this.saver));
+        commands.put("load", x-> x.printLoad(this.loader,this));
 
         commands.put("tutorial", x-> x.printTutorial());
         commands.put("exit", x -> x.printGoodbye());
         this.commands = commands;
+    }
+
+    public void loadController(Controller c){
+        if(c != null){
+            this.controller = c;
+            this.view.setController(c);
+        }
     }
 }
