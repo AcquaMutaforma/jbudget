@@ -36,7 +36,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClassName = 'it.unicam.cs.pa.jbudget.App'
+    mainClassName = 'it.unicam.cs.pa.jbudget102627.App'
 }
 
 test {
