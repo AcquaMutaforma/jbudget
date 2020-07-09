@@ -28,7 +28,7 @@ public class PrintMovement extends Printer implements PrintMovInterface{
             motiv = returnLine();
             System.out.println("\nInsert the value :");
             value = Double.parseDouble(returnLine());
-            System.out.println("\nInsert the type [c/d] :");
+            System.out.println("\nInsert the type, credit or debit [c/d] :");
             String typechar = returnLine();
             if(typechar == "c"){
                 type = MovementType.CREDIT;

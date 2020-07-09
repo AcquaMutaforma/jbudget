@@ -30,7 +30,7 @@ public class Controller {
             return;
         this.ledge.addTransaction(tra);
         //TODO fix: ledge scarta le transazioni sbagliate, il budget manager ?
-        if(this.ledge.getTransaction(tra.getId()) != null)
+        if(this.ledge.getTransaction(tra.getId()) != null && this.budgetManager.getBudgets() != null)
             this.budgetManager.aorTransaction(tra,true);
     }
     public boolean rmTransaction(TransactionInterface tra){
@@ -105,6 +105,9 @@ public class Controller {
     public List<BReportInterface> getReports(){ return this.budgetManager.getReports(); }
     public List<TagInterface> getTags(){  return this.ledge.getTags();  }
     public List<MovementInterface> getMovementsOf(AccountInterface a){ return a.getMovements(); }
+
+    public AccountInterface getAccount(String s){ return ledge.getAccount(s); }
+    public TagInterface getTag(String s) { return ledge.getTag(s); }
 
 
     public List<Period> getPeriod(){ return this.ledge.generatePeriod(); }

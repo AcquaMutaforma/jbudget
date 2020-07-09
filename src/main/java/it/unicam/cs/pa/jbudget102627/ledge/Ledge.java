@@ -81,8 +81,11 @@ public class Ledge implements LedgeInterface{
 
     @Override
     public void addTag(TagInterface c) {
-        if(!getTags().contains(c))
-            this.taglist.add(c);
+        if(getTags().contains(c))
+            return;
+        if(getTag(c.getName()) != null)
+            return;
+        this.taglist.add(c);
     }
 
     @Override
@@ -106,13 +109,10 @@ public class Ledge implements LedgeInterface{
 
     @Override
     public void addAccount(AccountInterface a) {
-        if(!getAccounts().contains(a))
+        if(getAccounts().contains(a))
             return;
-        for(AccountInterface acc : getAccounts()){
-            if(acc.getName() == a.getName()) {
-                return;
-            }
-        }
+        if(getAccount(a.getName()) != null)
+            return;
         this.accountlist.add(a);
     }
     @Override
@@ -222,6 +222,29 @@ public class Ledge implements LedgeInterface{
                 break;
         }
         return m;
+    }
+
+    @Override
+    public AccountInterface getAccount(String s) {
+        AccountInterface acc = null;
+        for(AccountInterface a : getAccounts()){
+            if(a.getName().toLowerCase().equals(s.toLowerCase())) {
+                acc = a;
+                break;
+            }
+        }
+        return acc;
+    }
+
+    @Override
+    public TagInterface getTag(String s) {
+        TagInterface tag = null;
+        for(TagInterface t : getTags()){
+            if(t.getName().toLowerCase().equals(s.toLowerCase())){
+                tag = t;
+            }
+        }
+        return tag;
     }
 
     @Override

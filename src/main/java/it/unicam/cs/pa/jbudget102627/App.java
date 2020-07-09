@@ -68,6 +68,8 @@ public class App {
         questo è fattibile, fai creare un account, poi ci metti quello prestato e un
         for per mettere tutte le transazione con .addmonth()
         commands.put("creaPrestito", x -> x.);
+
+        showScheduled
         */
         commands.put("save", x -> x.printSave(this.saver));
         commands.put("load", x-> {

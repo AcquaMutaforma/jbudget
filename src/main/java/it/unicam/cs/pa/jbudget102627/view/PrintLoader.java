@@ -9,7 +9,7 @@ import java.io.IOException;
 public class PrintLoader extends Printer implements PrintLoaderInterface {
 
     @Override
-    public Controller load(LoadInterface load) throws FileNotFoundException {
+    public Controller load(LoadInterface load) throws IOException {
         String path = "";
         Controller c = null;
         try {

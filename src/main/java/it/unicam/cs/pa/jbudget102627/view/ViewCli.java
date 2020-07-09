@@ -77,11 +77,11 @@ public class ViewCli implements ViewInterface{
 
     @Override
     public void printState() {
-        if(this.controller.getAccounts().isEmpty())
-            return;
         System.out.println("\n-------------------------------------------------------------");
-        for(AccountInterface a : this.controller.getAccounts()){
-            this.printAccount.printAccount(a);
+        if(this.controller.getAccounts() != null) {
+            for(AccountInterface a : this.controller.getAccounts()){
+                this.printAccount.printAccount(a);
+            }
         }
         if(this.controller.getReports() != null){
             for(BReportInterface rep : this.controller.getReports()){
@@ -145,7 +145,7 @@ public class ViewCli implements ViewInterface{
     public void printLoad(LoadInterface load, App app) {
         try {
             app.loadController(this.printLoader.load(load));
-        }catch (FileNotFoundException e){
+        }catch (IOException e){
             System.out.println("\nLoad failed, files not found...");
         }
     }
@@ -171,7 +171,11 @@ public class ViewCli implements ViewInterface{
     }
 
     @Override
-    public void addTag() {  this.controller.addTag(this.printTag.addTag(this.controller)); }
+    public void addTag() {
+        TagInterface t  = this.printTag.addTag(this.controller);
+        if(t != null)
+            this.controller.addTag(t);
+    }
 
     @Override
     public void rmTag() {

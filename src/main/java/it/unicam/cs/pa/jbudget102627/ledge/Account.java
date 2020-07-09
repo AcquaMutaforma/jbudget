@@ -9,12 +9,12 @@ import java.util.stream.Collectors;
 public class Account implements AccountInterface{
 
     private final int id;
-    private double balance;
+    private transient double balance;
     private double openingbalance;
     private String name;
     private String description;
-    private transient List<MovementInterface> movlist;
     private final AccountType type;
+    private transient List<MovementInterface> movlist;
 
     public Account(int id,double ob,String n, String desc,AccountType at){
         this.id = id;

@@ -9,7 +9,7 @@ public class PrintSaver extends Printer implements PrintSaveInterface {
 
     @Override
     public void save(Controller controller, SaverInterface save) {
-        System.out.println("\nInserisci il percorso dove salvare i file : ");
+        System.out.println("\nInsert the path you want to use to save the data : ");
         try {
             String s = returnLine();
             System.out.println("\nValid Path! I am saving the data ...");

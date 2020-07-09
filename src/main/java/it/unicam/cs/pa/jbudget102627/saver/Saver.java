@@ -19,9 +19,8 @@ public class Saver implements SaverInterface{
         s = s.concat("/jbudget_saves");
         File file = new File(s);
         file.mkdir();
-        saveTags(s,controller.getTags());
         saveAccounts(s,controller.getAccounts());
-        //TODO il resto
+        saveTags(s,controller.getTags());
     }
 
     @Override
@@ -31,35 +30,26 @@ public class Saver implements SaverInterface{
 
     private void saveTags(String s, List<TagInterface> taglist) throws IOException {
         s = s.concat("/tags.txt");
-        String toadd = "";
-        File file = new File(s);
-        FileWriter writer = new FileWriter(s,true);
         Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
-
-        for(TagInterface t : taglist){
-            toadd = gson.toJson(t).concat("\n");
-        }
         eraseLastSaves(s);
-        writeXtoY(toadd,s);
+        for(TagInterface t : taglist){
+            writeXtoY(gson.toJson(t).concat("\n"),s);
+        }
 
     }
 
     private void saveAccounts(String s, List<AccountInterface> acclist) throws IOException{
         s = s.concat("/accounts.txt");
-        String toadd = "";
-        File file = new File(s);
-        FileWriter writer = new FileWriter(s,true);
         Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
-        for(AccountInterface acc : acclist){
-            toadd = gson.toJson(acc).concat("\n");
-        }
         eraseLastSaves(s);
-        writeXtoY(toadd,s);
+        for(AccountInterface acc : acclist){
+            writeXtoY(gson.toJson(acc).concat("\n"),s);
+        }
     }
 
     private void writeXtoY(String obj, String filename) throws IOException {
         File file = new File(filename);
-        FileWriter writer = new FileWriter(filename,true);
+        FileWriter writer = new FileWriter(file,true);
         writer.append(obj);
         writer.close();
     }

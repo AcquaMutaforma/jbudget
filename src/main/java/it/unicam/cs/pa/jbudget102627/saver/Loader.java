@@ -3,8 +3,12 @@ package it.unicam.cs.pa.jbudget102627.saver;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import it.unicam.cs.pa.jbudget102627.Controller;
+import it.unicam.cs.pa.jbudget102627.IDManager;
+import it.unicam.cs.pa.jbudget102627.budget.BudgetManager;
 import it.unicam.cs.pa.jbudget102627.ledge.AccountInterface;
+import it.unicam.cs.pa.jbudget102627.ledge.Ledge;
 import it.unicam.cs.pa.jbudget102627.ledge.TagInterface;
+import it.unicam.cs.pa.jbudget102627.view.PrintAccount;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,11 +20,11 @@ import java.util.Scanner;
 
 public class Loader implements LoadInterface{
     @Override
-    public Controller loadController(String path) throws FileNotFoundException {
+    public Controller loadController(String path) throws IOException {
         path = path.concat("/jbudget_saves");
-        Controller c = null;
-
-
+        Controller c = new Controller(new Ledge(),new BudgetManager(), new IDManager());
+        loadAccounts(path,c);
+        loadTags(path,c);
         return c;
     }
 
@@ -29,27 +33,24 @@ public class Loader implements LoadInterface{
         return new File(s.concat("/jbudget_saves")).exists();
     }
 
-    private List<AccountInterface> loadAccounts(String s) throws IOException {
-        List<AccountInterface> accountlist = new ArrayList<>();
+    private void loadAccounts(String s,Controller c) throws IOException {
         File f = new File(s.concat("/accounts.txt"));
         Scanner scanner = new Scanner(f);
         Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
         while(scanner.hasNextLine()){
             AccountInterface acc = gson.fromJson(scanner.nextLine(), AccountInterface.class);
-            accountlist.add(acc);
+            c.addAccount(acc);
         }
-        return accountlist;
     }
 
-    private List<TagInterface> loadTags(String s) throws IOException {
-        List<TagInterface> taglist = new ArrayList<>();
+    private void loadTags(String s,Controller c) throws IOException {
         File f = new File(s.concat("/accounts.txt"));
         Scanner scanner = new Scanner(f);
         Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
         while(scanner.hasNextLine()){
             TagInterface tag = gson.fromJson(scanner.nextLine(), TagInterface.class);
-            taglist.add(tag);
+            c.addTag(tag);
         }
-        return taglist;
     }
+
 }

@@ -33,5 +33,7 @@ public interface LedgeInterface {
     TagInterface getTag(int id);
     MovementInterface getMovement(int id);
 
+    AccountInterface getAccount(String s);
+    TagInterface getTag(String s);
     ArrayList<Period> generatePeriod();
 }

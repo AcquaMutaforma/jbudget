@@ -24,9 +24,14 @@ public class PrintTag extends Printer implements PrintTagInterface{
         }catch (IOException e) {
             return null;
         }
+        if(controller.getTag(name) != null) {
+
+            System.out.println("\nTag not inserted, same name as an existing one..");
+            return null;
+        }
         int id = controller.generateIDof("tag");
         TagInterface t = new Tag(id,name);
-        System.out.println("\nTag inserito correttament !");
+        System.out.println("\nTag insert successfully !");
         return t;
     }
 

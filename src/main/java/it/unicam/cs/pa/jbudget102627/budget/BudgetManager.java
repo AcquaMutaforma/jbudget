@@ -57,6 +57,8 @@ public class BudgetManager implements BManagerInterface {
 
     @Override
     public void aorTransaction(TransactionInterface tra, boolean aor) {
+        if(tra == null)
+            return;
         if(aor) {
             for (BReportInterface rep : getReports()) {
                 rep.addTransaction(tra);

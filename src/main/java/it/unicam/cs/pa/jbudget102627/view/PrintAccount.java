@@ -17,7 +17,6 @@ public class PrintAccount extends Printer implements PrintAccInterface{
 
     @Override
     public AccountInterface addAccount(Controller controller) {
-        //TODO non inserirlo se ci sono altri con lo stesso nome
         double openingbalance = 0.0;
         String name;
         String description;
@@ -26,6 +25,10 @@ public class PrintAccount extends Printer implements PrintAccInterface{
             System.out.println("\nAdding a new Account..");
             System.out.println("\nInsert name : ");
             name = returnLine();
+            if(controller.getAccount(name) != null){
+                System.out.print("\nAccount not inserted, same name as an existing one..");
+                return null;
+            }
             System.out.println("\nInsert description : ");
             description = returnLine();
             System.out.println("\nInsert type of account, asset or liability [a / l] : ");
