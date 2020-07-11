@@ -14,7 +14,7 @@ public class PrintBReport extends Printer implements PrintBReportInterface{
     public void printReport(BReportInterface report) {
         System.out.println("\nBudget -- id: "+report.getId()+"\tname: "+report.getName()+"\n");
         for(TagInterface t : report.getTags()){
-            System.out.println("\ttag: "+t.getName()+"value: "+report.getValueOf(t));
+            System.out.println("|\ttag: "+t.getName()+"\tvalue: "+report.getValueOf(t));
         }
     }
 

@@ -53,24 +53,22 @@ public class App {
     private void createCommands(){
         HashMap<String,Consumer<ViewInterface>> commands = new HashMap<>();
         commands.put("help",s-> s.printCommands(new TreeSet(commands.keySet())));
-        commands.put("addAccount", s -> s.addAccount());
-        commands.put("rmAccount", x-> x.rmAccount());
-        commands.put("addTransaction", x-> x.addTransaction());
-        commands.put("rmTransaction", x -> x.rmTransaction());
-        commands.put("addTag", t -> t.addTag());
-        commands.put("rmTag", t -> t.rmTag());
-        commands.put("addBudget", s -> s.addBudget());
-        commands.put("rmBudget", x-> x.rmBudget());
-        commands.put("rmMovement", x-> x.rmMovement());
+        commands.put("addAccount", ViewInterface::addAccount);
+        commands.put("rmAccount", ViewInterface::rmAccount);
+        commands.put("addTransaction", ViewInterface::addTransaction);
+        commands.put("rmTransaction", ViewInterface::rmTransaction);
+        commands.put("addTag", ViewInterface::addTag);
+        commands.put("rmTag", ViewInterface::rmTag);
+        commands.put("addBudget", ViewInterface::addBudget);
+        commands.put("rmBudget", ViewInterface::rmBudget);
+        commands.put("rmMovement", ViewInterface::rmMovement);
 
-        commands.put("stats",x -> x.printPeriodList());
-        /* todo
-        questo è fattibile, fai creare un account, poi ci metti quello prestato e un
-        for per mettere tutte le transazione con .addmonth()
-        commands.put("creaPrestito", x -> x.);
+        commands.put("stats", ViewInterface::printPeriodList);
+        commands.put("getTransactions", ViewInterface::getTransactions);
+        commands.put("getScheduled", ViewInterface::getScheduled);
+        commands.put("getMovements", ViewInterface::getMovementsOf);
+        commands.put("creaPrestito",ViewInterface::newPrestito);
 
-        showScheduled
-        */
         commands.put("save", x -> x.printSave(this.saver));
         commands.put("load", x-> {
             try {
@@ -79,8 +77,8 @@ public class App {
                 e.printStackTrace();
             }
         });
-        commands.put("tutorial", x-> x.printTutorial());
-        commands.put("exit", x -> x.printGoodbye());
+        commands.put("tutorial", ViewInterface::printTutorial);
+        commands.put("exit", ViewInterface::printGoodbye);
         this.commands = commands;
     }
 

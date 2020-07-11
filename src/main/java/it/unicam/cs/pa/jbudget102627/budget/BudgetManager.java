@@ -3,12 +3,18 @@ package it.unicam.cs.pa.jbudget102627.budget;
 import it.unicam.cs.pa.jbudget102627.ledge.LedgeInterface;
 import it.unicam.cs.pa.jbudget102627.ledge.TransactionInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BudgetManager implements BManagerInterface {
 
     private List<BudgetInterface> budgetlist;
     private List<BReportInterface> reportlist;
+
+    public BudgetManager() {
+        this.budgetlist = new ArrayList<>();
+        this.reportlist = new ArrayList<>();
+    }
 
     @Override
     public List<BudgetInterface> getBudgets() {return this.budgetlist; }

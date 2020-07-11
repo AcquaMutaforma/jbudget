@@ -5,17 +5,11 @@ import com.google.gson.GsonBuilder;
 import it.unicam.cs.pa.jbudget102627.Controller;
 import it.unicam.cs.pa.jbudget102627.IDManager;
 import it.unicam.cs.pa.jbudget102627.budget.BudgetManager;
-import it.unicam.cs.pa.jbudget102627.ledge.AccountInterface;
-import it.unicam.cs.pa.jbudget102627.ledge.Ledge;
-import it.unicam.cs.pa.jbudget102627.ledge.TagInterface;
-import it.unicam.cs.pa.jbudget102627.view.PrintAccount;
+import it.unicam.cs.pa.jbudget102627.ledge.*;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Loader implements LoadInterface{
@@ -23,7 +17,7 @@ public class Loader implements LoadInterface{
     public Controller loadController(String path) throws IOException {
         path = path.concat("/jbudget_saves");
         Controller c = new Controller(new Ledge(),new BudgetManager(), new IDManager());
-        loadAccounts(path,c);
+        //loadAccounts(path,c);
         loadTags(path,c);
         return c;
     }
@@ -38,7 +32,7 @@ public class Loader implements LoadInterface{
         Scanner scanner = new Scanner(f);
         Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
         while(scanner.hasNextLine()){
-            AccountInterface acc = gson.fromJson(scanner.nextLine(), AccountInterface.class);
+            AccountInterface acc = gson.fromJson(scanner.nextLine(), Account.class);
             c.addAccount(acc);
         }
     }

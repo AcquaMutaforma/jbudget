@@ -105,10 +105,10 @@ public class Controller {
     public List<BReportInterface> getReports(){ return this.budgetManager.getReports(); }
     public List<TagInterface> getTags(){  return this.ledge.getTags();  }
     public List<MovementInterface> getMovementsOf(AccountInterface a){ return a.getMovements(); }
+    public List<BudgetInterface> getBudgets(){ return this.budgetManager.getBudgets();}
 
     public AccountInterface getAccount(String s){ return ledge.getAccount(s); }
     public TagInterface getTag(String s) { return ledge.getTag(s); }
-
-
+    //TODO
     public List<Period> getPeriod(){ return this.ledge.generatePeriod(); }
 }

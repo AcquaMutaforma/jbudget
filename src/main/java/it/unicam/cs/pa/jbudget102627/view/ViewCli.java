@@ -3,9 +3,7 @@ package it.unicam.cs.pa.jbudget102627.view;
 import it.unicam.cs.pa.jbudget102627.App;
 import it.unicam.cs.pa.jbudget102627.Controller;
 import it.unicam.cs.pa.jbudget102627.budget.BReportInterface;
-import it.unicam.cs.pa.jbudget102627.ledge.AccountInterface;
-import it.unicam.cs.pa.jbudget102627.ledge.Period;
-import it.unicam.cs.pa.jbudget102627.ledge.TagInterface;
+import it.unicam.cs.pa.jbudget102627.ledge.*;
 import it.unicam.cs.pa.jbudget102627.saver.LoadInterface;
 import it.unicam.cs.pa.jbudget102627.saver.SaverInterface;
 
@@ -203,5 +201,33 @@ public class ViewCli implements ViewInterface{
         for(Period p : controller.getPeriod()){
             this.printperiod.printPeriod(p);
         }
+    }
+
+    @Override
+    public void getTransactions() {
+        System.out.print("\n-- Transazioni -------------------");
+        for(TransactionInterface tra : controller.getTransactions()){
+            this.printTransaction.printTransaction(tra);
+        }
+        System.out.print("\n----------------------------------");
+    }
+
+    @Override
+    public void getScheduled() {
+        System.out.print("\n-- Scheduled ---------------------");
+        for(TransactionInterface sched : controller.getScheduledTransactions()){
+            this.printTransaction.printTransaction(sched);
+        }
+        System.out.print("\n----------------------------------");
+    }
+
+    @Override
+    public void getMovementsOf() throws IOException {
+        printMovement.printMovementOf(controller);
+    }
+
+    @Override
+    public void newPrestito() {
+
     }
 }

@@ -26,7 +26,7 @@ public class PrintTransaction extends Printer implements PrintTransInterface{
 
     @Override
     public TransactionInterface addTransaction(Controller controller) {
-        TransactionInterface tra = null;
+        TransactionInterface tra;
         PrintTagInterface printTag = new PrintTag();
         PrintMovInterface printMovement = new PrintMovement();
         List<TagInterface> taglist = new ArrayList<>();

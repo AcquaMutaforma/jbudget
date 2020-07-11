@@ -33,10 +33,10 @@ public class PrintAccount extends Printer implements PrintAccInterface{
             description = returnLine();
             System.out.println("\nInsert type of account, asset or liability [a / l] : ");
             String t = returnLine();
-            if(t.contains("a")) {
+            if(t.toLowerCase().equals("a")) {
                 type = AccountType.ASSET;
             }
-            if(t.toLowerCase() == "l"){
+            if(t.toLowerCase().equals("l")){
                 type = AccountType.LIABILITIES;
             }
             System.out.println("\nInsert the opening balance : ");

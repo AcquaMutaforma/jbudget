@@ -2,9 +2,13 @@ package it.unicam.cs.pa.jbudget102627.saver;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import it.unicam.cs.pa.jbudget102627.Controller;
+import it.unicam.cs.pa.jbudget102627.budget.BudgetInterface;
 import it.unicam.cs.pa.jbudget102627.ledge.AccountInterface;
+import it.unicam.cs.pa.jbudget102627.ledge.MovementInterface;
 import it.unicam.cs.pa.jbudget102627.ledge.TagInterface;
+import it.unicam.cs.pa.jbudget102627.ledge.TransactionInterface;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -19,8 +23,16 @@ public class Saver implements SaverInterface{
         s = s.concat("/jbudget_saves");
         File file = new File(s);
         file.mkdir();
-        saveAccounts(s,controller.getAccounts());
-        saveTags(s,controller.getTags());
+        if(!controller.getAccounts().isEmpty())
+            saveAccounts(s,controller.getAccounts());
+        if(!controller.getTags().isEmpty())
+            saveTags(s,controller.getTags());
+        if(!controller.getTransactions().isEmpty())
+            saveTransactions(s,controller.getTransactions());
+        if(!controller.getScheduledTransactions().isEmpty())
+            saveScheduled(s,controller.getScheduledTransactions());
+        if(!controller.getBudgets().isEmpty())
+            saveBudget(s,controller.getBudgets());
     }
 
     @Override
@@ -43,6 +55,33 @@ public class Saver implements SaverInterface{
         Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
         eraseLastSaves(s);
         for(AccountInterface acc : acclist){
+            writeXtoY(gson.toJson(acc).concat("\n"),s);
+        }
+    }
+
+    private void saveTransactions(String s, List<TransactionInterface> translist) throws IOException{
+        s = s.concat("/transactions.txt");
+        Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
+        eraseLastSaves(s);
+        for(TransactionInterface tra : translist){
+            writeXtoY(gson.toJson(tra).concat("\n"),s);
+        }
+    }
+
+    private void saveScheduled(String s, List<TransactionInterface> schedlist) throws IOException{
+        s = s.concat("/scheduled.txt");
+        Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
+        eraseLastSaves(s);
+        for(TransactionInterface sched : schedlist){
+            writeXtoY(gson.toJson(sched).concat("\n"),s);
+        }
+    }
+
+    private void saveBudget(String s, List<BudgetInterface> budlist) throws IOException{
+        s = s.concat("/budgets.txt");
+        Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
+        eraseLastSaves(s);
+        for(BudgetInterface acc : budlist){
             writeXtoY(gson.toJson(acc).concat("\n"),s);
         }
     }

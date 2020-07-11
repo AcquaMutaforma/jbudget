@@ -49,7 +49,6 @@ public class Transaction implements TransactionInterface {
 
     @Override
     public List<MovementInterface> getMovements(Predicate<MovementInterface> p){
-        //TODO vedi se funziona va
         return getMovements().stream().filter(p).collect(Collectors.toList());
     }
 
@@ -64,7 +63,6 @@ public class Transaction implements TransactionInterface {
     public void addTag(List<TagInterface> lt) {
         for(TagInterface c : lt){
             addTag(c);
-            fixTags();
         }
     }
 
@@ -80,12 +78,13 @@ public class Transaction implements TransactionInterface {
     }
 
     private void fixTags(){
-        if(getMovements().isEmpty())
+        if(getMovements().isEmpty() || getTags().isEmpty())
             return;
         for(MovementInterface mi : getMovements()){
             mi.setTags(getTags());
         }
     }
+
     @Override
     public void addMovement(MovementInterface m) {
         if(!getMovements().contains(m)){

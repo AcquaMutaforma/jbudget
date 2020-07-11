@@ -6,6 +6,7 @@ import it.unicam.cs.pa.jbudget102627.saver.LoadInterface;
 import it.unicam.cs.pa.jbudget102627.saver.SaverInterface;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.TreeSet;
 
 public interface ViewInterface {
@@ -35,4 +36,8 @@ public interface ViewInterface {
     void rmMovement();
 
     void printPeriodList();
+    void getTransactions();
+    void getScheduled( );
+    void getMovementsOf( ) throws IOException;
+    void newPrestito( );
 }

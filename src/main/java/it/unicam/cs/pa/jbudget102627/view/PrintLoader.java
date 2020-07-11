@@ -3,15 +3,14 @@ package it.unicam.cs.pa.jbudget102627.view;
 import it.unicam.cs.pa.jbudget102627.Controller;
 import it.unicam.cs.pa.jbudget102627.saver.LoadInterface;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class PrintLoader extends Printer implements PrintLoaderInterface {
 
     @Override
     public Controller load(LoadInterface load) throws IOException {
-        String path = "";
-        Controller c = null;
+        String path;
+        Controller c;
         try {
             System.out.println("\nInsert the path of the directory to load : ");
             path = returnLine();
@@ -24,10 +23,10 @@ public class PrintLoader extends Printer implements PrintLoaderInterface {
             System.out.println("\nSave found! I am loading the previous data..");
             c = load.loadController(path);
             System.out.println("\nAll done! ");
+            return c;
         } else {
             System.out.println("\nI am sorry.. i didn't found anything :(");
             return null;
         }
-        return c;
     }
 }

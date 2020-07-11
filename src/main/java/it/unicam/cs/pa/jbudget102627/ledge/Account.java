@@ -103,11 +103,13 @@ public class Account implements AccountInterface{
      * @param aor AddOrRemove, true se sto aggiungendo il movimento, false se lo sto eliminando
      */
     private void editBalance(MovementInterface m,boolean aor){
-        if(((getType() == AccountType.ASSET)&&(m.getType() == MovementType.CREDIT) && aor) ||
-                (getType() == AccountType.LIABILITIES)&&(m.getType() == MovementType.DEBIT)&&aor){
-            this.balance += m.getValue();
-        }else{
-            this.balance -= m.getValue();
+        if(((getType() == AccountType.ASSET)&&(m.getType() == MovementType.CREDIT)) ||
+                (getType() == AccountType.LIABILITIES)&&(m.getType() == MovementType.DEBIT)) {
+            if (aor) {
+                this.balance += m.getValue();
+            } else {
+                this.balance -= m.getValue();
+            }
         }
     }
 

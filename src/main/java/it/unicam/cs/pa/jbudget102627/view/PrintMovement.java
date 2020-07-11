@@ -16,24 +16,23 @@ public class PrintMovement extends Printer implements PrintMovInterface{
 
     @Override
     public MovementInterface addMovement(Controller controller, LocalDate date, List<TagInterface> tags){
-        double value = 0.0;
-        String motiv = "";
+        double value;
+        String motiv;
         MovementType type = null;
-        AccountInterface acc = null;
+        AccountInterface acc;
 
         System.out.println("\nAdding a new Movement..");
-        MovementInterface mov = null;
         try{
             System.out.println("\nInsert the motivation :");
             motiv = returnLine();
             System.out.println("\nInsert the value :");
             value = Double.parseDouble(returnLine());
             System.out.println("\nInsert the type, credit or debit [c/d] :");
-            String typechar = returnLine();
-            if(typechar == "c"){
+            String typechar = returnLine().toLowerCase();
+            if(typechar.equals("c")){
                 type = MovementType.CREDIT;
             }
-            if(typechar == "d"){
+            if(typechar.equals("d")){
                 type = MovementType.DEBIT;
             }
             System.out.println("\nInsert the id of the Account for this movement :");
@@ -41,10 +40,12 @@ public class PrintMovement extends Printer implements PrintMovInterface{
         }catch (IOException e){
             return null;
         }
-        int id = controller.generateIDof("movement");
-        if(tags == null || date == null || acc == null )
+        if(tags == null || date == null || acc == null || type == null)
             return null;
-        return new Movement(id,value,motiv,type,tags,date,acc);
+        int id = controller.generateIDof("movement");
+        MovementInterface m = new Movement(id,value,motiv,type,tags,date,acc);
+        printMovement(m);
+        return m;
     }
 
     @Override
@@ -59,5 +60,18 @@ public class PrintMovement extends Printer implements PrintMovInterface{
             System.out.println("\nMovement with the insert id was not found..");
             return null;
         }
+    }
+
+    @Override
+    public void printMovementOf(Controller controller) throws IOException {
+        System.out.println("\nInsert the id of the Account :");
+        AccountInterface acc = controller.getAccount(Integer.parseInt(returnLine()));
+        if(acc.getMovements().isEmpty())
+            System.out.println("\nNo Movements in this account...");
+        System.out.print("\n-- Movements -------------------------------");
+        for(MovementInterface mov : acc.getMovements()){
+            printMovement(mov);
+        }
+        System.out.print("\n--------------------------------------------");
     }
 }

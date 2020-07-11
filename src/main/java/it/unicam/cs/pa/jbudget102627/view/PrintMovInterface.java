@@ -4,6 +4,7 @@ import it.unicam.cs.pa.jbudget102627.Controller;
 import it.unicam.cs.pa.jbudget102627.ledge.MovementInterface;
 import it.unicam.cs.pa.jbudget102627.ledge.TagInterface;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface PrintMovInterface {
     void printMovement(MovementInterface m );
     MovementInterface addMovement(Controller controller, LocalDate date, List<TagInterface> tags);
     MovementInterface rmMovement(Controller controller);
+    void printMovementOf(Controller controller) throws IOException;
 }
