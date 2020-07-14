@@ -2,11 +2,9 @@ package it.unicam.cs.pa.jbudget102627.saver;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import it.unicam.cs.pa.jbudget102627.Controller;
 import it.unicam.cs.pa.jbudget102627.budget.BudgetInterface;
 import it.unicam.cs.pa.jbudget102627.ledge.AccountInterface;
-import it.unicam.cs.pa.jbudget102627.ledge.MovementInterface;
 import it.unicam.cs.pa.jbudget102627.ledge.TagInterface;
 import it.unicam.cs.pa.jbudget102627.ledge.TransactionInterface;
 
@@ -33,6 +31,7 @@ public class Saver implements SaverInterface{
             saveScheduled(s,controller.getScheduledTransactions());
         if(!controller.getBudgets().isEmpty())
             saveBudget(s,controller.getBudgets());
+
     }
 
     @Override
@@ -69,7 +68,7 @@ public class Saver implements SaverInterface{
     }
 
     private void saveScheduled(String s, List<TransactionInterface> schedlist) throws IOException{
-        s = s.concat("/scheduled.txt");
+        s = s.concat("/scheduleds.txt");
         Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
         eraseLastSaves(s);
         for(TransactionInterface sched : schedlist){
@@ -86,10 +85,10 @@ public class Saver implements SaverInterface{
         }
     }
 
-    private void writeXtoY(String obj, String filename) throws IOException {
+    private void writeXtoY(String s, String filename) throws IOException {
         File file = new File(filename);
         FileWriter writer = new FileWriter(file,true);
-        writer.append(obj);
+        writer.append(s);
         writer.close();
     }
 

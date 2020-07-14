@@ -5,6 +5,6 @@ import it.unicam.cs.pa.jbudget102627.ledge.Period;
 public class PrintPeriod {
 
     public void printPeriod(Period p){
-
+        //TODO
     }
 }

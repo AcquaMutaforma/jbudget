@@ -112,8 +112,12 @@ public class ViewCli implements ViewInterface{
     @Override
     public void printTutorial() {
         System.out.println("Per poter utilizzare correttamente il programma devono essere inizializzati alcuni oggetti:" +
-                "\n[1] addAccount -- necessario per inserire movimenti" +
-                "\n[2] addTag -- Necessario per utilizzare i budget");
+                "\n[1] addAccount -- Necessario per inserire movimenti." +
+                "\n[2] addTag -- Necessario per utilizzare i budget."+
+                "\n[3] save -- Crea un nuovo salvataggio con tutti gli elementi presenti, se erano presenti altri file vengono sovrascritti !"+
+                "si consiglia di utilizzare questo come ultimo comando prima di uscire dall'applicazione."+
+                "\n[4] load -- Carica i file che vengono trovati, se vegono eseguite delle azioni prima del caricamento, verranno sovrascitte "+
+                "si consiglia di utilizzare questo come primo comando.");
     }
 
     @Override
@@ -198,6 +202,7 @@ public class ViewCli implements ViewInterface{
 
     @Override
     public void printPeriodList() {
+        //TODO check
         for(Period p : controller.getPeriod()){
             this.printperiod.printPeriod(p);
         }
@@ -228,6 +233,8 @@ public class ViewCli implements ViewInterface{
 
     @Override
     public void newPrestito() {
-
+        System.out.println("\nPer descrivere un prestito si deve creare un account di tipo LIABILITY," +
+                " con il valore del prestito come bilancio iniziale.. ");
+        controller.addAccount(this.printAccount.addAccount(controller));
     }
 }

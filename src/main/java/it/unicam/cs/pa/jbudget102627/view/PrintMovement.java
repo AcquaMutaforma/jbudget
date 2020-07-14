@@ -63,15 +63,19 @@ public class PrintMovement extends Printer implements PrintMovInterface{
     }
 
     @Override
-    public void printMovementOf(Controller controller) throws IOException {
+    public void printMovementOf(Controller controller) {
         System.out.println("\nInsert the id of the Account :");
-        AccountInterface acc = controller.getAccount(Integer.parseInt(returnLine()));
-        if(acc.getMovements().isEmpty())
-            System.out.println("\nNo Movements in this account...");
-        System.out.print("\n-- Movements -------------------------------");
-        for(MovementInterface mov : acc.getMovements()){
-            printMovement(mov);
+        try {
+            AccountInterface acc = controller.getAccount(Integer.parseInt(returnLine()));
+            if (acc.getMovements().isEmpty())
+                System.out.println("\nNo Movements in this account...");
+            System.out.print("\n-- Movements -------------------------------");
+            for (MovementInterface mov : acc.getMovements()) {
+                printMovement(mov);
+            }
+            System.out.print("\n--------------------------------------------");
+        }catch (IOException e){
+            System.out.print("\nAccount not found...");
         }
-        System.out.print("\n--------------------------------------------");
     }
 }

@@ -10,6 +10,7 @@ import it.unicam.cs.pa.jbudget102627.ledge.*;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Loader implements LoadInterface{
@@ -17,8 +18,9 @@ public class Loader implements LoadInterface{
     public Controller loadController(String path) throws IOException {
         path = path.concat("/jbudget_saves");
         Controller c = new Controller(new Ledge(),new BudgetManager(), new IDManager());
-        //loadAccounts(path,c);
+        loadAccounts(path,c);
         loadTags(path,c);
+        loadTransactions(path,c);
         return c;
     }
 
@@ -33,6 +35,7 @@ public class Loader implements LoadInterface{
         Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
         while(scanner.hasNextLine()){
             AccountInterface acc = gson.fromJson(scanner.nextLine(), Account.class);
+            acc.setMovements(new ArrayList<>());
             c.addAccount(acc);
         }
     }
@@ -42,9 +45,21 @@ public class Loader implements LoadInterface{
         Scanner scanner = new Scanner(f);
         Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
         while(scanner.hasNextLine()){
-            TagInterface tag = gson.fromJson(scanner.nextLine(), TagInterface.class);
+            TagInterface tag = gson.fromJson(scanner.nextLine(), Tag.class);
             c.addTag(tag);
         }
     }
+
+    private void loadTransactions(String s,Controller c) throws IOException {
+        File f = new File(s.concat("/transactions.txt"));
+        Scanner scanner = new Scanner(f);
+        Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
+        while(scanner.hasNextLine()){
+            Transaction tra = gson.fromJson(scanner.nextLine(), Transaction.class);
+            c.addTransaction(tra);
+        }
+    }
+
+
 
 }

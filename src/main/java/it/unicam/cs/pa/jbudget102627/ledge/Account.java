@@ -97,6 +97,11 @@ public class Account implements AccountInterface{
         return null;
     }
 
+    @Override
+    public void setMovements(List<MovementInterface> mov) {
+        this.movlist = mov;
+    }
+
     /**
      * metodo per la modifica del bilancio invocato da addMovement e rmMovement
      * @param m movimento legato all'azione di add o remove

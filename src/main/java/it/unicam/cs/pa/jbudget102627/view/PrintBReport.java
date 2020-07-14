@@ -20,16 +20,20 @@ public class PrintBReport extends Printer implements PrintBReportInterface{
 
     @Override
     public BudgetInterface addBudget(Controller controller) {
+        PrintTag printtag = new PrintTag();
         System.out.println("\nAdding a new Budget...");
-        String name = "";
-        BudgetInterface b = null;
+        String name;
+        BudgetInterface b;
         try{
             System.out.println("\nInsert the name of the budget: ");
             name = returnLine();
-            System.out.println("\nHow much tags do you want to add ?: ");
+            System.out.println("\nYou can use the tags as a filter, for example to ignore too old transactions you can use a tag with the year 2020\n"+
+                    "and set his expected value as 0, it will not be calculated.\n\nHow much tags do you want to add ?: ");
             int a = Integer.parseInt(returnLine());
-
             b = new Budget(name,controller.generateIDof("budget"));
+            for(TagInterface t : controller.getTags()){
+                printtag.printTag(t);
+            }
             for(int i = 0; i < a; i++){
                 System.out.println("\nInsert the id of the tag to add at the budget: ");
                 TagInterface t = controller.getTag(Integer.parseInt(returnLine()));

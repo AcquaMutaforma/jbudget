@@ -10,6 +10,7 @@ import it.unicam.cs.pa.jbudget102627.view.ViewCli;
 import it.unicam.cs.pa.jbudget102627.view.ViewInterface;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.TreeSet;
 import java.util.function.Consumer;
@@ -17,10 +18,10 @@ import java.util.function.Consumer;
 public class App {
 
     private Controller controller;
-    private ViewInterface view;
-    private SaverInterface saver;
+    private final ViewInterface view;
+    private final SaverInterface saver;
     private HashMap<String,Consumer<ViewInterface>> commands;
-    private LoadInterface loader;
+    private final LoadInterface loader;
 
     public App() {
         this.loader = new Loader();
@@ -52,7 +53,7 @@ public class App {
 
     private void createCommands(){
         HashMap<String,Consumer<ViewInterface>> commands = new HashMap<>();
-        commands.put("help",s-> s.printCommands(new TreeSet(commands.keySet())));
+        commands.put("help",s-> s.printCommands(new TreeSet<String>(commands.keySet())));
         commands.put("addAccount", ViewInterface::addAccount);
         commands.put("rmAccount", ViewInterface::rmAccount);
         commands.put("addTransaction", ViewInterface::addTransaction);
@@ -63,10 +64,16 @@ public class App {
         commands.put("rmBudget", ViewInterface::rmBudget);
         commands.put("rmMovement", ViewInterface::rmMovement);
 
-        commands.put("stats", ViewInterface::printPeriodList);
+        commands.put("statistics", ViewInterface::printPeriodList);
         commands.put("getTransactions", ViewInterface::getTransactions);
         commands.put("getScheduled", ViewInterface::getScheduled);
-        commands.put("getMovements", ViewInterface::getMovementsOf);
+        commands.put("getMovements", x -> {
+            try {
+                x.getMovementsOf();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         commands.put("creaPrestito",ViewInterface::newPrestito);
 
         commands.put("save", x -> x.printSave(this.saver));

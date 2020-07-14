@@ -35,7 +35,6 @@ public class BudgetReport implements BReportInterface{
 
     @Override
     public List<TagInterface> getTags() {
-        //TODO check if it really works
         return new ArrayList<>(report.keySet());
     }
 
@@ -79,12 +78,8 @@ public class BudgetReport implements BReportInterface{
      */
     private void generate() {
         this.report.putAll(getBudget().getMap());
-        //TODO check if it works & if it sucks or not
         for(TagInterface t : getBudget().getFilter()){
             report.remove(t);
-        }
-        for(TagInterface t : report.keySet()){
-            report.put(t,0.0);
         }
         for(TransactionInterface tra : ledge.getTransactions()){
             addTransaction(tra);

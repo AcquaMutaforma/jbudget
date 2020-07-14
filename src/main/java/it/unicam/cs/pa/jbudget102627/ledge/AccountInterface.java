@@ -24,4 +24,7 @@ public interface AccountInterface {
     boolean rmMovement(MovementInterface m);
     List<MovementInterface> getMovements(Predicate<MovementInterface> p);
     MovementInterface getMovement(int id);
+
+    //load needs
+    void setMovements(List<MovementInterface> mov);
 }
