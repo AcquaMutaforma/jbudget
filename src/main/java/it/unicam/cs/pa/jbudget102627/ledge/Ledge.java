@@ -53,7 +53,7 @@ public class Ledge implements LedgeInterface{
             }else {
                 this.translist.add(t);
                 for (MovementInterface m : t.getMovements()) {
-                    m.getAccount().addMovement(m);
+                    getAccount(m.getAccountId()).addMovement(m);
                 }
             }
         }
@@ -64,7 +64,7 @@ public class Ledge implements LedgeInterface{
         if(getTransactions().contains(t)){
             if (!t.getMovements().isEmpty()) {
                 for (MovementInterface mov : t.getMovements()) {
-                    mov.getAccount().rmMovement(mov);
+                    getAccount(mov.getAccountId()).rmMovement(mov);
                 }
             }
             this.translist.remove(t);
@@ -123,12 +123,12 @@ public class Ledge implements LedgeInterface{
                 return true;
             }
             for (TransactionInterface tra : getTransactions()) {
-                tra.rmMovement(x -> x.getAccount().equals(a));
+                tra.rmMovement(x -> x.getAccountId() == a.getId());
                 if(tra.getMovements().isEmpty())
                     rmTransaction(tra);
             }
             for(ScheduledInterface sched : getScheduled()){
-                sched.rmTransaction(x->x.rmMovement(y->y.getAccount().equals(a)));
+                sched.rmTransaction(x->x.rmMovement(y->y.getAccountId() == a.getId()));
             }
             return true;
         }
@@ -136,6 +136,7 @@ public class Ledge implements LedgeInterface{
     }
 
     //se la data di oggi e' > di scheduled.getdate allora inserisco le transazioni e la cancello
+    //TODO inserirla nel controller !!
     @Override
     public void checkScheduled(){
         if(getScheduled().isEmpty())
@@ -155,7 +156,7 @@ public class Ledge implements LedgeInterface{
         for(TransactionInterface tra: getTransactions()){
             if(tra.getMovements().contains(m)) {
                 tra.rmMovement(m);
-                m.getAccount().rmMovement(m);
+                getAccount(m.getAccountId()).rmMovement(m);
                 return true;
             }
         }
@@ -249,6 +250,7 @@ public class Ledge implements LedgeInterface{
 
     @Override
     public ArrayList<Period> generatePeriod() {
+        //TODO "list is always empty"
         ArrayList<Period> list = new ArrayList<>();
         for(TransactionInterface tra : getTransactions()){
             for(Period p : list){

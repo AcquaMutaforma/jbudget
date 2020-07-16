@@ -16,8 +16,7 @@ public class Controller {
     private final IdManagerInterface idmanager;
 
     public Controller(LedgeInterface l, BManagerInterface bm, IdManagerInterface idm) {
-        /*TODO appunto: saver cerca di caricare i dati, ovvero questi signori qui sopra,
-           altrimenti il main crea un controller con new l, new bm, new idm */
+
         this.ledge = l;
         this.budgetManager = bm;
         this.idmanager = idm;

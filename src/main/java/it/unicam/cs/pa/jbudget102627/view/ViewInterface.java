@@ -24,7 +24,7 @@ public interface ViewInterface {
     void addAccount();
     void rmAccount();
     void printSave(SaverInterface save);
-    void printLoad(LoadInterface save, App app) throws FileNotFoundException;
+    void printLoad(LoadInterface save, App app) throws IOException;
     void addTransaction();
     void rmTransaction();
     void addTag();

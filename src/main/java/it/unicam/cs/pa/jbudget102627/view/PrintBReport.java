@@ -11,9 +11,10 @@ import java.io.IOException;
 public class PrintBReport extends Printer implements PrintBReportInterface{
 
     @Override
-    public void printReport(BReportInterface report) {
+    public void printReport(BReportInterface report, Controller controller) {
         System.out.println("\nBudget -- id: "+report.getId()+"\tname: "+report.getName()+"\n");
-        for(TagInterface t : report.getTags()){
+        for(int tag : report.getTags()){
+            TagInterface t = controller.getTag(tag);
             System.out.println("|\ttag: "+t.getName()+"\tvalue: "+report.getValueOf(t));
         }
     }

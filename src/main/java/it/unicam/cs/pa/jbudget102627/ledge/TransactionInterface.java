@@ -8,15 +8,14 @@ public interface TransactionInterface {
 
     //getters
     int getId();
-    List<TagInterface> getTags();
+    List<Integer> getTags();
     LocalDate getDate();
-    List<MovementInterface> getMovements();
-    List<MovementInterface> getMovements(Predicate<MovementInterface> p);
+    List<Integer> getMovements();
 
 
     //setters
     void setId(int id);
-    void setTags(List<TagInterface> l);
+    void setTags(List<Integer> l);
     void setDate(LocalDate d);
 
     //other
@@ -25,7 +24,11 @@ public interface TransactionInterface {
     boolean rmTag(TagInterface c);
     void addMovement(MovementInterface m);
     boolean rmMovement(MovementInterface m);
-    boolean rmMovement(Predicate<MovementInterface> p);
+
+    void addTag(int c);
+    boolean rmTag(int c);
+    void addMovement(int m);
+    boolean rmMovement(int m);
 
 
 }

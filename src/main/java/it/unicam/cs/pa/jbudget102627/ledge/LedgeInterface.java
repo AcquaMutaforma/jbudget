@@ -13,6 +13,7 @@ public interface LedgeInterface {
     List<AccountInterface> getAccounts();
     List<ScheduledInterface> getScheduled();
     List<ScheduledInterface> getScheduled(Predicate<ScheduledInterface> p);
+    List<MovementInterface> getMovements();
 
     void addTransaction(TransactionInterface t);
     boolean rmTransaction(TransactionInterface t);

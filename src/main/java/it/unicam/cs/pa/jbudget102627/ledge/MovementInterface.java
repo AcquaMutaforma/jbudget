@@ -10,20 +10,21 @@ public interface MovementInterface {
     String getMotivation();
     double getValue();
     MovementType getType();
-    List<TagInterface> getTags();
+    List<Integer> getTags();
     LocalDate getDate();
-    AccountInterface getAccount();
+    int getAccountId();
 
     //setters
-    void setId(int id);
     void setMotivation(String m);
     void setValue(double d);
     void setType(MovementType mt);
-    void setTags(List<TagInterface> l);
+    void setTags(List<Integer> l);
     void setDate(LocalDate d);
     void setAccount(AccountInterface a);
 
     void addTag(TagInterface c);
     boolean rmTag(TagInterface c);
+    void addTag(int c);
+    boolean rmTag(int c);
 
 }

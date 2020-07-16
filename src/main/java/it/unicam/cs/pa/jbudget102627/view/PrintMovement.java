@@ -11,7 +11,7 @@ public class PrintMovement extends Printer implements PrintMovInterface{
     @Override
     public void printMovement(MovementInterface m) {
         System.out.println("\n | Movement -- id: "+m.getId()+" motivation: "+m.getMotivation()
-        +" type: "+m.getType()+" value:"+m.getValue());
+        +" type: "+m.getType()+" value:"+m.getValue()+" date: "+m.getDate());
     }
 
     @Override

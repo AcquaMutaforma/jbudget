@@ -144,12 +144,8 @@ public class ViewCli implements ViewInterface{
     }
 
     @Override
-    public void printLoad(LoadInterface load, App app) {
-        try {
-            app.loadController(this.printLoader.load(load));
-        }catch (IOException e){
-            System.out.println("\nLoad failed, files not found...");
-        }
+    public void printLoad(LoadInterface load, App app) throws IOException {
+        app.loadController(this.printLoader.load(load));
     }
 
     @Override

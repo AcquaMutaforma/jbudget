@@ -6,6 +6,7 @@ import it.unicam.cs.pa.jbudget102627.Controller;
 import it.unicam.cs.pa.jbudget102627.budget.BudgetInterface;
 import it.unicam.cs.pa.jbudget102627.ledge.AccountInterface;
 import it.unicam.cs.pa.jbudget102627.ledge.TagInterface;
+import it.unicam.cs.pa.jbudget102627.ledge.Transaction;
 import it.unicam.cs.pa.jbudget102627.ledge.TransactionInterface;
 
 import java.io.File;
@@ -27,11 +28,11 @@ public class Saver implements SaverInterface{
             saveTags(s,controller.getTags());
         if(!controller.getTransactions().isEmpty())
             saveTransactions(s,controller.getTransactions());
+
         if(!controller.getScheduledTransactions().isEmpty())
             saveScheduled(s,controller.getScheduledTransactions());
         if(!controller.getBudgets().isEmpty())
             saveBudget(s,controller.getBudgets());
-
     }
 
     @Override
@@ -95,11 +96,7 @@ public class Saver implements SaverInterface{
     private void eraseLastSaves(String filename) throws IOException {
         File file = new File(filename);
         FileWriter writer= new FileWriter(filename);
-        if(file.exists()) {
-            writer.write("");
-        }else{
-            file.createNewFile();
-        }
+        writer.write("");
         writer.close();
     }
 }

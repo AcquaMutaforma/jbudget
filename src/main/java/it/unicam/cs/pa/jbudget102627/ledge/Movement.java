@@ -6,17 +6,17 @@ import java.util.Objects;
 
 public class Movement implements MovementInterface {
 
-    private int id;
+    private final int id;
     private double value;
     private String motivation;
     private MovementType type;
-    private List<TagInterface> tagList;
+    private List<Integer> tagList;
     private LocalDate date;
-    private AccountInterface account;
+    private int accountid;
 
     public Movement(int i, double val, String motiv, MovementType mt,
-                    List<TagInterface> tag, LocalDate ld, AccountInterface a ){
-        setId(i);
+                    List<Integer> tag, LocalDate ld, AccountInterface a ){
+        this.id = i;
         setValue(val);
         setMotivation(motiv);
         setType(mt);
@@ -38,16 +38,13 @@ public class Movement implements MovementInterface {
     public MovementType getType() {return this.type;}
 
     @Override
-    public List<TagInterface> getTags() {return this.tagList;}
+    public List<Integer> getTags() {return this.tagList;}
 
     @Override
     public LocalDate getDate() {return this.date;}
 
     @Override
-    public AccountInterface getAccount() {return this.account;}
-
-    @Override
-    public void setId(int id) {this.id = id;}
+    public int getAccountId() {return this.accountid;}
 
     @Override
     public void setMotivation(String m) {this.motivation = m;  }
@@ -59,13 +56,13 @@ public class Movement implements MovementInterface {
     public void setType(MovementType mt) {this.type = mt;}
 
     @Override
-    public void setTags(List<TagInterface> l) {this.tagList = l;}
+    public void setTags(List<Integer> l) {this.tagList = l;}
 
     @Override
     public void setDate(LocalDate d) {this.date = d;}
 
     @Override
-    public void setAccount(AccountInterface a) {this.account = a;}
+    public void setAccount(AccountInterface a) {this.accountid= a.getId();}
 
     @Override
     public boolean equals(Object o) {
@@ -82,18 +79,33 @@ public class Movement implements MovementInterface {
 
     @Override
     public void addTag(TagInterface c) {
-        if(!getTags().contains(c))
-            getTags().add(c);
+        if(!getTags().contains(c.getId()))
+            getTags().add(c.getId());
     }
 
     @Override
     public boolean rmTag(TagInterface c) {
-        if(getTags().contains(c)){
-            getTags().remove(c);
+        if(getTags().contains(c.getId())){
+            getTags().remove(c.getId());
             return true;
         }else{
             return false;
         }
+    }
+
+    @Override
+    public void addTag(int c) {
+        if(!this.tagList.contains(c))
+            this.tagList.add(c);
+    }
+
+    @Override
+    public boolean rmTag(int c) {
+        if(this.tagList.contains(c)) {
+            this.tagList.remove(c);
+            return true;
+        }
+        return false;
     }
 
 }

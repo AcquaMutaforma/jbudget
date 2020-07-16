@@ -17,6 +17,7 @@ public class Account implements AccountInterface{
     private transient List<MovementInterface> movlist;
 
     public Account(int id,double ob,String n, String desc,AccountType at){
+        //todo Opening balance > 0 !!
         this.id = id;
         setOpeningBalance(ob);
         setName(n);
@@ -55,6 +56,11 @@ public class Account implements AccountInterface{
 
     @Override
     public void setDescription(String d) {this.description = d;    }
+
+    @Override
+    public void balanceToOpening() {
+        this.balance = openingbalance;
+    }
 
     /**
      * questo metodo aggiunge un movimento all'account ne modifica il bilancio tramite editBalance

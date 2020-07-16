@@ -14,13 +14,13 @@ public class Budget implements BudgetInterface{
      */
 
     private String nome;
-    private int id;
-    private Map<TagInterface,Double> budgetmap;
+    private final int id;
+    private Map<Integer,Double> budgetmap;
 
     public Budget(String nome, int id) {
         this.nome = nome;
         this.id = id;
-        this.budgetmap = new HashMap<>();
+        this.budgetmap = new TreeMap<>();
     }
 
     @Override
@@ -30,31 +30,36 @@ public class Budget implements BudgetInterface{
     public int getId() {return this.id;}
 
     @Override
-    public List<TagInterface> getTags() {
+    public List<Integer> getTags() {
         //TODO check if it works
         return new ArrayList<>(budgetmap.keySet());
     }
 
     @Override
     public double getValueOf(TagInterface c) {
+        return this.budgetmap.get(c.getId());
+    }
+
+    @Override
+    public double getValueOf(int c) {
         return this.budgetmap.get(c);
     }
 
     @Override
-    public void set(TagInterface c, double expected) {
+    public void set(int c, double expected) {
         this.budgetmap.put(c,expected);
     }
 
     @Override
     //TODO serve davvero ?
-    public Map<TagInterface, Double> getMap() {
+    public Map<Integer, Double> getMap() {
         return this.budgetmap;
     }
 
     @Override
-    public List<TagInterface> getFilter() {
-        List<TagInterface> filterlist = new ArrayList<>();
-        for(TagInterface t : getTags()){
+    public List<Integer> getFilter() {
+        List<Integer> filterlist = new ArrayList<>();
+        for(int t : getTags()){
             if(getValueOf(t) == 0)
                 filterlist.add(t);
         }

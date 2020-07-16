@@ -9,11 +9,12 @@ public interface BudgetInterface {
 
     String getName();
     int getId();
-    List<TagInterface> getTags();
+    List<Integer> getTags();
     double getValueOf(TagInterface c);
-    void set(TagInterface c, double expected);
-    Map<TagInterface, Double> getMap();
-    List<TagInterface> getFilter();
+    double getValueOf(int c);
+    void set(int c, double expected);
+    Map<Integer, Double> getMap();
+    List<Integer> getFilter();
 
     /*
     PROBABILMENTE NON TI SERVE A NIENTE, IL BUDGET E' SENZA IL REPORT,

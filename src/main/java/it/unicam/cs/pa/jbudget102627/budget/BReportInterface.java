@@ -10,10 +10,11 @@ public interface BReportInterface {
 
     int getId();
     String getName();
-    Map<TagInterface,Double> getReport();
+    Map<Integer,Double> getReport();
     BudgetInterface getBudget();
-    List<TagInterface> getTags();
+    List<Integer> getTags();
     double getValueOf(TagInterface c);
+    double getValueOf(int c);
     void addTransaction(TransactionInterface tra);
     boolean rmTransaction(TransactionInterface tra);
 

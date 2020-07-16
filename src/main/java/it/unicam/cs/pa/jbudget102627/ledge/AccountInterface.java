@@ -27,4 +27,5 @@ public interface AccountInterface {
 
     //load needs
     void setMovements(List<MovementInterface> mov);
+    void balanceToOpening();
 }

@@ -11,7 +11,7 @@ public class BudgetReport implements BReportInterface{
     private final int id;
     private final BudgetInterface budget;
     private final LedgeInterface ledge;
-    private Map<TagInterface,Double> report;
+    private Map<Integer,Double> report;
 
     public BudgetReport(int id, BudgetInterface budget, LedgeInterface ledge) {
         this.id = id;
@@ -28,37 +28,42 @@ public class BudgetReport implements BReportInterface{
     public String getName() {return this.getBudget().getName();}
 
     @Override
-    public Map<TagInterface, Double> getReport() { return this.report; }
+    public Map<Integer, Double> getReport() { return this.report; }
 
     @Override
     public BudgetInterface getBudget() { return this.budget; }
 
     @Override
-    public List<TagInterface> getTags() {
+    public List<Integer> getTags() {
         return new ArrayList<>(report.keySet());
     }
 
     @Override
-    public double getValueOf(TagInterface c) {return report.get(c);}
+    public double getValueOf(TagInterface c) {return report.get(c.getId());}
+
+    @Override
+    public double getValueOf(int c) {
+        return this.report.get(c);
+    }
 
     @Override
     public void addTransaction(TransactionInterface tra) {
-        List<TagInterface> filter = getBudget().getFilter();
+        List<Integer> filter = getBudget().getFilter();
         if(tra.getTags().containsAll(filter)){
-            for (TagInterface t : this.report.keySet()) {
+            for (int t : this.report.keySet()) {
                 if (tra.getTags().contains(t))
-                    editBalance(tra.getTotalAmount(), t);
+                    editBalance(t, tra.getTotalAmount(),true);
             }
         }
     }
 
     @Override
     public boolean rmTransaction(TransactionInterface tra) {
-        List<TagInterface> filter = getBudget().getFilter();
+        List<Integer> filter = getBudget().getFilter();
         if(tra.getTags().containsAll(filter)){
-            for (TagInterface t : this.report.keySet()) {
+            for (int t : this.report.keySet()) {
                 if (tra.getTags().contains(t))
-                    editBalance(-1 * tra.getTotalAmount(), t);
+                    editBalance(t, tra.getTotalAmount(),false);
             }
             return true;
         }
@@ -66,9 +71,12 @@ public class BudgetReport implements BReportInterface{
     }
 
 
-    private void editBalance(Double value, TagInterface tag) {
+    private void editBalance(int tag, double value,boolean aor) {
         double old = this.report.get(tag);
-        old += value;
+        if(aor)
+            old += value;
+        else
+            old -= value;
         this.report.put(tag,old);
     }
 
@@ -78,7 +86,7 @@ public class BudgetReport implements BReportInterface{
      */
     private void generate() {
         this.report.putAll(getBudget().getMap());
-        for(TagInterface t : getBudget().getFilter()){
+        for(Integer t : getBudget().getFilter()){
             report.remove(t);
         }
         for(TransactionInterface tra : ledge.getTransactions()){

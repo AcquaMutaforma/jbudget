@@ -80,7 +80,7 @@ public class App {
         commands.put("load", x-> {
             try {
                 x.printLoad(this.loader,this);
-            } catch (FileNotFoundException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         });
