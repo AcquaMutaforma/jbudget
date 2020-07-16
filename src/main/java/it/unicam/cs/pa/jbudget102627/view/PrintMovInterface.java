@@ -13,7 +13,7 @@ import java.util.List;
 public interface PrintMovInterface {
 
     void printMovement(MovementInterface m );
-    MovementInterface addMovement(Controller controller, LocalDate date, List<TagInterface> tags);
+    MovementInterface addMovement(Controller controller, LocalDate date, List<Integer> tags);
     MovementInterface rmMovement(Controller controller);
     void printMovementOf(Controller controller) throws IOException;
 }

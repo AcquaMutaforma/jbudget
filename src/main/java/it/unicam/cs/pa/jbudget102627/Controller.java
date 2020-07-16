@@ -5,6 +5,7 @@ import it.unicam.cs.pa.jbudget102627.budget.BReportInterface;
 import it.unicam.cs.pa.jbudget102627.budget.BudgetInterface;
 import it.unicam.cs.pa.jbudget102627.ledge.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -97,17 +98,36 @@ public class Controller {
     public TagInterface getTag(int id){ return this.ledge.getTag(id); }
     public BReportInterface getReport(int id){ return this.budgetManager.getReport(id);}
 
+    public List<MovementInterface> getMovements(){
+        List<MovementInterface> mlist = new ArrayList<>();
+        for(AccountInterface acc: getAccounts()){
+            mlist.addAll(getMovementsOf(acc));
+        }
+        return mlist;
+    }
     public List<AccountInterface> getAccounts(){ return this.ledge.getAccounts(); }
     public List<TransactionInterface> getTransactions(){ return this.ledge.getTransactions(); }
     public List<TransactionInterface> getTransactions(Predicate<TransactionInterface> p){ return this.ledge.getTransactions(p); }
     public List<TransactionInterface> getScheduledTransactions(){ return this.ledge.getScheduledTransactions(); }
     public List<BReportInterface> getReports(){ return this.budgetManager.getReports(); }
     public List<TagInterface> getTags(){  return this.ledge.getTags();  }
-    public List<MovementInterface> getMovementsOf(AccountInterface a){ return a.getMovements(); }
+    //TODO getMovementsof manca sulla view e come comando in app
+    public List<MovementInterface> getMovementsOf(AccountInterface a){
+        List<MovementInterface> list = new ArrayList<>();
+        for(int mov : a.getMovements()){
+            list.add(getMovement(mov));
+        }
+        return list;
+    }
     public List<BudgetInterface> getBudgets(){ return this.budgetManager.getBudgets();}
 
     public AccountInterface getAccount(String s){ return ledge.getAccount(s); }
     public TagInterface getTag(String s) { return ledge.getTag(s); }
     //TODO
     public List<Period> getPeriod(){ return this.ledge.generatePeriod(); }
+
+    public void addMovement(MovementInterface mov) {
+        //TODO vedi un po che fa il ledge,per sicurezza
+        this.ledge.addMovement(mov);
+    }
 }

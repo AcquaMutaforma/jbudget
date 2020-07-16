@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import it.unicam.cs.pa.jbudget102627.Controller;
 import it.unicam.cs.pa.jbudget102627.IDManager;
+import it.unicam.cs.pa.jbudget102627.IdManagerInterface;
 import it.unicam.cs.pa.jbudget102627.budget.Budget;
 import it.unicam.cs.pa.jbudget102627.budget.BudgetInterface;
 import it.unicam.cs.pa.jbudget102627.budget.BudgetManager;
@@ -19,12 +20,12 @@ public class Loader implements LoadInterface{
     @Override
     public Controller loadController(String path) throws IOException {
         path = path.concat("/jbudget_saves");
-        Controller c = new Controller(new Ledge(),new BudgetManager(), new IDManager());
+        Controller c = new Controller(new Ledge(),new BudgetManager(), loadIDManager(path));
         loadAccounts(path,c);
         loadTags(path,c);
-        loadBudgets(path,c);
+        loadMovements(path,c);
         loadTransactions(path,c);
-
+        loadBudgets(path,c);
         return c;
     }
 
@@ -52,7 +53,7 @@ public class Loader implements LoadInterface{
         if(!f.getAbsoluteFile().exists())
             return;
         Scanner scanner = new Scanner(f);
-        Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
+        Gson gson = new Gson();
         while(scanner.hasNextLine()){
             TagInterface tag = gson.fromJson(scanner.nextLine(), Tag.class);
             c.addTag(tag);
@@ -64,7 +65,7 @@ public class Loader implements LoadInterface{
         if(!f.getAbsoluteFile().exists())
             return;
         Scanner scanner = new Scanner(f);
-        Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
+        Gson gson = new Gson();
         while(scanner.hasNextLine()){
             Transaction tra = gson.fromJson(scanner.nextLine(), Transaction.class);
             c.addTransaction(tra);
@@ -76,12 +77,32 @@ public class Loader implements LoadInterface{
         if(!f.getAbsoluteFile().exists())
             return;
         Scanner scanner = new Scanner(f);
-        Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
+        Gson gson = new Gson();
         while(scanner.hasNextLine()){
             BudgetInterface bud = gson.fromJson(scanner.nextLine(), Budget.class);
             c.addBudget(bud);
         }
     }
 
+    private void loadMovements(String s,Controller c) throws IOException {
+        File f = new File(s.concat("/movements.txt"));
+        if(!f.getAbsoluteFile().exists())
+            return;
+        Scanner scanner = new Scanner(f);
+        Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
+        while(scanner.hasNextLine()){
+            MovementInterface mov = gson.fromJson(scanner.nextLine(), Movement.class);
+            c.getAccount(mov.getAccountId()).addMovement(mov);
+        }
+    }
 
+    private IdManagerInterface loadIDManager(String s) throws IOException {
+        File f = new File(s.concat("/idmanager.txt"));
+        if(!f.getAbsoluteFile().exists())
+            return new IDManager();
+        Scanner scanner = new Scanner(f);
+        Gson gson = new Gson();
+        IdManagerInterface idm = gson.fromJson(scanner.nextLine(), IDManager.class);
+        return idm;
+    }
 }

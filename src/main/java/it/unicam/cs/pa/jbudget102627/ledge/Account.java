@@ -9,12 +9,12 @@ import java.util.stream.Collectors;
 public class Account implements AccountInterface{
 
     private final int id;
-    private transient double balance;
+    private double balance;
     private double openingbalance;
     private String name;
     private String description;
     private final AccountType type;
-    private transient List<MovementInterface> movlist;
+    private List<Integer> movlist;
 
     public Account(int id,double ob,String n, String desc,AccountType at){
         //todo Opening balance > 0 !!
@@ -43,7 +43,7 @@ public class Account implements AccountInterface{
     public String getDescription() {return this.description;}
 
     @Override
-    public List<MovementInterface> getMovements() {return this.movlist; }
+    public List<Integer> getMovements() {return this.movlist; }
 
     @Override
     public AccountType getType() {return this.type;}
@@ -68,8 +68,8 @@ public class Account implements AccountInterface{
      */
     @Override
     public void addMovement(MovementInterface m) {
-        if(!getMovements().contains(m)) {
-            this.movlist.add(m);
+        if(!getMovements().contains(m.getId())) {
+            this.movlist.add(m.getId());
             this.editBalance(m,true);
         }
     }
@@ -82,30 +82,36 @@ public class Account implements AccountInterface{
      */
     @Override
     public boolean rmMovement(MovementInterface m) {
-        if(!getMovements().contains(m))
+        if(!getMovements().contains(m.getId()))
             return false;
-        getMovements().remove(m);
+        getMovements().remove(m.getId());
         this.editBalance(m,false);
         return true;
     }
 
     @Override
-    public List<MovementInterface> getMovements(Predicate<MovementInterface> p){
-        return getMovements().stream().filter(p).collect(Collectors.toList());
+    public void addMovement(int m) {
+        if(this.movlist.contains(m))
+            return;
+        this.movlist.add(m);
     }
 
     @Override
-    public MovementInterface getMovement(int id) {
-        for(MovementInterface mov : getMovements()){
-            if(mov.getId() == id)
-                return mov;
+    public boolean rmMovement(int m) {
+        if(this.movlist.contains(m)){
+            this.movlist.remove(m);
+            return true;
         }
-        return null;
+        return false;
     }
 
     @Override
     public void setMovements(List<MovementInterface> mov) {
-        this.movlist = mov;
+        List<Integer> mlist = new ArrayList<>();
+        for(MovementInterface m : mov){
+            mlist.add(m.getId());
+        }
+        this.movlist = mlist;
     }
 
     /**

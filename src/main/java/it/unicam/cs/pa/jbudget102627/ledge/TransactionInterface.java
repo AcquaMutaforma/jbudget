@@ -2,7 +2,6 @@ package it.unicam.cs.pa.jbudget102627.ledge;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.function.Predicate;
 
 public interface TransactionInterface {
 
@@ -11,7 +10,6 @@ public interface TransactionInterface {
     List<Integer> getTags();
     LocalDate getDate();
     List<Integer> getMovements();
-
 
     //setters
     void setId(int id);

@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import it.unicam.cs.pa.jbudget102627.Controller;
 import it.unicam.cs.pa.jbudget102627.budget.BudgetInterface;
-import it.unicam.cs.pa.jbudget102627.ledge.AccountInterface;
-import it.unicam.cs.pa.jbudget102627.ledge.TagInterface;
-import it.unicam.cs.pa.jbudget102627.ledge.Transaction;
-import it.unicam.cs.pa.jbudget102627.ledge.TransactionInterface;
+import it.unicam.cs.pa.jbudget102627.ledge.*;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -26,9 +23,10 @@ public class Saver implements SaverInterface{
             saveAccounts(s,controller.getAccounts());
         if(!controller.getTags().isEmpty())
             saveTags(s,controller.getTags());
-        if(!controller.getTransactions().isEmpty())
-            saveTransactions(s,controller.getTransactions());
-
+        if(!controller.getTransactions().isEmpty()) {
+            saveMovements(s,controller.getMovements());
+            saveTransactions(s, controller.getTransactions());
+        }
         if(!controller.getScheduledTransactions().isEmpty())
             saveScheduled(s,controller.getScheduledTransactions());
         if(!controller.getBudgets().isEmpty())
@@ -83,6 +81,15 @@ public class Saver implements SaverInterface{
         eraseLastSaves(s);
         for(BudgetInterface acc : budlist){
             writeXtoY(gson.toJson(acc).concat("\n"),s);
+        }
+    }
+
+    private void saveMovements(String s, List<MovementInterface> movlist) throws IOException{
+        s = s.concat("/movements.txt");
+        Gson gson = new Gson();
+        eraseLastSaves(s);
+        for(MovementInterface mov : movlist){
+            writeXtoY(gson.toJson(mov).concat("\n"),s);
         }
     }
 

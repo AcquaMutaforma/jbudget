@@ -11,11 +11,11 @@ public class PrintMovement extends Printer implements PrintMovInterface{
     @Override
     public void printMovement(MovementInterface m) {
         System.out.println("\n | Movement -- id: "+m.getId()+" motivation: "+m.getMotivation()
-        +" type: "+m.getType()+" value:"+m.getValue()+" date: "+m.getDate());
+        +" type: "+m.getType()+" value:"+m.getValue()+" date: "+m.getDate()+" accountID: "+m.getAccountId());
     }
 
     @Override
-    public MovementInterface addMovement(Controller controller, LocalDate date, List<TagInterface> tags){
+    public MovementInterface addMovement(Controller controller, LocalDate date, List<Integer> tags){
         double value;
         String motiv;
         MovementType type = null;
@@ -70,7 +70,7 @@ public class PrintMovement extends Printer implements PrintMovInterface{
             if (acc.getMovements().isEmpty())
                 System.out.println("\nNo Movements in this account...");
             System.out.print("\n-- Movements -------------------------------");
-            for (MovementInterface mov : acc.getMovements()) {
+            for (MovementInterface mov : controller.getMovementsOf(acc)) {
                 printMovement(mov);
             }
             System.out.print("\n--------------------------------------------");

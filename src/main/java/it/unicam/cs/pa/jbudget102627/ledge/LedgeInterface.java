@@ -25,6 +25,7 @@ public interface LedgeInterface {
     boolean rmScheduled(ScheduledInterface st);
     void checkScheduled();
 
+    boolean addMovement(MovementInterface m);
     boolean rmMovement(MovementInterface m);
 
     List<TransactionInterface> getScheduledTransactions();

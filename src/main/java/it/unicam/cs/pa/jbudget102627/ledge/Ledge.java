@@ -9,16 +9,18 @@ import java.util.stream.Collectors;
 public class Ledge implements LedgeInterface{
 
 
-    private List<TransactionInterface> translist;
-    private List<TagInterface> taglist;
-    private List<AccountInterface> accountlist;
-    private List<ScheduledInterface> scheduledlist;
+    private final List<TransactionInterface> translist;
+    private final List<TagInterface> taglist;
+    private final List<AccountInterface> accountlist;
+    private final List<ScheduledInterface> scheduledlist;
+    private final List<MovementInterface> movlist;
 
     public Ledge(){
         this.translist = new ArrayList<>();
         this.taglist = new ArrayList<>();
         this.accountlist = new ArrayList<>();
         this.scheduledlist = new ArrayList<>();
+        this.movlist = new ArrayList<>();
     }
 
     @Override
@@ -44,6 +46,11 @@ public class Ledge implements LedgeInterface{
     }
 
     @Override
+    public List<MovementInterface> getMovements() {
+        return this.movlist;
+    }
+
+    @Override
     public void addTransaction(TransactionInterface t) {
         if(t.getMovements().isEmpty())
             throw new NullPointerException("transazione senza movimenti"); //todo logger ?
@@ -52,8 +59,8 @@ public class Ledge implements LedgeInterface{
                 addTransactionToScheduled(t);
             }else {
                 this.translist.add(t);
-                for (MovementInterface m : t.getMovements()) {
-                    getAccount(m.getAccountId()).addMovement(m);
+                for (int m : t.getMovements()) {
+                    getAccount(getMovement(m).getAccountId()).addMovement(m);
                 }
             }
         }
@@ -63,8 +70,9 @@ public class Ledge implements LedgeInterface{
     public boolean rmTransaction(TransactionInterface t) {
         if(getTransactions().contains(t)){
             if (!t.getMovements().isEmpty()) {
-                for (MovementInterface mov : t.getMovements()) {
-                    getAccount(mov.getAccountId()).rmMovement(mov);
+                for (int mov : t.getMovements()) {
+                    getAccount(getMovement(mov).getAccountId()).rmMovement(mov);
+                    this.movlist.remove(mov);
                 }
             }
             this.translist.remove(t);
@@ -94,12 +102,13 @@ public class Ledge implements LedgeInterface{
             for(TransactionInterface tra : getTransactions()){
                 tra.rmTag(t);
             }
-            if(!getScheduled().isEmpty()){
-                for(ScheduledInterface sched : getScheduled()){
-                    for(TransactionInterface tra : sched.getTransactions()){
-                        tra.rmTag(t);
-                    }
+            for(ScheduledInterface sched : getScheduled()){
+                for(TransactionInterface tra : sched.getTransactions()){
+                    tra.rmTag(t);
                 }
+            }
+            for(MovementInterface mov : this.movlist){
+                mov.rmTag(t);
             }
             this.taglist.remove(t);
             return true;
@@ -119,16 +128,19 @@ public class Ledge implements LedgeInterface{
     public boolean rmAccount(AccountInterface a) {
         if (getAccounts().contains(a)) {
             this.accountlist.remove(a);
-            if(getTransactions().isEmpty() && getScheduled().isEmpty()) {
-                return true;
-            }
-            for (TransactionInterface tra : getTransactions()) {
-                tra.rmMovement(x -> x.getAccountId() == a.getId());
-                if(tra.getMovements().isEmpty())
-                    rmTransaction(tra);
-            }
-            for(ScheduledInterface sched : getScheduled()){
-                sched.rmTransaction(x->x.rmMovement(y->y.getAccountId() == a.getId()));
+            for(int mov : a.getMovements()){
+                for(TransactionInterface tra : getTransactions()){
+                    tra.rmMovement(mov);
+                    if(tra.getMovements().isEmpty())
+                        rmTransaction(tra);
+                }
+                for(ScheduledInterface sched : getScheduled()){
+                    for(TransactionInterface tra2 : sched.getTransactions()){
+                        tra2.rmMovement(mov);
+                        if(tra2.getMovements().isEmpty())
+                            sched.addTransaction(tra2);
+                    }
+                }
             }
             return true;
         }
@@ -152,11 +164,21 @@ public class Ledge implements LedgeInterface{
     }
 
     @Override
+    public boolean addMovement(MovementInterface m) {
+        if(!movlist.contains(m)){
+            this.movlist.add(m);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public boolean rmMovement(MovementInterface m) {
         for(TransactionInterface tra: getTransactions()){
-            if(tra.getMovements().contains(m)) {
-                tra.rmMovement(m);
+            if(tra.getMovements().contains(m.getId())) {
+                tra.rmMovement(m.getId());
                 getAccount(m.getAccountId()).rmMovement(m);
+                this.movlist.remove(m);
                 return true;
             }
         }
@@ -216,13 +238,11 @@ public class Ledge implements LedgeInterface{
 
     @Override
     public MovementInterface getMovement(int id) {
-        MovementInterface m = null;
-        for(AccountInterface a: getAccounts()){
-            m = a.getMovement(id);
-            if(m != null)
-                break;
+        for(MovementInterface mov : getMovements()){
+            if(mov.getId() == id)
+                return mov;
         }
-        return m;
+        return null;
     }
 
     @Override
@@ -253,6 +273,9 @@ public class Ledge implements LedgeInterface{
         //TODO "list is always empty"
         ArrayList<Period> list = new ArrayList<>();
         for(TransactionInterface tra : getTransactions()){
+            if(list.isEmpty()) {
+                list.add(new Period(tra.getDate().getYear(), tra.getDate().getMonthValue(), tra.getTotalAmount()));
+            }
             for(Period p : list){
                 if(tra.getDate().getYear() == p.getYear() && tra.getDate().getMonthValue() == p.getMonth())
                     p.addValue(tra.getTotalAmount());

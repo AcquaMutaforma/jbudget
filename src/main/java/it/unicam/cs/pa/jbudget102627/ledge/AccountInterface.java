@@ -11,7 +11,7 @@ public interface AccountInterface {
     double getOpeningBalance();
     String getName();
     String getDescription();
-    List<MovementInterface> getMovements();
+    List<Integer> getMovements();
     AccountType getType();
 
     //setters
@@ -22,8 +22,9 @@ public interface AccountInterface {
     //Specific methods
     void addMovement(MovementInterface m);
     boolean rmMovement(MovementInterface m);
-    List<MovementInterface> getMovements(Predicate<MovementInterface> p);
-    MovementInterface getMovement(int id);
+
+    void addMovement(int m);
+    boolean rmMovement(int m);
 
     //load needs
     void setMovements(List<MovementInterface> mov);

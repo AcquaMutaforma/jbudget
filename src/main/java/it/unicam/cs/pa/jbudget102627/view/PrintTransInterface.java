@@ -5,7 +5,7 @@ import it.unicam.cs.pa.jbudget102627.ledge.TransactionInterface;
 
 public interface PrintTransInterface {
 
-    void printTransaction(TransactionInterface tra);
+    void printTransaction(TransactionInterface tra, Controller controller);
     TransactionInterface addTransaction(Controller controller);
     TransactionInterface rmTransaction(Controller controller);
 }
