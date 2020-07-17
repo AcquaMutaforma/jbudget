@@ -62,7 +62,7 @@ public class PrintTransaction extends Printer implements PrintTransInterface{
         tra = new Transaction(id,date);
         tra.setTags(taglist);
         for(Integer mov : movlist){
-            tra.addMovement(mov);
+            tra.addMovement(controller.getMovement(mov));
         }
         return tra;
     }

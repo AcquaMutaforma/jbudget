@@ -83,7 +83,7 @@ public class ViewCli implements ViewInterface{
         }
         if(this.controller.getReports() != null){
             for(BReportInterface rep : this.controller.getReports()){
-                this.printReport.printReport(rep);
+                this.printReport.printReport(rep,this.controller);
             }
         }
         if(this.controller.getTags() != null){
@@ -208,7 +208,7 @@ public class ViewCli implements ViewInterface{
     public void getTransactions() {
         System.out.print("\n-- Transazioni -------------------");
         for(TransactionInterface tra : controller.getTransactions()){
-            this.printTransaction.printTransaction(tra);
+            this.printTransaction.printTransaction(tra,this.controller);
         }
         System.out.print("\n----------------------------------");
     }
@@ -217,7 +217,7 @@ public class ViewCli implements ViewInterface{
     public void getScheduled() {
         System.out.print("\n-- Scheduled ---------------------");
         for(TransactionInterface sched : controller.getScheduledTransactions()){
-            this.printTransaction.printTransaction(sched);
+            this.printTransaction.printTransaction(sched,this.controller);
         }
         System.out.print("\n----------------------------------");
     }

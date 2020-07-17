@@ -97,6 +97,7 @@ public class Controller {
     public TransactionInterface getTransaction(int id){ return this.ledge.getTransaction(id); }
     public TagInterface getTag(int id){ return this.ledge.getTag(id); }
     public BReportInterface getReport(int id){ return this.budgetManager.getReport(id);}
+    public IdManagerInterface getIDManager(){ return this.idmanager; }
 
     public List<MovementInterface> getMovements(){
         List<MovementInterface> mlist = new ArrayList<>();

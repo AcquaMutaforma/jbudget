@@ -40,7 +40,7 @@ public class PrintBReport extends Printer implements PrintBReportInterface{
                 TagInterface t = controller.getTag(Integer.parseInt(returnLine()));
                 System.out.println("\nInsert the expected value of this tag: ");
                 double v = Double.parseDouble(returnLine());
-                b.set(t,v);
+                b.set(t.getId(),v);
             }
         }catch (IOException e){
             System.out.println("\nOne or more of the insert values was incorrect..");

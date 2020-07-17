@@ -10,7 +10,7 @@ public class Transaction implements TransactionInterface {
     private int id;
     private List<Integer> tagList;
     private LocalDate date;
-    private List<Integer> movList;
+    private final List<Integer> movList;
     private double balance;
 
     public Transaction(int id, LocalDate date){
@@ -112,7 +112,7 @@ public class Transaction implements TransactionInterface {
         }
         return false;
     }
-
+/*
     @Override
     public void addMovement(int m) {
         if(!this.movList.contains(m))
@@ -128,9 +128,11 @@ public class Transaction implements TransactionInterface {
         return false;
     }
 
+ */
+
     private void editBalance(MovementInterface m, boolean aor){
-        if(m.getType() == MovementType.CREDIT && aor ||
-                m.getType() == MovementType.DEBIT && !aor){
+        if((m.getType() == MovementType.CREDIT && aor) ||
+                (m.getType() == MovementType.DEBIT && !aor)){
             this.balance += m.getValue();
         }else
             this.balance -= m.getValue();

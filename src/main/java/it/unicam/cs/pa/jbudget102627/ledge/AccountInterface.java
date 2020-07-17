@@ -23,9 +23,6 @@ public interface AccountInterface {
     void addMovement(MovementInterface m);
     boolean rmMovement(MovementInterface m);
 
-    void addMovement(int m);
-    boolean rmMovement(int m);
-
     //load needs
     void setMovements(List<MovementInterface> mov);
     void balanceToOpening();

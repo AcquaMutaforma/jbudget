@@ -90,22 +90,6 @@ public class Account implements AccountInterface{
     }
 
     @Override
-    public void addMovement(int m) {
-        if(this.movlist.contains(m))
-            return;
-        this.movlist.add(m);
-    }
-
-    @Override
-    public boolean rmMovement(int m) {
-        if(this.movlist.contains(m)){
-            this.movlist.remove(m);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public void setMovements(List<MovementInterface> mov) {
         List<Integer> mlist = new ArrayList<>();
         for(MovementInterface m : mov){

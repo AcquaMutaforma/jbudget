@@ -67,7 +67,7 @@ public class Loader implements LoadInterface{
         Scanner scanner = new Scanner(f);
         Gson gson = new Gson();
         while(scanner.hasNextLine()){
-            Transaction tra = gson.fromJson(scanner.nextLine(), Transaction.class);
+            TransactionInterface tra = gson.fromJson(scanner.nextLine(), Transaction.class);
             c.addTransaction(tra);
         }
     }
@@ -92,7 +92,7 @@ public class Loader implements LoadInterface{
         Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
         while(scanner.hasNextLine()){
             MovementInterface mov = gson.fromJson(scanner.nextLine(), Movement.class);
-            c.getAccount(mov.getAccountId()).addMovement(mov);
+            c.addMovement(mov);
         }
     }
 
@@ -102,7 +102,6 @@ public class Loader implements LoadInterface{
             return new IDManager();
         Scanner scanner = new Scanner(f);
         Gson gson = new Gson();
-        IdManagerInterface idm = gson.fromJson(scanner.nextLine(), IDManager.class);
-        return idm;
+        return gson.fromJson(scanner.nextLine(), IDManager.class);
     }
 }

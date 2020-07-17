@@ -6,7 +6,7 @@ import it.unicam.cs.pa.jbudget102627.budget.BudgetInterface;
 
 public interface PrintBReportInterface {
 
-    void printReport(BReportInterface report);
+    void printReport(BReportInterface report, Controller controller);
     BudgetInterface addBudget(Controller controller);
     BReportInterface rmBudget(Controller controller);
 

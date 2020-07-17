@@ -19,6 +19,8 @@ public class Saver implements SaverInterface{
         s = s.concat("/jbudget_saves");
         File file = new File(s);
         file.mkdir();
+        saveIDManager(s,controller);
+
         if(!controller.getAccounts().isEmpty())
             saveAccounts(s,controller.getAccounts());
         if(!controller.getTags().isEmpty())
@@ -38,6 +40,13 @@ public class Saver implements SaverInterface{
         return new File(s.concat("/jbudget_saves")).exists();
     }
 
+    private void saveIDManager(String s,Controller controller) throws IOException {
+        s = s.concat("/idmanager.txt");
+        Gson gson = new Gson();
+        eraseLastSaves(s);
+        writeXtoY(gson.toJson(controller.getIDManager()).concat("\n"),s);
+    }
+
     private void saveTags(String s, List<TagInterface> taglist) throws IOException {
         s = s.concat("/tags.txt");
         Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
@@ -45,12 +54,11 @@ public class Saver implements SaverInterface{
         for(TagInterface t : taglist){
             writeXtoY(gson.toJson(t).concat("\n"),s);
         }
-
     }
 
     private void saveAccounts(String s, List<AccountInterface> acclist) throws IOException{
         s = s.concat("/accounts.txt");
-        Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
+        Gson gson = new Gson();
         eraseLastSaves(s);
         for(AccountInterface acc : acclist){
             writeXtoY(gson.toJson(acc).concat("\n"),s);
@@ -59,7 +67,7 @@ public class Saver implements SaverInterface{
 
     private void saveTransactions(String s, List<TransactionInterface> translist) throws IOException{
         s = s.concat("/transactions.txt");
-        Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
+        Gson gson = new Gson();
         eraseLastSaves(s);
         for(TransactionInterface tra : translist){
             writeXtoY(gson.toJson(tra).concat("\n"),s);
@@ -101,7 +109,6 @@ public class Saver implements SaverInterface{
     }
 
     private void eraseLastSaves(String filename) throws IOException {
-        File file = new File(filename);
         FileWriter writer= new FileWriter(filename);
         writer.write("");
         writer.close();

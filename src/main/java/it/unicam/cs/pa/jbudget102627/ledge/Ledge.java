@@ -60,7 +60,8 @@ public class Ledge implements LedgeInterface{
             }else {
                 this.translist.add(t);
                 for (int m : t.getMovements()) {
-                    getAccount(getMovement(m).getAccountId()).addMovement(m);
+                    MovementInterface mov = getMovement(m);
+                    getAccount(mov.getAccountId()).addMovement(mov);
                 }
             }
         }
@@ -71,7 +72,8 @@ public class Ledge implements LedgeInterface{
         if(getTransactions().contains(t)){
             if (!t.getMovements().isEmpty()) {
                 for (int mov : t.getMovements()) {
-                    getAccount(getMovement(mov).getAccountId()).rmMovement(mov);
+                    MovementInterface m = getMovement(mov);
+                    getAccount(m.getAccountId()).rmMovement(m);
                     this.movlist.remove(mov);
                 }
             }
@@ -130,13 +132,13 @@ public class Ledge implements LedgeInterface{
             this.accountlist.remove(a);
             for(int mov : a.getMovements()){
                 for(TransactionInterface tra : getTransactions()){
-                    tra.rmMovement(mov);
+                    tra.rmMovement(getMovement(mov));
                     if(tra.getMovements().isEmpty())
                         rmTransaction(tra);
                 }
                 for(ScheduledInterface sched : getScheduled()){
                     for(TransactionInterface tra2 : sched.getTransactions()){
-                        tra2.rmMovement(mov);
+                        tra2.rmMovement(getMovement(mov));
                         if(tra2.getMovements().isEmpty())
                             sched.addTransaction(tra2);
                     }
@@ -167,6 +169,7 @@ public class Ledge implements LedgeInterface{
     public boolean addMovement(MovementInterface m) {
         if(!movlist.contains(m)){
             this.movlist.add(m);
+            getAccount(m.getAccountId()).addMovement(m);
             return true;
         }
         return false;
@@ -176,7 +179,7 @@ public class Ledge implements LedgeInterface{
     public boolean rmMovement(MovementInterface m) {
         for(TransactionInterface tra: getTransactions()){
             if(tra.getMovements().contains(m.getId())) {
-                tra.rmMovement(m.getId());
+                tra.rmMovement(m);
                 getAccount(m.getAccountId()).rmMovement(m);
                 this.movlist.remove(m);
                 return true;
