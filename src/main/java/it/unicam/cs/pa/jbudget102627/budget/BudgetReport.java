@@ -6,12 +6,17 @@ import it.unicam.cs.pa.jbudget102627.ledge.TransactionInterface;
 
 import java.util.*;
 
+/**
+ * Calcola il valore di ogni tag presente nel budget,
+ * sottraendo ogni transazione al valore aspettato
+ * @author Pallotta Alessandro - 102627
+ */
 public class BudgetReport implements BReportInterface{
 
     private final int id;
     private final BudgetInterface budget;
     private final LedgeInterface ledge;
-    private Map<Integer,Double> report;
+    private final Map<Integer,Double> report;
 
     public BudgetReport(int id, BudgetInterface budget, LedgeInterface ledge) {
         this.id = id;
@@ -52,7 +57,7 @@ public class BudgetReport implements BReportInterface{
         if(tra.getTags().containsAll(filter)){
             for (int t : this.report.keySet()) {
                 if (tra.getTags().contains(t))
-                    editBalance(t, tra.getTotalAmount(),true);
+                    addToBalance(t, tra.getTotalAmount());
             }
         }
     }
@@ -63,21 +68,18 @@ public class BudgetReport implements BReportInterface{
         if(tra.getTags().containsAll(filter)){
             for (int t : this.report.keySet()) {
                 if (tra.getTags().contains(t))
-                    editBalance(t, tra.getTotalAmount(),false);
+                    rmToBalance(t, tra.getTotalAmount());
             }
             return true;
         }
         return false;
     }
 
-
-    private void editBalance(int tag, double value,boolean aor) {
-        double old = this.report.get(tag);
-        if(aor)
-            old += value;
-        else
-            old -= value;
-        this.report.put(tag,old);
+    private void addToBalance(int tag, double value) {
+        this.report.put(tag,this.report.get(tag)+value);
+    }
+    private void rmToBalance(int tag, double value) {
+        this.report.put(tag,this.report.get(tag)-value);
     }
 
     /**

@@ -6,10 +6,14 @@ import it.unicam.cs.pa.jbudget102627.ledge.TransactionInterface;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Gestisce i Budget e i BudgetReport
+ * @author Pallotta Alessandro - 102627
+ */
 public class BudgetManager implements BManagerInterface {
 
-    private List<BudgetInterface> budgetlist;
-    private List<BReportInterface> reportlist;
+    private final List<BudgetInterface> budgetlist;
+    private final List<BReportInterface> reportlist;
 
     public BudgetManager() {
         this.budgetlist = new ArrayList<>();
@@ -55,30 +59,27 @@ public class BudgetManager implements BManagerInterface {
 
     @Override
     public void generateReport(int id,BudgetInterface b, LedgeInterface l) {
-        /*per future implementazioni lo lasciamo cosi',
-        senno' avrebbe potuto avere lo stesso id del budget */
         BReportInterface rep = new BudgetReport(id,b,l);
         addReport(rep);
     }
 
     @Override
-    public void aorTransaction(TransactionInterface tra, boolean aor) {
+    public void addTransaction(TransactionInterface tra){
         if(tra == null)
             return;
-        if(aor) {
-            for (BReportInterface rep : getReports()) {
-                rep.addTransaction(tra);
-            }
-        }else{
-            for(BReportInterface rep : getReports()){
-                rep.rmTransaction(tra);
-            }
-        }
-        for(BReportInterface rep: getReports()){
-
+        for (BReportInterface rep : getReports()) {
+            rep.addTransaction(tra);
         }
     }
 
+    @Override
+    public void rmTransaction(TransactionInterface tra) {
+        if( tra == null)
+            return;
+        for (BReportInterface rep : getReports()) {
+            rep.rmTransaction(tra);
+        }
+    }
     @Override
     public BReportInterface getReport(int id) {
         for(BReportInterface rep : getReports()){

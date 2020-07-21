@@ -6,6 +6,10 @@ import it.unicam.cs.pa.jbudget102627.ledge.TransactionInterface;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * definisce le azioni base di un report
+ * @author Pallotta Alessandro - 102627
+ */
 public interface BReportInterface {
 
     int getId();

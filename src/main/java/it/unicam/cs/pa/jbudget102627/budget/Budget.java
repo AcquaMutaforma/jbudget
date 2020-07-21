@@ -4,14 +4,13 @@ import it.unicam.cs.pa.jbudget102627.ledge.TagInterface;
 
 import java.util.*;
 
+/**
+ * definisce un valore per ogni tag, se il valore impostato e' zero allora quel tag
+ * verra' utilizzato come filtro nelle transazioni; per esempio potremmo utilizzare il tag 2020
+ * con valore zero, per calcolare le transazioni escludendo quelle aventi tag 2019
+ * @author Pallotta Alessandro - 102627
+ */
 public class Budget implements BudgetInterface{
-
-    /*
-    Il budget conterra' dei tag con un valore e quelli, nel report, verranno calcolati
-    con le transazioni, ma si potra aggiungere tag con valore 0 per usarli da filtro,
-    il report cosi' andra' a cercare solo movimenti per ogni tag + i tag(=0),
-    tipo l'anno o tag descrittivi
-     */
 
     private String nome;
     private final int id;
@@ -31,7 +30,6 @@ public class Budget implements BudgetInterface{
 
     @Override
     public List<Integer> getTags() {
-        //TODO check if it works
         return new ArrayList<>(budgetmap.keySet());
     }
 
@@ -51,11 +49,16 @@ public class Budget implements BudgetInterface{
     }
 
     @Override
-    //TODO serve davvero ?
     public Map<Integer, Double> getMap() {
         return this.budgetmap;
     }
 
+    /**
+     * Restituisce una lista dei tag che hanno valore atteso zero, che verranno usati
+     * come filtro dal BudgetReport
+     * @return filterlist   lista degli id dei tag da usare come filtro per le transazioni
+     * @see Budget's javadoc
+     */
     @Override
     public List<Integer> getFilter() {
         List<Integer> filterlist = new ArrayList<>();

@@ -2,9 +2,6 @@ package it.unicam.cs.pa.jbudget102627;
 
 public class IDManager implements IdManagerInterface {
 
-    /*TODO magari puoi togliere i set, tanto saver carica un altro oggetto, e i getters sono usati
-       solamente da generateIDof() */
-
     private int idmovement;
     private int idtransaction;
     private int idaccount;
@@ -20,17 +17,17 @@ public class IDManager implements IdManagerInterface {
         this.idtag = 0;
         this.idreport = 0;
     }
-
+    @Override
     public int getIdmovement() {     return idmovement;    }
-
+    @Override
     public int getIdtransaction() {    return idtransaction;    }
-
+    @Override
     public int getIdaccount() { return idaccount; }
-
+    @Override
     public int getIdbudget() { return idbudget; }
-
+    @Override
     public int getIdtag() { return idtag; }
-
+    @Override
     public int getIdreport(){ return idreport; }
 
     @Override

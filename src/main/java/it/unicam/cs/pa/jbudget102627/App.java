@@ -72,8 +72,7 @@ public class App {
                 x.getMovementsOf();
             } catch (IOException e) {
                 e.printStackTrace();
-            }
-        });
+            } });
         commands.put("creaPrestito",ViewInterface::newPrestito);
 
         commands.put("save", x -> x.printSave(this.saver));
