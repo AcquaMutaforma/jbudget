@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/**
+ * Gestisce i componenti base dell'applicazione: movimenti, transazioni, account, tag.
+ * @author Pallotta Alessandro - 102627
+ */
 public class Ledge implements LedgeInterface{
-
 
     private final List<TransactionInterface> translist;
     private final List<TagInterface> taglist;
@@ -50,10 +53,15 @@ public class Ledge implements LedgeInterface{
         return this.movlist;
     }
 
+    /**
+     * Aggiunge una transazione e i suoi movimenti al loro account, se la data della transazione
+     * e' dopo di oggi, allora verra inserita nelle transazioni schedulate
+     * @param t transazione da aggiungere
+     */
     @Override
     public void addTransaction(TransactionInterface t) {
         if(t.getMovements().isEmpty())
-            throw new NullPointerException("transazione senza movimenti"); //todo logger ?
+            throw new NullPointerException("transazione senza movimenti");
         if(!getTransactions().contains(t)) {
             if(t.getDate().isAfter(LocalDate.now())){
                 addTransactionToScheduled(t);
@@ -67,6 +75,12 @@ public class Ledge implements LedgeInterface{
         }
     }
 
+    /**
+     * rimuove la transazione se avvenuta, anche i movimenti che negli account
+     * se invece e' nelle transazioni schedulate viene semplicemente cancellata
+     * @param t transazione da rimuovere
+     * @return true se e' stata trovata ed eliminata, false se non viene trovata
+     */
     @Override
     public boolean rmTransaction(TransactionInterface t) {
         if(getTransactions().contains(t)){
@@ -98,6 +112,11 @@ public class Ledge implements LedgeInterface{
         this.taglist.add(c);
     }
 
+    /**
+     * rimuove il tag dalla lista, da ogni transazione, transazione schedulata e movimento
+     * @param t tag da rimuovere
+     * @return true se e' stato trovato ed eliminato, false se non viene trovato il tag
+     */
     @Override
     public boolean rmTag(TagInterface t) {
         if(getTags().contains(t)){
@@ -126,6 +145,14 @@ public class Ledge implements LedgeInterface{
             return;
         this.accountlist.add(a);
     }
+
+    /**
+     * rimuove l'account e tutti i movimenti ad esso associati, controllando nelle transazioni
+     * e transazioni schedulate, al termine della rimozione se le transazioni non avessero
+     * altri movimenti vengono eliminate
+     * @param a account da rimuovere
+     * @return true se l'account viene trovato e rimosso, false se non viene trovato
+     */
     @Override
     public boolean rmAccount(AccountInterface a) {
         if (getAccounts().contains(a)) {
@@ -185,9 +212,22 @@ public class Ledge implements LedgeInterface{
                 return true;
             }
         }
+        for(TransactionInterface sche : getScheduledTransactions()){
+            if(sche.getMovements().contains(m.getId())) {
+                sche.rmMovement(m);
+                getAccount(m.getAccountId()).rmMovement(m);
+                this.movlist.remove(m);
+                return true;
+            }
+        }
         return false;
     }
 
+    /**
+     * crea una lista ove sono presenti tutte le transazioni schedulate.
+     * Utilizzato per semplificare altri metodi che devono controllare tutte le transazioni.
+     * @return lista di tutte le transazioni
+     */
     @Override
     public List<TransactionInterface> getScheduledTransactions() {
         List<TransactionInterface> list = new ArrayList<>();
@@ -249,6 +289,16 @@ public class Ledge implements LedgeInterface{
     }
 
     @Override
+    public ScheduledInterface getScheduled(LocalDate date) {
+        for(ScheduledInterface sched : getScheduled()){
+            if(sched.getDate().equals(date)){
+                return sched;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public AccountInterface getAccount(String s) {
         AccountInterface acc = null;
         for(AccountInterface a : getAccounts()){
@@ -271,13 +321,18 @@ public class Ledge implements LedgeInterface{
         return tag;
     }
 
+    /**
+     * crea una lista di period, che rappresenta tutte le transazioni effettuate raggruppate
+     * per mese ed anno.
+     * @return list di period
+     */
     @Override
     public ArrayList<Period> generatePeriod() {
-        //TODO "list is always empty"
+        //TODO "list is always empty" check it
         ArrayList<Period> list = new ArrayList<>();
         for(TransactionInterface tra : getTransactions()){
             if(list.isEmpty()) {
-                list.add(new Period(tra.getDate().getYear(), tra.getDate().getMonthValue(), tra.getTotalAmount()));
+                list.add(new Period(tra.getDate().getYear(), tra.getDate().getMonthValue(), 0));
             }
             for(Period p : list){
                 if(tra.getDate().getYear() == p.getYear() && tra.getDate().getMonthValue() == p.getMonth())
@@ -289,15 +344,29 @@ public class Ledge implements LedgeInterface{
         return list;
     }
 
+    /**
+     * aggiunge la transazione a scheduled se ne esiste uno con la stessa data,
+     * altrimenti viene creato un nuovo scheduled e viene inserita la transazione.
+     * @param t transazione con data dopo di oggi da inserire in scheduled
+     */
     private void addTransactionToScheduled(TransactionInterface t){
-        List<ScheduledInterface> l = getScheduled(x -> x.getDate() == t.getDate());
-        if(!l.isEmpty()) {
-            l.get(0).addTransaction(t);
-        }else{
+        ScheduledInterface sched = getScheduled(t.getDate());
+        if(sched != null)
+            sched.addTransaction(t);
+        else{
             ScheduledInterface s = new Scheduled(t.getDate());
             s.addTransaction(t);
             addScheduled(s);
         }
     }
 
+    @Override
+    public List<MovementInterface> getMovements(Predicate<MovementInterface> p){
+        List<MovementInterface> list = new ArrayList<>();
+        for(MovementInterface mov : getMovements()){
+            if(p.test(mov))
+                list.add(mov);
+        }
+        return list;
+    }
 }

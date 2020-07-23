@@ -6,6 +6,9 @@ import it.unicam.cs.pa.jbudget102627.ledge.TagInterface;
 
 import java.io.IOException;
 
+/**
+ * Responsabile della rappresentazione grafica dei Tag.
+ */
 public class PrintTag extends Printer implements PrintTagInterface{
 
     @Override

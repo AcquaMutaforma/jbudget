@@ -5,6 +5,9 @@ import it.unicam.cs.pa.jbudget102627.saver.LoadInterface;
 
 import java.io.IOException;
 
+/**
+ * responsabile di guidare l'utente nel caricamento dei dati.
+ */
 public class PrintLoader extends Printer implements PrintLoaderInterface {
 
     @Override

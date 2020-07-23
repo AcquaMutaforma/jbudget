@@ -5,6 +5,9 @@ import it.unicam.cs.pa.jbudget102627.saver.SaverInterface;
 
 import java.io.IOException;
 
+/**
+ * Responsabile di aiutare l'utente nel salvataggio dei dati.
+ */
 public class PrintSaver extends Printer implements PrintSaveInterface {
 
     @Override

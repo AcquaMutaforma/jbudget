@@ -8,6 +8,9 @@ import it.unicam.cs.pa.jbudget102627.ledge.TagInterface;
 
 import java.io.IOException;
 
+/**
+ * Responsabile della rappresentazione grafica dei budget e dei report.
+ */
 public class PrintBReport extends Printer implements PrintBReportInterface{
 
     @Override

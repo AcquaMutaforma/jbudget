@@ -16,7 +16,17 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Ha la responsabilita' di caricare i dati dai file txt nel programma.
+ */
 public class Loader implements LoadInterface{
+
+    /**
+     * Crea un nuovo controller e carica tutti gli elementi salvati su disco.
+     * @param path Stringa del percorso ove sono salvati i file
+     * @return controller con tutti gli oggetti caricati.
+     * @throws IOException viene lanciato se ci sono problemi a leggere i file.
+     */
     @Override
     public Controller loadController(String path) throws IOException {
         path = path.concat("/jbudget_saves");
@@ -25,6 +35,7 @@ public class Loader implements LoadInterface{
         loadTags(path,c);
         loadMovements(path,c);
         loadTransactions(path,c);
+        loadScheduleds(path,c);
         loadBudgets(path,c);
         return c;
     }
@@ -34,12 +45,19 @@ public class Loader implements LoadInterface{
         return new File(s.concat("/jbudget_saves")).getAbsoluteFile().exists();
     }
 
+    /**
+     * Carica gli account e li "resetta" portando il bilancio a quello iniziale
+     * e svuotando la lista dei movimenti.
+     * @param s percorso della directory
+     * @param c nuovo controller
+     * @throws IOException se lo scanner non riesce a leggere il file
+     */
     private void loadAccounts(String s,Controller c) throws IOException {
         File f = new File(s.concat("/accounts.txt"));
         if(!f.getAbsoluteFile().exists())
             return;
         Scanner scanner = new Scanner(f);
-        Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
+        Gson gson = new Gson();
         while(scanner.hasNextLine()){
             AccountInterface acc = gson.fromJson(scanner.nextLine(), Account.class);
             acc.setMovements(new ArrayList<>());
@@ -72,6 +90,18 @@ public class Loader implements LoadInterface{
         }
     }
 
+    private void loadScheduleds(String s, Controller c) throws IOException {
+        File f = new File(s.concat("/scheduleds.txt"));
+        if(!f.getAbsoluteFile().exists())
+            return;
+        Scanner scanner = new Scanner(f);
+        Gson gson = new Gson();
+        while(scanner.hasNextLine()){
+            TransactionInterface tra = gson.fromJson(scanner.nextLine(), Transaction.class);
+            c.addTransaction(tra);
+        }
+    }
+
     private void loadBudgets(String s,Controller c) throws IOException {
         File f = new File(s.concat("/budgets.txt"));
         if(!f.getAbsoluteFile().exists())
@@ -89,7 +119,7 @@ public class Loader implements LoadInterface{
         if(!f.getAbsoluteFile().exists())
             return;
         Scanner scanner = new Scanner(f);
-        Gson gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
+        Gson gson = new Gson();
         while(scanner.hasNextLine()){
             MovementInterface mov = gson.fromJson(scanner.nextLine(), Movement.class);
             c.addMovement(mov);

@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+/**
+ * Ha la responsabilita' di rappresentare un giorno e di contenere tutte le transazioni da
+ * pagare in quella determinata data.
+ */
 public class Scheduled implements ScheduledInterface{
 
     private List<TransactionInterface> translist;

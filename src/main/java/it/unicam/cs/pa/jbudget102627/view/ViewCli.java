@@ -11,6 +11,10 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.TreeSet;
 
+/**
+ * Responsabile della gestione della vista, della ricezione ed esecuzione dei comandi
+ * inseriti dall'utente
+ */
 public class ViewCli implements ViewInterface{
 
     private final BufferedReader input;
@@ -41,6 +45,11 @@ public class ViewCli implements ViewInterface{
         this.controller = controller;
     }
 
+    /**
+     * Utilizzato per caricare il controller dopo aver caricato al suo interno i dati
+     * precedentemente salvati su disco.
+     * @param c controller da caricare
+     */
     public void setController(Controller c){
         this.controller = c;
     }
@@ -73,6 +82,9 @@ public class ViewCli implements ViewInterface{
         System.out.println("Commands: "+ Arrays.toString(wordsArray));
     }
 
+    /**
+     * Rappresentazione dello stato del programma.
+     */
     @Override
     public void printState() {
         System.out.println("\n-------------------------------------------------------------");
@@ -94,8 +106,10 @@ public class ViewCli implements ViewInterface{
         System.out.println("\n-------------------------------------------------------------");
     }
 
-
-
+    /**
+     * Responsabile della ricezione dei comandi da parte dell'utente.
+     * @return comando da eseguire
+     */
     @Override
     public String getCommand() {
         printState();
@@ -109,6 +123,9 @@ public class ViewCli implements ViewInterface{
         }return toReturn;
     }
 
+    /**
+     * Fornisce informazioni extra all'utente.
+     */
     @Override
     public void printTutorial() {
         System.out.println("Per poter utilizzare correttamente il programma devono essere inizializzati alcuni oggetti:" +
@@ -198,10 +215,7 @@ public class ViewCli implements ViewInterface{
 
     @Override
     public void printPeriodList() {
-        //TODO check
-        for(Period p : controller.getPeriod()){
-            this.printperiod.printPeriod(p);
-        }
+        this.printperiod.printPeriod(controller.getPeriod());
     }
 
     @Override
@@ -230,7 +244,7 @@ public class ViewCli implements ViewInterface{
     @Override
     public void newPrestito() {
         System.out.println("\nPer descrivere un prestito si deve creare un account di tipo LIABILITY," +
-                " con il valore del prestito come bilancio iniziale.. ");
+                " con il valore del prestito come bilancio iniziale:");
         controller.addAccount(this.printAccount.addAccount(controller));
     }
 }

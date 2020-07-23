@@ -2,6 +2,9 @@ package it.unicam.cs.pa.jbudget102627.ledge;
 
 import java.util.Objects;
 
+/**
+ * Rappresenta un singolo Tag.
+ */
 public class Tag implements TagInterface {
 
     private int id;

@@ -3,9 +3,11 @@ package it.unicam.cs.pa.jbudget102627.ledge;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
+/**
+ * Ha la responsabilita' di rappresentare un conto in modo generico, cosi' da utilizzarlo per
+ * diversi scopi, come un portafogli o un prestito in banca.
+ */
 public class Account implements AccountInterface{
 
     private final int id;
@@ -17,7 +19,6 @@ public class Account implements AccountInterface{
     private List<Integer> movlist;
 
     public Account(int id,double ob,String n, String desc,AccountType at){
-        //todo Opening balance > 0 !!
         this.id = id;
         setOpeningBalance(ob);
         setName(n);

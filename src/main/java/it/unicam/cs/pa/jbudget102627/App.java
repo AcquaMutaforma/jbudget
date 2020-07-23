@@ -9,12 +9,15 @@ import it.unicam.cs.pa.jbudget102627.saver.SaverInterface;
 import it.unicam.cs.pa.jbudget102627.view.ViewCli;
 import it.unicam.cs.pa.jbudget102627.view.ViewInterface;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.TreeSet;
 import java.util.function.Consumer;
 
+/**
+ * Componente responsabile della gestione dei vari componenti del pattern MVC.
+ * Definisce ed esegue i comandi ricevuti dall'utente.
+ */
 public class App {
 
     private Controller controller;
@@ -51,6 +54,9 @@ public class App {
         System.exit(0);
     }
 
+    /**
+     * Crea la lista dei comandi disponibili all'utente
+     */
     private void createCommands(){
         HashMap<String,Consumer<ViewInterface>> commands = new HashMap<>();
         commands.put("help",s-> s.printCommands(new TreeSet<String>(commands.keySet())));
@@ -88,6 +94,11 @@ public class App {
         this.commands = commands;
     }
 
+    /**
+     * Carica un nuovo Controller sostituendolo a quello attivo.
+     * Utilizzato da Load per caricare i dati precedentemente salvati.
+     * @param c nuovo controller.
+     */
     public void loadController(Controller c){
         if(c != null){
             this.controller = c;

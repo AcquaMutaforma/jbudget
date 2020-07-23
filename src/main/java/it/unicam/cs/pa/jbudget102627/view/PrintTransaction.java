@@ -8,6 +8,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Responsabile della rappresentazione grafica delle transazioni.
+ */
 public class PrintTransaction extends Printer implements PrintTransInterface{
     @Override
     public void printTransaction(TransactionInterface tra, Controller controller) {

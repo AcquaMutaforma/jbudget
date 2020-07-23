@@ -25,11 +25,7 @@ public interface TransactionInterface {
 
     void addTag(int c);
     boolean rmTag(int c);
-    /*
-    void addMovement(int m);
-    boolean rmMovement(int m);
 
-     */
 
 
 }

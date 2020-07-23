@@ -7,6 +7,9 @@ import it.unicam.cs.pa.jbudget102627.ledge.AccountType;
 
 import java.io.IOException;
 
+/**
+ * Responsabile della rappresentazione grafica degli account.
+ */
 public class PrintAccount extends Printer implements PrintAccInterface{
 
     @Override
@@ -15,9 +18,15 @@ public class PrintAccount extends Printer implements PrintAccInterface{
         System.out.println(s);
     }
 
+    /**
+     * Crea un account dopo aver guidato l'utente nell'inserimento dei dati
+     * @param controller .
+     * @return AccountInterface con i valori inseriti in input, null se l'utente ha inserito
+     * dati non validi.
+     */
     @Override
     public AccountInterface addAccount(Controller controller) {
-        double openingbalance = 0.0;
+        double openingbalance;
         String name;
         String description;
         AccountType type = null;
@@ -58,8 +67,7 @@ public class PrintAccount extends Printer implements PrintAccInterface{
         try{
             System.out.println("\nInsert the ID of the account to remove : ");
             int id = Integer.parseInt(returnLine());
-            AccountInterface a = controller.getAccount(id);
-            return a;
+            return controller.getAccount(id);
         }catch (IOException e){
             System.out.println("\nAccount with the insert id was not found..");
             return null; }

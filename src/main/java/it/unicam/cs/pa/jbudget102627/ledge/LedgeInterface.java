@@ -1,12 +1,12 @@
 package it.unicam.cs.pa.jbudget102627.ledge;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
 public interface LedgeInterface {
 
-    //getters
     List<TransactionInterface> getTransactions();
     List<TransactionInterface> getTransactions(Predicate<TransactionInterface> p);
     List<TagInterface> getTags();
@@ -14,6 +14,7 @@ public interface LedgeInterface {
     List<ScheduledInterface> getScheduled();
     List<ScheduledInterface> getScheduled(Predicate<ScheduledInterface> p);
     List<MovementInterface> getMovements();
+    List<MovementInterface> getMovements(Predicate<MovementInterface> p);
 
     void addTransaction(TransactionInterface t);
     boolean rmTransaction(TransactionInterface t);
@@ -34,8 +35,10 @@ public interface LedgeInterface {
     TransactionInterface getTransaction(int id);
     TagInterface getTag(int id);
     MovementInterface getMovement(int id);
+    ScheduledInterface getScheduled(LocalDate date);
 
     AccountInterface getAccount(String s);
     TagInterface getTag(String s);
+
     ArrayList<Period> generatePeriod();
 }

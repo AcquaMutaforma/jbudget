@@ -1,5 +1,8 @@
 package it.unicam.cs.pa.jbudget102627;
 
+/**
+ * Responsabile della creazione degli ID per tutti gli oggetti utilizzati dal programma.
+ */
 public class IDManager implements IdManagerInterface {
 
     private int idmovement;
@@ -30,6 +33,11 @@ public class IDManager implements IdManagerInterface {
     @Override
     public int getIdreport(){ return idreport; }
 
+    /**
+     * Genera un ID in base alla stringa di input.
+     * @param s nome dell'oggetto per cui generare un id
+     * @return ID per un nuovo oggetto.
+     */
     @Override
     public int generateIdOf(String s) {
         switch (s){

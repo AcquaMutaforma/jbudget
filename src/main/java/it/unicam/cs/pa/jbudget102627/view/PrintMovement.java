@@ -54,8 +54,7 @@ public class PrintMovement extends Printer implements PrintMovInterface{
         try{
             System.out.println("\nInsert the ID of the Movement to remove : ");
             int id = Integer.parseInt(returnLine());
-            MovementInterface a = controller.getMovement(id);
-            return a;
+            return controller.getMovement(id);
         }catch (IOException e){
             System.out.println("\nMovement with the insert id was not found..");
             return null;
@@ -69,11 +68,13 @@ public class PrintMovement extends Printer implements PrintMovInterface{
             AccountInterface acc = controller.getAccount(Integer.parseInt(returnLine()));
             if (acc.getMovements().isEmpty())
                 System.out.println("\nNo Movements in this account...");
-            System.out.print("\n-- Movements -------------------------------");
-            for (MovementInterface mov : controller.getMovementsOf(acc)) {
-                printMovement(mov);
+            else{
+                System.out.print("\n-- Movements -------------------------------");
+                for (MovementInterface mov : controller.getMovementsOf(acc)) {
+                    printMovement(mov);
+                }
+                System.out.print("\n--------------------------------------------");
             }
-            System.out.print("\n--------------------------------------------");
         }catch (IOException e){
             System.out.print("\nAccount not found...");
         }

@@ -112,23 +112,6 @@ public class Transaction implements TransactionInterface {
         }
         return false;
     }
-/*
-    @Override
-    public void addMovement(int m) {
-        if(!this.movList.contains(m))
-            this.movList.add(m);
-    }
-
-    @Override
-    public boolean rmMovement(int m) {
-        if(this.movList.contains(m)){
-            this.movList.remove(m);
-            return true;
-        }
-        return false;
-    }
-
- */
 
     private void editBalance(MovementInterface m, boolean aor){
         if((m.getType() == MovementType.CREDIT && aor) ||

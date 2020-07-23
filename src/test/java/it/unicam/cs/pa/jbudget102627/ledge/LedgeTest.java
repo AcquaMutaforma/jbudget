@@ -3,9 +3,10 @@ package it.unicam.cs.pa.jbudget102627.ledge;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class LedgeTest {
 
@@ -17,7 +18,9 @@ class LedgeTest {
         Account a = new Account(0,0,"aa","aa",AccountType.ASSET);
         TagInterface t = new Tag(0,"test");
         ledge.addTag(t);
-        Movement m = new Movement(0,2,"",MovementType.CREDIT,ledge.getTags(),t1.getDate(),a);
+        List<Integer> taglist = new ArrayList<>();
+        taglist.add(t.getId());
+        Movement m = new Movement(0,2,"",MovementType.CREDIT,taglist,t1.getDate(),a);
 
         t1.addMovement(m);
         t2.addMovement(m);
@@ -27,7 +30,7 @@ class LedgeTest {
         ledge.addTransaction(t2);
         assertTrue(ledge.getTransactions(x -> x.getId() > 5).isEmpty());
         assertTrue(ledge.getTransactions(x -> x.getDate()==null).isEmpty());
-        assertTrue(ledge.getTransactions(x -> x.getId() == 1).size() == 1);
+        assertEquals(ledge.getTransactions(x -> x.getId() == 1).size(),1);
     }
 
     @Test
@@ -37,7 +40,9 @@ class LedgeTest {
         Account a = new Account(0,0,"aa","aa",AccountType.ASSET);
         TagInterface t = new Tag(0,"test");
         ledge.addTag(t);
-        Movement m = new Movement(0,2,"",MovementType.CREDIT,ledge.getTags(),t1.getDate(),a);
+        List<Integer> taglist = new ArrayList<>();
+        taglist.add(t.getId());
+        Movement m = new Movement(0,2,"",MovementType.CREDIT,taglist,t1.getDate(),a);
 
         t1.addMovement(m);
 
@@ -55,7 +60,9 @@ class LedgeTest {
         Account a = new Account(0,0,"aa","aa",AccountType.ASSET);
         TagInterface t = new Tag(0,"test");
         ledge.addTag(t);
-        Movement m = new Movement(0,2,"",MovementType.CREDIT,ledge.getTags(),t1.getDate(),a);
+        List<Integer> taglist = new ArrayList<>();
+        taglist.add(t.getId());
+        Movement m = new Movement(0,2,"",MovementType.CREDIT,taglist,t1.getDate(),a);
         t1.addMovement(m);
 
         t1.addTag(t);
@@ -75,7 +82,9 @@ class LedgeTest {
         Account a = new Account(0,0,"aa","aa",AccountType.ASSET);
         TagInterface t = new Tag(0,"test");
         ledge.addTag(t);
-        Movement m = new Movement(0,2,"",MovementType.CREDIT,ledge.getTags(),t1.getDate(),a);
+        List<Integer> taglist = new ArrayList<>();
+        taglist.add(t.getId());
+        Movement m = new Movement(0,2,"",MovementType.CREDIT,taglist,t1.getDate(),a);
         t1.addMovement(m);
         ledge.addTransaction(t1);
         ledge.addAccount(a);

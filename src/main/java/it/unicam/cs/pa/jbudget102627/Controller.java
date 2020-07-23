@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+/**
+ * Responsabile di coordinare tutti gli elementi appartenenti al Model del pattern MVC.
+ */
 public class Controller {
-
 
     private final LedgeInterface ledge;
     private final BManagerInterface budgetManager;
@@ -29,15 +31,14 @@ public class Controller {
         if(tra == null)
             return;
         this.ledge.addTransaction(tra);
-        //TODO fix: ledge scarta le transazioni sbagliate, il budget manager ?
         if(this.ledge.getTransaction(tra.getId()) != null && this.budgetManager.getBudgets() != null)
-            this.budgetManager.aorTransaction(tra,true);
+            this.budgetManager.addTransaction(tra);
     }
     public boolean rmTransaction(TransactionInterface tra){
         if(tra == null)
             return false;
         if(this.ledge.rmTransaction(tra)){
-            this.budgetManager.aorTransaction(tra,false);
+            this.budgetManager.rmTransaction(tra);
             return true;
         }else{
             return false;
@@ -112,23 +113,18 @@ public class Controller {
     public List<TransactionInterface> getScheduledTransactions(){ return this.ledge.getScheduledTransactions(); }
     public List<BReportInterface> getReports(){ return this.budgetManager.getReports(); }
     public List<TagInterface> getTags(){  return this.ledge.getTags();  }
-    //TODO getMovementsof manca sulla view e come comando in app
+
     public List<MovementInterface> getMovementsOf(AccountInterface a){
-        List<MovementInterface> list = new ArrayList<>();
-        for(int mov : a.getMovements()){
-            list.add(getMovement(mov));
-        }
-        return list;
+        return this.ledge.getMovements( x -> x.getAccountId() == a.getId());
     }
     public List<BudgetInterface> getBudgets(){ return this.budgetManager.getBudgets();}
 
     public AccountInterface getAccount(String s){ return ledge.getAccount(s); }
     public TagInterface getTag(String s) { return ledge.getTag(s); }
-    //TODO
     public List<Period> getPeriod(){ return this.ledge.generatePeriod(); }
 
     public void addMovement(MovementInterface mov) {
-        //TODO vedi un po che fa il ledge,per sicurezza
         this.ledge.addMovement(mov);
     }
+
 }
