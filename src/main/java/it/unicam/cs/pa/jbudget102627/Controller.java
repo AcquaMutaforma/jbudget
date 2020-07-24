@@ -5,7 +5,7 @@ import it.unicam.cs.pa.jbudget102627.budget.BReportInterface;
 import it.unicam.cs.pa.jbudget102627.budget.BudgetInterface;
 import it.unicam.cs.pa.jbudget102627.ledge.*;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -19,13 +19,10 @@ public class Controller {
     private final IdManagerInterface idmanager;
 
     public Controller(LedgeInterface l, BManagerInterface bm, IdManagerInterface idm) {
-
         this.ledge = l;
         this.budgetManager = bm;
         this.idmanager = idm;
     }
-
-
 
     public void addTransaction(TransactionInterface tra){
         if(tra == null)
@@ -84,47 +81,41 @@ public class Controller {
         }
     }
 
+    public void addMovement(MovementInterface mov) {
+        this.ledge.addMovement(mov);
+    }
+
     public boolean rmMovement(MovementInterface m){
         if(m == null)
             return false;
-        return this.ledge.rmMovement(m); }
+        return this.ledge.rmMovement(m);
+    }
 
     public int generateIDof(String s){ return this.idmanager.generateIdOf(s); }
 
-    //Getters
-
+    //GETTERS
     public AccountInterface getAccount(int id){ return this.ledge.getAccount(id); }
     public MovementInterface getMovement(int id){ return this.ledge.getMovement(id); }
     public TransactionInterface getTransaction(int id){ return this.ledge.getTransaction(id); }
     public TagInterface getTag(int id){ return this.ledge.getTag(id); }
     public BReportInterface getReport(int id){ return this.budgetManager.getReport(id);}
-    public IdManagerInterface getIDManager(){ return this.idmanager; }
 
-    public List<MovementInterface> getMovements(){
-        List<MovementInterface> mlist = new ArrayList<>();
-        for(AccountInterface acc: getAccounts()){
-            mlist.addAll(getMovementsOf(acc));
-        }
-        return mlist;
-    }
+    public IdManagerInterface getIDManager(){ return this.idmanager; }
+    public List<MovementInterface> getMovements(){ return this.ledge.getMovements(); }
     public List<AccountInterface> getAccounts(){ return this.ledge.getAccounts(); }
     public List<TransactionInterface> getTransactions(){ return this.ledge.getTransactions(); }
     public List<TransactionInterface> getTransactions(Predicate<TransactionInterface> p){ return this.ledge.getTransactions(p); }
     public List<TransactionInterface> getScheduledTransactions(){ return this.ledge.getScheduledTransactions(); }
     public List<BReportInterface> getReports(){ return this.budgetManager.getReports(); }
     public List<TagInterface> getTags(){  return this.ledge.getTags();  }
-
-    public List<MovementInterface> getMovementsOf(AccountInterface a){
-        return this.ledge.getMovements( x -> x.getAccountId() == a.getId());
-    }
     public List<BudgetInterface> getBudgets(){ return this.budgetManager.getBudgets();}
-
     public AccountInterface getAccount(String s){ return ledge.getAccount(s); }
     public TagInterface getTag(String s) { return ledge.getTag(s); }
     public List<Period> getPeriod(){ return this.ledge.generatePeriod(); }
+    public List<ScheduledInterface> getScheduled() {return this.ledge.getScheduled(); }
 
-    public void addMovement(MovementInterface mov) {
-        this.ledge.addMovement(mov);
+    public List<MovementInterface> getMovementsOf(AccountInterface a){
+        return this.ledge.getMovements( x -> x.getAccountId() == a.getId());
     }
 
 }

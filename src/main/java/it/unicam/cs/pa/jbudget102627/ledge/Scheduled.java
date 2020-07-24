@@ -46,14 +46,14 @@ public class Scheduled implements ScheduledInterface{
     public boolean rmTransaction(Predicate<TransactionInterface> p) {
         if(isComplete())
             return false;
-        boolean alo = false;
+        List<TransactionInterface> rmlist = new ArrayList<>();
         for(TransactionInterface tra : getTransactions()){
             if(p.test(tra)){
-                rmTransaction(tra);
-                alo = true;
+                rmlist.add(tra);
             }
         }
-        return alo;
+        this.translist.removeAll(rmlist);
+        return true;
     }
 
     @Override

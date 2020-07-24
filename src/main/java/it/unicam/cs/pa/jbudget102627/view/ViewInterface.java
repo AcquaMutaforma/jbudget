@@ -38,6 +38,7 @@ public interface ViewInterface {
     void printPeriodList();
     void getTransactions();
     void getScheduled( );
+    void getAllMovements();
     void getMovementsOf( ) throws IOException;
     void newPrestito( );
 }

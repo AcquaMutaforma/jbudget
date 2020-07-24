@@ -61,7 +61,7 @@ public class Transaction implements TransactionInterface {
     @Override
     public boolean rmTag(TagInterface c) {
         if(getTags().contains(c.getId())){
-            getTags().remove(c.getId());
+            getTags().remove((Integer)c.getId());
             return true;
         }else{
             return false;
@@ -90,7 +90,7 @@ public class Transaction implements TransactionInterface {
     @Override
     public boolean rmMovement(MovementInterface m) {
         if(getMovements().contains(m.getId())){
-            this.movList.remove(m.getId());
+            this.movList.remove((Integer)m.getId());
             editBalance(m,false);
             return true;
         }else{
@@ -107,7 +107,7 @@ public class Transaction implements TransactionInterface {
     @Override
     public boolean rmTag(int c) {
         if(this.tagList.contains(c)){
-            this.tagList.remove(c);
+            this.tagList.remove((Integer)c);
             return true;
         }
         return false;

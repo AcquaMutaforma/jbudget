@@ -73,6 +73,7 @@ public class App {
         commands.put("statistics", ViewInterface::printPeriodList);
         commands.put("getTransactions", ViewInterface::getTransactions);
         commands.put("getScheduled", ViewInterface::getScheduled);
+        commands.put("getAllMovements", ViewInterface::getAllMovements);
         commands.put("getMovements", x -> {
             try {
                 x.getMovementsOf();

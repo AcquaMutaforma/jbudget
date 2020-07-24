@@ -64,20 +64,20 @@ public class Account implements AccountInterface{
     }
 
     /**
-     * questo metodo aggiunge un movimento all'account ne modifica il bilancio tramite editBalance
+     * questo metodo aggiunge un movimento all'account ne modifica il bilancio tramite addToBalance
      * @param m movimento che andremo ad inserire
      */
     @Override
     public void addMovement(MovementInterface m) {
         if(!getMovements().contains(m.getId())) {
             this.movlist.add(m.getId());
-            this.editBalance(m,true);
+            this.addToBalance(m);
         }
     }
 
     /**
      * questo metodo verifica la presenza del movimento, se presente verra' rimosso e il bilancio
-     * verra' aggiornato tramite editBalance()
+     * verra' aggiornato tramite rmToBalance()
      * @param m movimento da rimuovere dall'account
      * @return false se non e' presente il movimento , true se e' presente
      */
@@ -85,8 +85,8 @@ public class Account implements AccountInterface{
     public boolean rmMovement(MovementInterface m) {
         if(!getMovements().contains(m.getId()))
             return false;
-        getMovements().remove(m.getId());
-        this.editBalance(m,false);
+        getMovements().remove((Integer)m.getId());
+        this.rmToBalance(m);
         return true;
     }
 
@@ -99,20 +99,20 @@ public class Account implements AccountInterface{
         this.movlist = mlist;
     }
 
-    /**
-     * metodo per la modifica del bilancio invocato da addMovement e rmMovement
-     * @param m movimento legato all'azione di add o remove
-     * @param aor AddOrRemove, true se sto aggiungendo il movimento, false se lo sto eliminando
-     */
-    private void editBalance(MovementInterface m,boolean aor){
+    private void addToBalance(MovementInterface m){
         if(((getType() == AccountType.ASSET)&&(m.getType() == MovementType.CREDIT)) ||
-                (getType() == AccountType.LIABILITIES)&&(m.getType() == MovementType.DEBIT)) {
-            if (aor) {
-                this.balance += m.getValue();
-            } else {
-                this.balance -= m.getValue();
-            }
-        }
+                (getType() == AccountType.LIABILITIES)&&(m.getType() == MovementType.DEBIT))
+            this.balance += m.getValue();
+        else
+            this.balance -= m.getValue();
+    }
+
+    private void rmToBalance(MovementInterface m){
+        if(((getType() == AccountType.ASSET)&&(m.getType() == MovementType.CREDIT)) ||
+                (getType() == AccountType.LIABILITIES)&&(m.getType() == MovementType.DEBIT))
+            this.balance -= m.getValue();
+        else
+            this.balance += m.getValue();
     }
 
     @Override

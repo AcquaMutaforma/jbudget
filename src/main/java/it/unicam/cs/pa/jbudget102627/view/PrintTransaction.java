@@ -22,7 +22,9 @@ public class PrintTransaction extends Printer implements PrintTransInterface{
             printtag.printTag(controller.getTag(t));
         }
         for(int mov : tra.getMovements()){
-            printmov.printMovement(controller.getMovement(mov));
+            MovementInterface m = controller.getMovement(mov);
+            if(m != null)
+                printmov.printMovement(m);
         }
         System.out.println("\n-------------------------------------------------------");
     }
@@ -71,15 +73,14 @@ public class PrintTransaction extends Printer implements PrintTransInterface{
     }
 
     @Override
-    public TransactionInterface rmTransaction(Controller controller) {
+    public int rmTransaction() {
         System.out.println("\nRemoving a Transaction..");
         try{
             System.out.println("\nInsert the ID of the Transaction to remove : ");
-            int id = Integer.parseInt(returnLine());
-            return controller.getTransaction(id);
+            return Integer.parseInt(returnLine());
         }catch (IOException e){
             System.out.println("\nTransaction with the insert id was not found..");
-            return null;
+            return 0;
         }
     }
 }

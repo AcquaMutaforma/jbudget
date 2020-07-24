@@ -170,7 +170,7 @@ public class ViewCli implements ViewInterface{
 
     @Override
     public void rmTransaction() {
-        if(this.controller.rmTransaction(this.printTransaction.rmTransaction(this.controller))){
+        if(this.controller.rmTransaction(controller.getTransaction(this.printTransaction.rmTransaction()))){
             System.out.println("\nTransaction removed !");
         }else{
             System.out.println("\nThe Transaction was not removed...");
@@ -224,21 +224,32 @@ public class ViewCli implements ViewInterface{
         for(TransactionInterface tra : controller.getTransactions()){
             this.printTransaction.printTransaction(tra,this.controller);
         }
-        System.out.print("\n----------------------------------");
+        System.out.print("\n----------------------------------Fine Transazioni");
     }
 
     @Override
     public void getScheduled() {
+        if(controller.getScheduled().isEmpty()) {
+            System.out.print("\nThere are not any scheduled Transactions");
+            return;
+        }
         System.out.print("\n-- Scheduled ---------------------");
         for(TransactionInterface sched : controller.getScheduledTransactions()){
             this.printTransaction.printTransaction(sched,this.controller);
         }
-        System.out.print("\n----------------------------------");
+        System.out.print("\n----------------------------------End Scheduled list");
     }
 
     @Override
     public void getMovementsOf() throws IOException {
         printMovement.printMovementOf(controller);
+    }
+
+    @Override
+    public void getAllMovements() {
+        for(MovementInterface mov : controller.getMovements()){
+            printMovement.printMovement(mov);
+        }
     }
 
     @Override

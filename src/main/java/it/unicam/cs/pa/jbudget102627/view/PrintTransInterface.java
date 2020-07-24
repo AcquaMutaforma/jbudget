@@ -7,5 +7,5 @@ public interface PrintTransInterface {
 
     void printTransaction(TransactionInterface tra, Controller controller);
     TransactionInterface addTransaction(Controller controller);
-    TransactionInterface rmTransaction(Controller controller);
+    int rmTransaction();
 }

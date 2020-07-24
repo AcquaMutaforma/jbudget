@@ -55,13 +55,16 @@ public class Ledge implements LedgeInterface{
 
     /**
      * Aggiunge una transazione e i suoi movimenti al loro account, se la data della transazione
-     * e' dopo di oggi, allora verra inserita nelle transazioni schedulate
+     * e' dopo di oggi, allora verra inserita nelle transazioni schedulate.
+     * Se la transazione non contiene movimenti verra' scartata
      * @param t transazione da aggiungere
      */
     @Override
     public void addTransaction(TransactionInterface t) {
-        if(t.getMovements().isEmpty())
-            throw new NullPointerException("transazione senza movimenti");
+        if(t.getMovements().isEmpty()){
+            System.out.println("\nTransaction without movements, not added to the ledge..");
+            return;
+        }
         if(!getTransactions().contains(t)) {
             if(t.getDate().isAfter(LocalDate.now())){
                 addTransactionToScheduled(t);
@@ -88,7 +91,7 @@ public class Ledge implements LedgeInterface{
                 for (int mov : t.getMovements()) {
                     MovementInterface m = getMovement(mov);
                     getAccount(m.getAccountId()).rmMovement(m);
-                    this.movlist.remove(mov);
+                    this.movlist.remove(m);
                 }
             }
             this.translist.remove(t);
@@ -160,17 +163,12 @@ public class Ledge implements LedgeInterface{
             for(int mov : a.getMovements()){
                 for(TransactionInterface tra : getTransactions()){
                     tra.rmMovement(getMovement(mov));
-                    if(tra.getMovements().isEmpty())
-                        rmTransaction(tra);
                 }
-                for(ScheduledInterface sched : getScheduled()){
-                    for(TransactionInterface tra2 : sched.getTransactions()){
-                        tra2.rmMovement(getMovement(mov));
-                        if(tra2.getMovements().isEmpty())
-                            sched.addTransaction(tra2);
-                    }
+                for(TransactionInterface tra2 : getScheduledTransactions()){
+                    tra2.rmMovement(getMovement(mov));
                 }
             }
+            rmEmptyTransactions();
             return true;
         }
         return false;
@@ -196,7 +194,6 @@ public class Ledge implements LedgeInterface{
     public boolean addMovement(MovementInterface m) {
         if(!movlist.contains(m)){
             this.movlist.add(m);
-            getAccount(m.getAccountId()).addMovement(m);
             return true;
         }
         return false;
@@ -204,12 +201,14 @@ public class Ledge implements LedgeInterface{
 
     @Override
     public boolean rmMovement(MovementInterface m) {
+        boolean rm = false;
         for(TransactionInterface tra: getTransactions()){
             if(tra.getMovements().contains(m.getId())) {
                 tra.rmMovement(m);
                 getAccount(m.getAccountId()).rmMovement(m);
                 this.movlist.remove(m);
-                return true;
+                rm = true;
+                break;
             }
         }
         for(TransactionInterface sche : getScheduledTransactions()){
@@ -217,10 +216,12 @@ public class Ledge implements LedgeInterface{
                 sche.rmMovement(m);
                 getAccount(m.getAccountId()).rmMovement(m);
                 this.movlist.remove(m);
-                return true;
+                rm = true;
+                break;
             }
         }
-        return false;
+        rmEmptyTransactions();
+        return rm;
     }
 
     /**
@@ -266,6 +267,10 @@ public class Ledge implements LedgeInterface{
         for(TransactionInterface t: getTransactions()){
             if(t.getId() == id)
                 return t;
+        }
+        for(TransactionInterface tsched : getScheduledTransactions()){
+            if(tsched.getId() == id)
+                return tsched;
         }
         return null;
     }
@@ -368,5 +373,23 @@ public class Ledge implements LedgeInterface{
                 list.add(mov);
         }
         return list;
+    }
+
+    private void rmEmptyTransactions(){
+        List<TransactionInterface> rmlist = new ArrayList<>();
+        for(TransactionInterface tra: getTransactions()){
+            if(tra.getMovements().isEmpty())
+                rmlist.add(tra);
+        }
+        this.translist.removeAll(rmlist);
+
+        List<ScheduledInterface> rmlist2 = new ArrayList<>();
+        for(ScheduledInterface sched : getScheduled()){
+            sched.rmTransaction(x -> x.getMovements().isEmpty());
+            if(sched.isComplete())
+                rmlist2.add(sched);
+        }
+        this.scheduledlist.removeAll(rmlist2);
+
     }
 }
