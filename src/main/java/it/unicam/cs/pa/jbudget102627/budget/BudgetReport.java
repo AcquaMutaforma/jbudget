@@ -75,6 +75,11 @@ public class BudgetReport implements BReportInterface{
         return false;
     }
 
+    @Override
+    public void rmTag(TagInterface t) {
+        this.report.remove(t.getId());
+    }
+
     private void addToBalance(int tag, double value) {
         this.report.put(tag,this.report.get(tag)+value);
     }

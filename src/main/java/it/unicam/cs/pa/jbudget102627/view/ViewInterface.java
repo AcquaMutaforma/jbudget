@@ -41,4 +41,6 @@ public interface ViewInterface {
     void getAllMovements();
     void getMovementsOf( ) throws IOException;
     void newPrestito( );
+
+    void checkScheduleds();
 }

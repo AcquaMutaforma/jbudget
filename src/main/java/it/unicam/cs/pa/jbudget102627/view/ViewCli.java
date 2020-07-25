@@ -87,7 +87,7 @@ public class ViewCli implements ViewInterface{
      */
     @Override
     public void printState() {
-        System.out.println("\n-------------------------------------------------------------");
+        System.out.println("\n-- State of application -------------------------------------------------");
         if(this.controller.getAccounts() != null) {
             for(AccountInterface a : this.controller.getAccounts()){
                 this.printAccount.printAccount(a);
@@ -103,7 +103,7 @@ public class ViewCli implements ViewInterface{
                 this.printTag.printTag(tag);
             }
         }
-        System.out.println("\n-------------------------------------------------------------");
+        System.out.println("\n-------------------------------------------------------------End State");
     }
 
     /**
@@ -134,7 +134,9 @@ public class ViewCli implements ViewInterface{
                 "\n[3] save -- Crea un nuovo salvataggio con tutti gli elementi presenti, se erano presenti altri file vengono sovrascritti !"+
                 "si consiglia di utilizzare questo come ultimo comando prima di uscire dall'applicazione."+
                 "\n[4] load -- Carica i file che vengono trovati, se vegono eseguite delle azioni prima del caricamento, verranno sovrascitte "+
-                "si consiglia di utilizzare questo come primo comando.");
+                "si consiglia di utilizzare questo come primo comando."+
+                "\n[5] checkScheduled -- Utile per aggiornare gli scheduled in caso il programma sia attivo da piu' giorni."+
+                "\n[6] newLoan -- Comando per definire un prestito sotto forma di account.");
     }
 
     @Override
@@ -220,11 +222,15 @@ public class ViewCli implements ViewInterface{
 
     @Override
     public void getTransactions() {
-        System.out.print("\n-- Transazioni -------------------");
+        if(controller.getTransactions().isEmpty()){
+            System.out.print("\nNo Transactions has been found..");
+            return;
+        }
+        System.out.print("\n-- Transactions -------------------");
         for(TransactionInterface tra : controller.getTransactions()){
             this.printTransaction.printTransaction(tra,this.controller);
         }
-        System.out.print("\n----------------------------------Fine Transazioni");
+        System.out.print("\n----------------------------------End Transactions");
     }
 
     @Override
@@ -254,8 +260,13 @@ public class ViewCli implements ViewInterface{
 
     @Override
     public void newPrestito() {
-        System.out.println("\nPer descrivere un prestito si deve creare un account di tipo LIABILITY," +
-                " con il valore del prestito come bilancio iniziale:");
+        System.out.println("\nTo define a new Loan its needed to create a new Account of Liability type\n"
+        +"with the amount of it as the value of the account :");
         controller.addAccount(this.printAccount.addAccount(controller));
+    }
+
+    @Override
+    public void checkScheduleds() {
+        this.controller.checkScheduleds();
     }
 }

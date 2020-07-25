@@ -1,6 +1,7 @@
 package it.unicam.cs.pa.jbudget102627.budget;
 
 import it.unicam.cs.pa.jbudget102627.ledge.LedgeInterface;
+import it.unicam.cs.pa.jbudget102627.ledge.TagInterface;
 import it.unicam.cs.pa.jbudget102627.ledge.TransactionInterface;
 
 import java.util.List;
@@ -25,4 +26,5 @@ public interface BManagerInterface {
 
     BReportInterface getReport(int id);
 
+    void rmTag(TagInterface t);
 }

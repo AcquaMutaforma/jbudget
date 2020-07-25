@@ -20,4 +20,5 @@ public interface BudgetInterface {
     Map<Integer, Double> getMap();
     List<Integer> getFilter();
 
+    void rmTag(TagInterface t);
 }

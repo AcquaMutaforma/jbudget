@@ -73,6 +73,7 @@ public class App {
         commands.put("statistics", ViewInterface::printPeriodList);
         commands.put("getTransactions", ViewInterface::getTransactions);
         commands.put("getScheduled", ViewInterface::getScheduled);
+        commands.put("checkScheduled", ViewInterface::checkScheduleds);
         commands.put("getAllMovements", ViewInterface::getAllMovements);
         commands.put("getMovements", x -> {
             try {
@@ -80,7 +81,7 @@ public class App {
             } catch (IOException e) {
                 e.printStackTrace();
             } });
-        commands.put("creaPrestito",ViewInterface::newPrestito);
+        commands.put("newLoan",ViewInterface::newPrestito);
 
         commands.put("save", x -> x.printSave(this.saver));
         commands.put("load", x-> {

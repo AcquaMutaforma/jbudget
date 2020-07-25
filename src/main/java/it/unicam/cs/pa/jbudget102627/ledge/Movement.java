@@ -89,7 +89,7 @@ public class Movement implements MovementInterface {
     @Override
     public boolean rmTag(TagInterface c) {
         if(getTags().contains(c.getId())){
-            getTags().remove(c.getId());
+            getTags().remove((Integer)c.getId());
             return true;
         }else{
             return false;

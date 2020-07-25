@@ -1,6 +1,7 @@
 package it.unicam.cs.pa.jbudget102627.budget;
 
 import it.unicam.cs.pa.jbudget102627.ledge.LedgeInterface;
+import it.unicam.cs.pa.jbudget102627.ledge.TagInterface;
 import it.unicam.cs.pa.jbudget102627.ledge.TransactionInterface;
 
 import java.util.ArrayList;
@@ -87,5 +88,20 @@ public class BudgetManager implements BManagerInterface {
                 return rep;
         }
         return null;
+    }
+
+    @Override
+    public void rmTag(TagInterface t) {
+        for(BudgetInterface bud : getBudgets()){
+            bud.rmTag(t);
+        }
+        for(BReportInterface rep : getReports()){
+            rep.rmTag(t);
+        }
+        rmEmptyBudgets();
+    }
+
+    private void rmEmptyBudgets() {
+        this.budgetlist.removeIf(x -> x.getMap().isEmpty());
     }
 }

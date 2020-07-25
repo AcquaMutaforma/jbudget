@@ -68,4 +68,9 @@ public class Budget implements BudgetInterface{
         }
         return filterlist;
     }
+
+    @Override
+    public void rmTag(TagInterface t) {
+        this.budgetmap.remove(t.getId());
+    }
 }

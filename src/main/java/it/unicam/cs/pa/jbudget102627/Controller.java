@@ -62,7 +62,12 @@ public class Controller {
     public boolean rmTag(TagInterface t){
         if(t == null)
             return false;
-        return this.ledge.rmTag(t); }
+        if(this.ledge.rmTag(t)) {
+            this.budgetManager.rmTag(t);
+            return true;
+        }
+        return false;
+    }
 
     public void addBudget(BudgetInterface b){
         if(b == null)
@@ -118,4 +123,7 @@ public class Controller {
         return this.ledge.getMovements( x -> x.getAccountId() == a.getId());
     }
 
+    public void checkScheduleds() {
+        this.ledge.checkScheduled();
+    }
 }

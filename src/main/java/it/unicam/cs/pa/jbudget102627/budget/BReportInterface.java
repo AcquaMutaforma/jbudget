@@ -22,4 +22,5 @@ public interface BReportInterface {
     void addTransaction(TransactionInterface tra);
     boolean rmTransaction(TransactionInterface tra);
 
+    void rmTag(TagInterface t);
 }

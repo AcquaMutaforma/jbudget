@@ -174,8 +174,9 @@ public class Ledge implements LedgeInterface{
         return false;
     }
 
-    //se la data di oggi e' > di scheduled.getdate allora inserisco le transazioni e la cancello
-    //TODO inserirla nel controller !!
+    /**
+     * Verifica la data delle transazioni, se sono scadute inserisce le transazioni nel ledge.
+     */
     @Override
     public void checkScheduled(){
         if(getScheduled().isEmpty())
@@ -333,7 +334,6 @@ public class Ledge implements LedgeInterface{
      */
     @Override
     public ArrayList<Period> generatePeriod() {
-        //TODO "list is always empty" check it
         ArrayList<Period> list = new ArrayList<>();
         for(TransactionInterface tra : getTransactions()){
             if(list.isEmpty()) {
