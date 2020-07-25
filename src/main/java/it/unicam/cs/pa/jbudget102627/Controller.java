@@ -5,7 +5,6 @@ import it.unicam.cs.pa.jbudget102627.budget.BReportInterface;
 import it.unicam.cs.pa.jbudget102627.budget.BudgetInterface;
 import it.unicam.cs.pa.jbudget102627.ledge.*;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
 

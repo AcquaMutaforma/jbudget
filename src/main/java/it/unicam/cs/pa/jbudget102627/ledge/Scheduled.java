@@ -15,7 +15,7 @@ public class Scheduled implements ScheduledInterface{
     private LocalDate date;
 
     public Scheduled(LocalDate date) {
-        this.date = date;
+        setDate(date);
         this.translist = new ArrayList<>();
     }
 

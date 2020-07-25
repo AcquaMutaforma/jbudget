@@ -1,7 +1,6 @@
 package it.unicam.cs.pa.jbudget102627.saver;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import it.unicam.cs.pa.jbudget102627.Controller;
 import it.unicam.cs.pa.jbudget102627.IDManager;
 import it.unicam.cs.pa.jbudget102627.IdManagerInterface;
@@ -12,7 +11,6 @@ import it.unicam.cs.pa.jbudget102627.ledge.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Scanner;
 

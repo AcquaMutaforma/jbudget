@@ -68,16 +68,6 @@ public class Transaction implements TransactionInterface {
         }
     }
 
-    /*todo: il ledge si deve occupare di farlo, perche non ne è responsabile
-    private void fixTags(){
-        if(getMovements().isEmpty() || getTags().isEmpty())
-            return;
-        for(MovementInterface mi : getMovements()){
-            mi.setTags(getTags());
-        }
-    }
-    */
-
     @Override
     public void addMovement(MovementInterface m) {
         if(!getMovements().contains(m.getId())){

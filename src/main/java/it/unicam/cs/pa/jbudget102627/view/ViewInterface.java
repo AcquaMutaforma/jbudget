@@ -5,7 +5,6 @@ import it.unicam.cs.pa.jbudget102627.Controller;
 import it.unicam.cs.pa.jbudget102627.saver.LoadInterface;
 import it.unicam.cs.pa.jbudget102627.saver.SaverInterface;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.TreeSet;
 

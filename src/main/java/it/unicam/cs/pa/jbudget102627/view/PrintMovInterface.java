@@ -2,7 +2,6 @@ package it.unicam.cs.pa.jbudget102627.view;
 
 import it.unicam.cs.pa.jbudget102627.Controller;
 import it.unicam.cs.pa.jbudget102627.ledge.MovementInterface;
-import it.unicam.cs.pa.jbudget102627.ledge.TagInterface;
 
 import java.io.IOException;
 import java.time.LocalDate;

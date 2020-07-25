@@ -1,7 +1,6 @@
 package it.unicam.cs.pa.jbudget102627.ledge;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -40,5 +39,5 @@ public interface LedgeInterface {
     AccountInterface getAccount(String s);
     TagInterface getTag(String s);
 
-    ArrayList<Period> generatePeriod();
+    List<Period> generatePeriod();
 }

@@ -12,9 +12,9 @@ import java.util.*;
  */
 public class Budget implements BudgetInterface{
 
-    private String nome;
+    private final String nome;
     private final int id;
-    private Map<Integer,Double> budgetmap;
+    private final Map<Integer,Double> budgetmap;
 
     public Budget(String nome, int id) {
         this.nome = nome;
